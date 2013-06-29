@@ -24,29 +24,45 @@ MAX7219_REG_DISPLAYTEST = 0xF
 def send_byte(register, data):
     spi.transfer((register, data))
 
-def letter(char):
+def letter(char, font = cp437_FONT):
     for col in range(8):
-        send_byte(col + 1, cp437_FONT[char][col])
+        send_byte(col + 1, font[char][col])
 
 def clear():
     for col in range(8):
         send_byte(col + 1, 0)
 
-def left_scroll(from_char, to_char):
-    # TODO
-    print "Not yet implemented"
+def up_scroll(from_char, to_char, font = cp437_FONT):
+    for i in range(7,-1,-1):
+        time.sleep(0.1)
+        for col in range(8):
+            data = (font[from_char][col] >> (8 - i) | font[to_char][col] << i) & 0xFF
+            send_byte(col + 1, data)
 
-def simple(from_char, to_char):
-    letter(char)
+def left_scroll(from_char, to_char, font = cp437_FONT):
+    for i in range(8):
+        time.sleep(0.1)
+        for col in range(8):
+            if col + i < 8:
+                data = font[from_char][col + i]
+            else:
+                data = font[to_char][col + i - 8]
+
+            send_byte(col + 1, data)
+
+def simple(from_char, to_char, font = cp437_FONT):
+    letter(to_char, font)
     time.sleep(0.25)
-    letter(32)
+    # Clear between letters
+    letter(0, font)
     time.sleep(0.01)
 
-def show_message(text, transition_fn = simple):
+def show_message(text, transition = simple, font = cp437_FONT):
     prev = ' '
     for curr in text:
-        transition_fn(ord(prev), ord(curr))
+        transition(ord(prev), ord(curr), font)
         prev = curr
+    transition(ord(prev), 32)
 
 def init():
     status = spi.openSPI(speed=1000000)
