@@ -1,0 +1,62 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import spi
+import time
+
+from max7219.font import cp437_FONT
+
+MAX7219_REG_NOOP        = 0x0
+MAX7219_REG_DIGIT0      = 0x1
+MAX7219_REG_DIGIT1      = 0x2
+MAX7219_REG_DIGIT2      = 0x3
+MAX7219_REG_DIGIT3      = 0x4
+MAX7219_REG_DIGIT4      = 0x5
+MAX7219_REG_DIGIT5      = 0x6
+MAX7219_REG_DIGIT6      = 0x7
+MAX7219_REG_DIGIT7      = 0x8
+MAX7219_REG_DECODEMODE  = 0x9
+MAX7219_REG_INTENSITY   = 0xA
+MAX7219_REG_SCANLIMIT   = 0xB
+MAX7219_REG_SHUTDOWN    = 0xC
+MAX7219_REG_DISPLAYTEST = 0xF
+
+def send_byte(register, data):
+    spi.transfer((register, data))
+
+def letter(char):
+    for col in range(8):
+        send_byte(col + 1, cp437_FONT[char][col])
+
+def clear():
+    for col in range(8):
+        send_byte(col + 1, 0)
+
+def left_scroll(from_char, to_char):
+    # TODO
+    print "Not yet implemented"
+
+def simple(from_char, to_char):
+    letter(char)
+    time.sleep(0.25)
+    letter(32)
+    time.sleep(0.01)
+
+def show_message(text, transition_fn = simple):
+    prev = ' '
+    for curr in text:
+        transition_fn(ord(prev), ord(curr))
+        prev = curr
+
+def init():
+    status = spi.openSPI(speed=1000000)
+    print "SPI configuration = ", status
+
+    send_byte(MAX7219_REG_SCANLIMIT, 7)   # show all 8 digits
+    send_byte(MAX7219_REG_DECODEMODE, 0)  # using a LED matrix (not digits)
+    send_byte(MAX7219_REG_DISPLAYTEST, 0) # no display test
+
+    clear()
+
+    send_byte(MAX7219_REG_INTENSITY, 7)   # character intensity: range: 0..15
+    send_byte(MAX7219_REG_SHUTDOWN, 1)    # not in shutdown mode (i.e start it up)
