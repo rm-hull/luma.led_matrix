@@ -1,7 +1,9 @@
 MAX7219 Driver
 ==============
 
-Interfacing LED matrix displays with the MAX7219 driver in Python
+Interfacing LED matrix displays with the MAX7219 driver in Python using hardware SPI on the Raspberry Pi. 
+The particular kit I bought can be acquired for a few pounds from 
+http://www.banggood.com/MAX7219-Dot-Matrix-Module-DIY-Kit-SCM-Control-Module-For-Arduino-p-72178.html?currency=GBP 
 
 Pre-requisites
 --------------
@@ -19,6 +21,18 @@ And that the devices are successfully installed in /dev:
     
 Follow the advice in the references below if the devices do not appear before
 proceeding.
+
+GPIO pin-outs
+-------------
+The breakout board has an two headers to allow daisy-chaining:
+
+| Board Pin | Name | Remarks | RPi Pin | RPi Function |
+|--------:|:-----|:--------|--------:|--------------|
+| 1 | VCC | +5V Power | 2 | 5V0 |
+| 2 | VCC | Ground | 6 | GND |
+| 3 | DIN | Data In | 19 | GPIO 10 (MOSI) |
+| 4 | CS | Chip Select | 24 | GPIO 8 (SPI CS0) |
+| 5 | CLK | Clock | 23 | GPIO 11 (SPI CLK) |
 
 Building & Installing
 ---------------------
