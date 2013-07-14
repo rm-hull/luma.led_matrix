@@ -29,7 +29,7 @@ The breakout board has an two headers to allow daisy-chaining:
 | Board Pin | Name | Remarks | RPi Pin | RPi Function |
 |--------:|:-----|:--------|--------:|--------------|
 | 1 | VCC | +5V Power | 2 | 5V0 |
-| 2 | VCC | Ground | 6 | GND |
+| 2 | GND | Ground | 6 | GND |
 | 3 | DIN | Data In | 19 | GPIO 10 (MOSI) |
 | 4 | CS | Chip Select | 24 | GPIO 8 (SPI CS0) |
 | 5 | CLK | Clock | 23 | GPIO 11 (SPI CLK) |
