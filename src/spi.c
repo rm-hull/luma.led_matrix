@@ -149,7 +149,7 @@ static PyObject* transfer(PyObject* self, PyObject* arg)
 	uint8_t rx[tupleSize];
 	PyObject* tempItem;
 
-	uint8_t i=0;
+	uint16_t i=0;
 
 	while(i < tupleSize)
 	{
