@@ -1,22 +1,23 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from max7219.led import send_byte
-from max7219.font import cp437_FONT
+import max7219.led as led
+import max7219.font as font
 
-gfxbuf = [0,0,0,0,0,0,0,0]
+def init(num_devices):
+    led.init(num_devices)
+    gfxbuf = [0] * 8 * num_devices
 
-def letter(char, font = cp437_FONT):
+def letter(char, device=0, font=font.cp437_FONT):
     for col in range(8):
-        gfxbuf[col] = font[char][col]
+        gfxbuf[col + (device * 8)] = font[char][col]
 
-def clear():
-    for col in range(8):
-        gfxbuf[col] = 0
+def clear(device=0):
+    for col in len(8):
+        gfxbuf[col + (device * 8)] = 0
 
 def render():
-    for col in range(8):
-        send_byte(col + 1, gfxbuf[col])
+    led.send_data(gfxbuf)
 
 def set_on(x, y):
     gfxbuf[y] = gfxbuf[y] | (1 << x)
@@ -26,22 +27,22 @@ def set_off(x, y):
 
 def scroll(direction):
     if direction == 0:  # UP
-        for col in range(8):
+        for col in range(len(gfxlen)):
             gfxbuf[col] >>= 1
 
     elif direction == 2: # RIGHT
         gfxbuf[0] = 0
-        for col in range(6,-1,-1):
+        for col in range(len(gfxbuf)-2,-1,-1):
             gfxbuf[col+1] = gfxbuf[col]
 
     elif direction == 4: # DOWN
-        for col in range(8):
+        for col in range(len(gfxbuf)):
             gfxbuf[col] <<= 1
 
     elif direction == 6: # LEFT
-        for col in range(1,8):
+        for col in range(1,len(gfxbuf)):
             gfxbuf[col-1] = gfxbuf[col]
-        gfxbuf[7] = 0
+        gfxbuf[len(gfxbuf)-1] = 0
 
     elif direction < 8:  # DIAGONALS
         scroll(direction % 8 - 1)

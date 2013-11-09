@@ -21,34 +21,30 @@ MAX7219_REG_SCANLIMIT   = 0xB
 MAX7219_REG_SHUTDOWN    = 0xC
 MAX7219_REG_DISPLAYTEST = 0xF
 
-def send_byte(register, data):
-    spi.transfer((register, data))
+def send_control(register, data, num_devices=1):
+    spi.transfer((register, data) * num_devices)
 
-def letter(char, font = cp437_FONT):
-    for col in range(8):
-        send_byte(col + 1, font[char][col])
+def interleave(*args):
+    for idx in range(0, max(len(arg) for arg in args)):
+        for arg in args:
+            try:
+                yield arg[idx]
+            except IndexError:
+                continue
 
-def clear():
-    for col in range(8):
-        send_byte(col + 1, 0)
+def send_data(buf):
+    registers = range(1,9)*len(buf)/8
+    spi.transfer(interleave(registers, buf))
 
-def show_message(text, transition, font = cp437_FONT):
-    prev = ' '
-    for curr in text:
-        transition(ord(prev), ord(curr), font)
-        prev = curr
-    transition(ord(prev), 32)
+def brightness(intensity, num_devices=1):
+    send_control(MAX7219_REG_INTENSITY, intensity % 16, num_devices)
 
-def brightness(intensity):
-    send_byte(MAX7219_REG_INTENSITY, intensity % 16)
-
-def init():
+def init(num_devices=1):
     status = spi.openSPI(speed=1000000)
     print "SPI configuration = ", status
 
-    send_byte(MAX7219_REG_SCANLIMIT, 7)   # show all 8 digits
-    send_byte(MAX7219_REG_DECODEMODE, 0)  # using a LED matrix (not digits)
-    send_byte(MAX7219_REG_DISPLAYTEST, 0) # no display test
-    clear()
-    brightness(7)                         # character intensity: range: 0..15
-    send_byte(MAX7219_REG_SHUTDOWN, 1)    # not in shutdown mode (i.e start it up)
+    send_control(MAX7219_REG_SCANLIMIT, 7, num_devices)   # show all 8 digits
+    send_control(MAX7219_REG_DECODEMODE, 0, num_devices)  # using a LED matrix (not digits)
+    send_control(MAX7219_REG_DISPLAYTEST, 0, num_devices) # no display test
+    brightness(7, num_devices)                                 # character intensity: range: 0..15
+    send_control(MAX7219_REG_SHUTDOWN, 1, num_devices)    # not in shutdown mode (i.e start it up)

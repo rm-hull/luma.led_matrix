@@ -6,11 +6,13 @@ import max7219.transitions as transitions
 import time
 from random import randrange
 
-led.init()
-led.show_message("Hello world!", transition = transitions.left_scroll)
+canvas.init(2)
+canvas.show_message("Hello world!", transition = transitions.left_scroll)
 
 for x in range(256):
-    led.letter(x)
+    canvas.letter(x, 0)
+    canvas.letter(x + 1 % 256, 0)
+    canvas.render()
     time.sleep(0.1)
 
 while True:
