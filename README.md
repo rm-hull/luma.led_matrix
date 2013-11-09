@@ -50,12 +50,10 @@ Run the example code as follows:
 References
 ----------
 * http://hackaday.com/2013/01/06/hardware-spi-with-python-on-a-raspberry-pi/
-
 * http://gammon.com.au/forum/?id=11516
-
 * https://github.com/lthiery/SPI-Py
-
 * http://louisthiery.com/spi-python-hardware-spi-for-raspi/
+* http://www.brianhensley.net/2012/07/getting-spi-working-on-raspberry-pi.html
 
 License
 -------
