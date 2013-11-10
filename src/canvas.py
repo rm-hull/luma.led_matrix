@@ -5,7 +5,8 @@ import max7219.led as led
 import max7219.font as font
 
 def init(num_devices):
-    led.init(num_devices)
+    global gfxbuf
+    led.init()
     gfxbuf = [0] * 8 * num_devices
 
 def letter(char, device=0, font=font.cp437_FONT):
@@ -13,8 +14,7 @@ def letter(char, device=0, font=font.cp437_FONT):
         gfxbuf[col + (device * 8)] = font[char][col]
 
 def clear(device=0):
-    for col in len(8):
-        gfxbuf[col + (device * 8)] = 0
+    letter(' ', device)
 
 def render():
     led.send_data(gfxbuf)

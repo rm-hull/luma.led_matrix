@@ -21,8 +21,8 @@ MAX7219_REG_SCANLIMIT   = 0xB
 MAX7219_REG_SHUTDOWN    = 0xC
 MAX7219_REG_DISPLAYTEST = 0xF
 
-def send_control(register, data, num_devices=1):
-    spi.transfer((register, data) * num_devices)
+def send_control(register, data):
+    spi.transfer((register, data))
 
 def interleave(*args):
     for idx in range(0, max(len(arg) for arg in args)):
@@ -33,18 +33,23 @@ def interleave(*args):
                 continue
 
 def send_data(buf):
-    registers = range(1,9)*len(buf)/8
-    spi.transfer(interleave(registers, buf))
+    devices = len(buf) / 8
+    for col in range(8):
+        registers =  [0] * (devices - 1) + [col + 1]
+        #registers =  [col + 1] * devices
+        data = [buf[x + col] for x in range(0, devices * 8, 8)]
+        #print(tuple(interleave(registers, data)))
+        spi.transfer(tuple(interleave(registers, data)))
 
-def brightness(intensity, num_devices=1):
-    send_control(MAX7219_REG_INTENSITY, intensity % 16, num_devices)
+def brightness(intensity):
+    send_control(MAX7219_REG_INTENSITY, intensity % 16)
 
-def init(num_devices=1):
-    status = spi.openSPI(speed=1000000)
+def init():
+    status = spi.openSPI(device="/dev/spidev0.0", speed=1000000, delay=0)
     print "SPI configuration = ", status
 
-    send_control(MAX7219_REG_SCANLIMIT, 7, num_devices)   # show all 8 digits
-    send_control(MAX7219_REG_DECODEMODE, 0, num_devices)  # using a LED matrix (not digits)
-    send_control(MAX7219_REG_DISPLAYTEST, 0, num_devices) # no display test
-    brightness(7, num_devices)                                 # character intensity: range: 0..15
-    send_control(MAX7219_REG_SHUTDOWN, 1, num_devices)    # not in shutdown mode (i.e start it up)
+    send_control(MAX7219_REG_SCANLIMIT, 7 )   # show all 8 digits
+    send_control(MAX7219_REG_DECODEMODE, 0)  # using a LED matrix (not digits)
+    send_control(MAX7219_REG_DISPLAYTEST, 0) # no display test
+    brightness(7)                                 # character intensity: range: 0..15
+    send_control(MAX7219_REG_SHUTDOWN, 1)    # not in shutdown mode (i.e start it up)
