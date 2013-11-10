@@ -54,6 +54,7 @@ References
 * https://github.com/lthiery/SPI-Py
 * http://louisthiery.com/spi-python-hardware-spi-for-raspi/
 * http://www.brianhensley.net/2012/07/getting-spi-working-on-raspberry-pi.html
+* http://raspi.tv/2013/8-x-8-led-array-driven-by-max7219-on-the-raspberry-pi-via-python
 
 License
 -------

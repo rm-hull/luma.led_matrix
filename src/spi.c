@@ -120,6 +120,7 @@ static PyObject* openSPI(PyObject *self, PyObject *args, PyObject *kwargs)
 	PyObject* retDict;
 	retDict = PyDict_New();
 
+	PyDict_SetItem(retDict, PyString_FromString("device"), PyString_FromString(device));
 	PyDict_SetItem(retDict, PyString_FromString("mode"), PyInt_FromLong((long)mode));
 	PyDict_SetItem(retDict, PyString_FromString("bits"), PyInt_FromLong((long)bits));
 	PyDict_SetItem(retDict, PyString_FromString("speed"), PyInt_FromLong((long)speed));
