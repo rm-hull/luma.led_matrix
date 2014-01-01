@@ -72,3 +72,7 @@ Free Software Foundation.
 >This program is distributed for educational purposes only and is no way 
 suitable for any particular application, especially commercial. There is
 no implied suitability so use at your own risk!
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/rm-hull/max7219/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
