@@ -43,8 +43,11 @@ included in the source directory, so to build and install:
 
 
 (For Arch Linux :
+
    # pacman -Sy base-devel python2
+
    # python2 setup.py install
+
 )
 
 Examples
