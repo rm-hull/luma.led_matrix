@@ -37,18 +37,17 @@ The breakout board has an two headers to allow daisy-chaining:
 Building & Installing
 ---------------------
 The [SPI-Py](https://github.com/lthiery/SPI-Py) C-extension has already been 
-included in the source directory, so to build and install:
+included in the source directory, so to build and install: 
+
+For Raspian:
 
     $ sudo python setup.py install
 
+For Arch Linux:
 
-(For Arch Linux :
+    # pacman -Sy base-devel python2
+    # python2 setup.py install
 
-   # pacman -Sy base-devel python2
-
-   # python2 setup.py install
-
-)
 
 Examples
 --------
