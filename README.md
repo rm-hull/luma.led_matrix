@@ -41,6 +41,7 @@ included in the source directory, so to build and install:
 
 For Raspian:
 
+    $ sudo apt-get install python-dev
     $ sudo python setup.py install
 
 For Arch Linux:
@@ -81,6 +82,4 @@ Free Software Foundation.
 suitable for any particular application, especially commercial. There is
 no implied suitability so use at your own risk!
 
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/rm-hull/max7219/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
