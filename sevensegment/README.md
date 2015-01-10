@@ -6,6 +6,8 @@ Using the MAX7219 driver in Python for a 8 digit seven segment LED display (MAX7
 Eg: (but not limited to)
 http://www.aliexpress.com/item/MAX7219-Red-Module-8-Digit-7-Segment-Digital-LED-Display-Tube-For-Arduino-MCU/1449630475.html
 
+![max7219 7segment](https://raw.github.com/rm-hull/max7219/master/doc/images/7segment.jpg)
+
 Library
 -------
 sevenSegment.py
