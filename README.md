@@ -76,6 +76,8 @@ References
 
 License
 -------
+See [MIT License](https://github.com/rm-hull/max7219/blob/master/LICENSE.md).
+
 Portions of this code are derived from https://github.com/lthiery/SPI-Py
 which includes the following license notice:
 
