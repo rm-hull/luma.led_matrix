@@ -1,9 +1,13 @@
 MAX7219 Driver
 ==============
 
-Interfacing LED matrix displays with the MAX7219 driver in Python using hardware SPI on the Raspberry Pi. 
-The particular kit I bought can be acquired for a few pounds from 
+Interfacing LED matrix displays with the MAX7219 driver 
+[[PDF datasheet](https://raw.github.com/rm-hull/max7219/master/doc/MAX7219-datasheet.pdf)] 
+in Python using hardware SPI on the Raspberry Pi. The particular kit I bought 
+can be acquired for a few pounds from 
 http://www.banggood.com/MAX7219-Dot-Matrix-Module-DIY-Kit-SCM-Control-Module-For-Arduino-p-72178.html?currency=GBP 
+
+![max7219 matrix](https://raw.github.com/rm-hull/max7219/master/doc/images/matrix.jpg)
 
 Pre-requisites
 --------------
@@ -37,15 +41,28 @@ The breakout board has an two headers to allow daisy-chaining:
 Building & Installing
 ---------------------
 The [SPI-Py](https://github.com/lthiery/SPI-Py) C-extension has already been 
-included in the source directory, so to build and install:
+included in the source directory, so to build and install: 
 
+For Raspian:
+
+    $ sudo apt-get install python-dev
     $ sudo python setup.py install
+
+For Arch Linux:
+
+    # pacman -Sy base-devel python2
+    # python2 setup.py install
+
 
 Examples
 --------
 Run the example code as follows:
 
     $ sudo python examples/test.py
+
+*NOTE:* By default, SPI is only accessible by root (hence using `sudo` above). Follow these 
+instructions to create an spi group, and adding your user to that group, so you don't have to
+run as root: http://quick2wire.com/non-root-access-to-spi-on-the-pi
 
 References
 ----------
@@ -55,9 +72,12 @@ References
 * http://louisthiery.com/spi-python-hardware-spi-for-raspi/
 * http://www.brianhensley.net/2012/07/getting-spi-working-on-raspberry-pi.html
 * http://raspi.tv/2013/8-x-8-led-array-driven-by-max7219-on-the-raspberry-pi-via-python
+* http://quick2wire.com/non-root-access-to-spi-on-the-pi
 
 License
 -------
+See [MIT License](https://github.com/rm-hull/max7219/blob/master/LICENSE.md).
+
 Portions of this code are derived from https://github.com/lthiery/SPI-Py
 which includes the following license notice:
 
@@ -72,3 +92,5 @@ Free Software Foundation.
 >This program is distributed for educational purposes only and is no way 
 suitable for any particular application, especially commercial. There is
 no implied suitability so use at your own risk!
+
+

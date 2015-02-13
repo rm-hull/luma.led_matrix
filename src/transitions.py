@@ -3,7 +3,7 @@
 
 import time
 
-from max7219.led import send_byte
+from max7219.led import send_byte, letter
 from max7219.font import cp437_FONT
 
 def up_scroll(from_char, to_char, font = cp437_FONT):
