@@ -56,7 +56,6 @@ class device(object):
         Send the bytes (which should comprise of alternating command,
         data values) over the SPI device.
         """
-        print(bytes)
         spi.transfer(bytes)
 
     def _values(self, position):

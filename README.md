@@ -7,7 +7,13 @@ in Python using hardware SPI on the Raspberry Pi. The particular kit I bought
 can be acquired for a few pounds from 
 http://www.banggood.com/MAX7219-Dot-Matrix-Module-DIY-Kit-SCM-Control-Module-For-Arduino-p-72178.html?currency=GBP 
 
-![max7219 matrix](https://raw.github.com/rm-hull/max7219/master/doc/images/matrix.jpg)
+This library has recently had a major overhaul, and is not compatible with the earlier version. 
+It now supports:
+
+* multiple cascaded devices
+* LED matrix and seven-segement variants
+
+![max7219 matrix](https://raw.github.com/rm-hull/max7219/master/doc/images/devices.jpg)
 
 Pre-requisites
 --------------
@@ -58,7 +64,11 @@ Examples
 --------
 Run the example code as follows:
 
-    $ sudo python examples/test.py
+    $ sudo python examples/matrix_test.py
+
+or
+
+    $ sudo python examples/sevensegment_test.py
 
 *NOTE:* By default, SPI is only accessible by root (hence using `sudo` above). Follow these 
 instructions to create an spi group, and adding your user to that group, so you don't have to
