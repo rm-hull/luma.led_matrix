@@ -13,7 +13,7 @@ It now supports:
 * multiple cascaded devices
 * LED matrix and seven-segement variants
 
-![max7219 matrix](https://raw.github.com/rm-hull/max7219/master/doc/images/devices.jpg)
+![max7219 matrix](https://raw.githubusercontent.com/rm-hull/max7219/cascaded/doc/images/devices.jpg)
 
 Pre-requisites
 --------------
