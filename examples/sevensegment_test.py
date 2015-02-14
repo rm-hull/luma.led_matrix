@@ -14,6 +14,9 @@ for x in range(99823, 100023):
     display.write_number(deviceId=1, value=x, leftJustify=True)
     time.sleep(0.05)
 
+display.clear(deviceId=1)
+time.sleep(1)
+
 display.clear()
 time.sleep(1)
 

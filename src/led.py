@@ -40,7 +40,7 @@ class device(object):
         """
         assert cascaded > 0, "Must have at least one device!"
         self._cascaded = cascaded
-        self._buffer = None
+        self._buffer = [0] * self.NUM_DIGITS * self._cascaded
         spi.openSPI(speed=1000000)
 
         self._write(
@@ -67,11 +67,23 @@ class device(object):
             yield position + constants.MAX7219_REG_DIGIT0
             yield self._buffer[(deviceId * self.NUM_DIGITS) + position]
 
-    def clear(self):
+    def clear(self, deviceId=None):
         """
-        Clears the buffer, and flushes.
+        Clears the buffer the given deviceId if specified (else clears all devices), and flushes.
         """
-        self._buffer = [0] * self.NUM_DIGITS * self._cascaded
+        assert not deviceId or 0 <= deviceId < self._cascaded, "Invalid deviceId: {0}".format(deviceId)
+
+        if deviceId is None:
+            start = 0
+            end = self._cascaded
+        else:
+            start = deviceId
+            end = deviceId + 1
+
+        for deviceId in xrange(start, end):
+            for position in xrange(self.NUM_DIGITS):
+                self.set_byte(deviceId, position + constants.MAX7219_REG_DIGIT0, 0, redraw=False)
+
         self.flush()
 
     def flush(self):
@@ -141,6 +153,11 @@ class sevensegment(device):
     }
 
     def write_number(self, deviceId, value, base=10, decimalPlaces=0, zeroPad=False, leftJustify=False):
+        """
+        Formats the value according to the parameters supplied, and displays
+        on the specified device. If the formatted number is larger than
+        8 digits, then an OverflowError is raised.
+        """
         assert 0 <= deviceId < self._cascaded, "Invalid deviceId: {0}".format(deviceId)
         assert base in self.radix, "Invalid base: {0}".format(base)
 
@@ -161,6 +178,7 @@ class sevensegment(device):
         for char in strValue:
 
             if position < constants.MAX7219_REG_DIGIT0:
+                self.clear(deviceId)
                 raise OverflowError('{0} too large for display'.format(strValue));
 
             if char == '.':
