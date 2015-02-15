@@ -1,35 +1,29 @@
 #!/usr/bin/env python
 
 import max7219.led as led
-import max7219.canvas as canvas
-#import max7219.transitions as transitions
 import time
 from random import randrange
 
-canvas.init(2)
-#canvas.show_message("Hello world!", transition = transitions.left_scroll)
+device = led.matrix(cascaded=1)
+device.show_message("Hello world!")
 
 for x in range(256):
-    canvas.letter(x, 0)
-    canvas.letter(x, 1)
-    canvas.render()
+#    device.letter(1, 32 + (x % 64))
+    device.letter(0, x)
     time.sleep(0.1)
 
 while True:
- #   for x in range(500):
- #       canvas.set_on(randrange(8), randrange(8))
- #       canvas.scroll(randrange(16))
- #       canvas.render()
- #       time.sleep(0.01)
-
- #   for x in range(500):
- #       canvas.set_off(randrange(8), randrange(8))
- #       canvas.scroll(randrange(16))
- #       canvas.render()
- #       time.sleep(0.01)
-
     for x in range(500):
-        canvas.set_on(4, 4)
-        canvas.scroll(randrange(8))
-        canvas.render()
+        device.pixel(4, 4, 1, redraw=False)
+        direction = randrange(8)
+        if direction == 7 or direction == 0 or direction == 1:
+            device.scroll_up(redraw=False)
+        if direction == 1 or direction == 2 or direction == 3:
+            device.scroll_right(redraw=False)
+        if direction == 3 or direction == 4 or direction == 5:
+            device.scroll_down(redraw=False)
+        if direction == 5 or direction == 6 or direction == 7:
+            device.scroll_left(redraw=False)
+
+        device.flush()
         time.sleep(0.01)

@@ -2,7 +2,7 @@ MAX7219 Driver
 ==============
 
 Interfacing LED matrix displays with the MAX7219 driver 
-[[PDF datasheet](https://raw.github.com/rm-hull/max7219/master/doc/MAX7219-datasheet.pdf)] 
+[[PDF datasheet](https://raw.github.com/rm-hull/max7219/master/docs/MAX7219-datasheet.pdf)] 
 in Python using hardware SPI on the Raspberry Pi. The particular kit I bought 
 can be acquired for a few pounds from 
 http://www.banggood.com/MAX7219-Dot-Matrix-Module-DIY-Kit-SCM-Control-Module-For-Arduino-p-72178.html?currency=GBP 
@@ -13,7 +13,37 @@ It now supports:
 * multiple cascaded devices
 * LED matrix and seven-segement variants
 
-![max7219 matrix](https://raw.githubusercontent.com/rm-hull/max7219/cascaded/doc/images/devices.jpg)
+![max7219 matrix](https://raw.githubusercontent.com/rm-hull/max7219/master/docs/images/devices.jpg)
+
+Python Usage
+------------
+For the matrix device, initialize the `matrix` class:
+
+```python
+import max7219.led as led
+
+device = led.matrix()
+device.show_message("Hello world!")
+```
+
+For the 7-segment devce, initialize the `sevensegment` class:
+
+```python
+import max7219.led as led
+
+device = led.sevensegment()
+device.write_number(deviceId=0, value=3.14159)
+```
+
+The MAX7219 chipset supports a serial 16-bit register/data buffer which is 
+clocked in on pin DIN every time the clock edge falls, and clocked out on DOUT
+16.5 clock cycles later. This allows multiple devices to be chained together.
+
+When initializing cascaded devices, it is necessary to specify a `cascaded=...`
+parameter, and generally methods which target specific devices will expect a 
+`deviceId=...` parameter, counting from zero.
+
+For more information, see http://max7219.readthedocs.org/
 
 Pre-requisites
 --------------

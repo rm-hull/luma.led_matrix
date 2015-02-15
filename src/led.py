@@ -4,23 +4,25 @@
 import max7219.spi as spi
 import time
 
-from max7219.font import cp437_FONT
+from max7219.font import CP437_FONT
+
 
 class constants(object):
-    MAX7219_REG_NOOP        = 0x0
-    MAX7219_REG_DIGIT0      = 0x1
-    MAX7219_REG_DIGIT1      = 0x2
-    MAX7219_REG_DIGIT2      = 0x3
-    MAX7219_REG_DIGIT3      = 0x4
-    MAX7219_REG_DIGIT4      = 0x5
-    MAX7219_REG_DIGIT5      = 0x6
-    MAX7219_REG_DIGIT6      = 0x7
-    MAX7219_REG_DIGIT7      = 0x8
-    MAX7219_REG_DECODEMODE  = 0x9
-    MAX7219_REG_INTENSITY   = 0xA
-    MAX7219_REG_SCANLIMIT   = 0xB
-    MAX7219_REG_SHUTDOWN    = 0xC
+    MAX7219_REG_NOOP = 0x0
+    MAX7219_REG_DIGIT0 = 0x1
+    MAX7219_REG_DIGIT1 = 0x2
+    MAX7219_REG_DIGIT2 = 0x3
+    MAX7219_REG_DIGIT3 = 0x4
+    MAX7219_REG_DIGIT4 = 0x5
+    MAX7219_REG_DIGIT5 = 0x6
+    MAX7219_REG_DIGIT6 = 0x7
+    MAX7219_REG_DIGIT7 = 0x8
+    MAX7219_REG_DECODEMODE = 0x9
+    MAX7219_REG_INTENSITY = 0xA
+    MAX7219_REG_SCANLIMIT = 0xB
+    MAX7219_REG_SHUTDOWN = 0xC
     MAX7219_REG_DISPLAYTEST = 0xF
+
 
 class device(object):
     """
@@ -44,11 +46,11 @@ class device(object):
         spi.openSPI(speed=1000000)
 
         self._write(
-            constants.MAX7219_REG_SCANLIMIT, 7,   # show all 8 digits
-            constants.MAX7219_REG_DECODEMODE, 0,  # using a LED matrix (not digits)
-            constants.MAX7219_REG_DISPLAYTEST, 0, # no display test
-            constants.MAX7219_REG_SHUTDOWN, 1)    # not in shutdown mode (i.e start it up)
-        self.brightness(7)                        # character intensity: range: 0..15
+            constants.MAX7219_REG_SCANLIMIT, 7,    # show all 8 digits
+            constants.MAX7219_REG_DECODEMODE, 0,   # use matrix (not digits)
+            constants.MAX7219_REG_DISPLAYTEST, 0,  # no display test
+            constants.MAX7219_REG_SHUTDOWN, 1)     # not shutdown mode
+        self.brightness(7)                         # intensity: range: 0..15
         self.clear()
 
     def _write(self, *bytes):
@@ -69,7 +71,8 @@ class device(object):
 
     def clear(self, deviceId=None):
         """
-        Clears the buffer the given deviceId if specified (else clears all devices), and flushes.
+        Clears the buffer the given deviceId if specified (else clears all
+        devices), and flushes.
         """
         assert not deviceId or 0 <= deviceId < self._cascaded, "Invalid deviceId: {0}".format(deviceId)
 
@@ -82,7 +85,9 @@ class device(object):
 
         for deviceId in xrange(start, end):
             for position in xrange(self.NUM_DIGITS):
-                self.set_byte(deviceId, position + constants.MAX7219_REG_DIGIT0, 0, redraw=False)
+                self.set_byte(deviceId,
+                              position + constants.MAX7219_REG_DIGIT0,
+                              0, redraw=False)
 
         self.flush()
 
@@ -122,6 +127,21 @@ class device(object):
         if redraw:
             self.flush()
 
+    def scroll_left(self, redraw=True):
+
+        del self._buffer[0]
+        self._buffer.append(0)
+        if redraw:
+            self.flush()
+
+    def scroll_right(self, redraw=True):
+
+        del self._buffer[self.NUM_DIGITS - 1]
+        self._buffer.insert(0, 0)
+        if redraw:
+            self.flush()
+
+
 class sevensegment(device):
     """
     Implementation of MAX7219 devices cascaded with a series of seven-segment
@@ -152,7 +172,8 @@ class sevensegment(device):
         'f': 0x47
     }
 
-    def write_number(self, deviceId, value, base=10, decimalPlaces=0, zeroPad=False, leftJustify=False):
+    def write_number(self, deviceId, value, base=10, decimalPlaces=0,
+                     zeroPad=False, leftJustify=False):
         """
         Formats the value according to the parameters supplied, and displays
         on the specified device. If the formatted number is larger than
@@ -164,11 +185,19 @@ class sevensegment(device):
         # Magic up a printf format string
         size = self.NUM_DIGITS
         formatStr = '%'
-        if zeroPad: formatStr += '0'
-        if decimalPlaces > 0: size += 1
-        if leftJustify: size *= -1
+
+        if zeroPad:
+            formatStr += '0'
+
+        if decimalPlaces > 0:
+            size += 1
+
+        if leftJustify:
+            size *= -1
+
         formatStr = '{fmt}{size}.{dp}{type}'.format(
-                        fmt=formatStr, size=size, dp=decimalPlaces, type=self.radix[base])
+                        fmt=formatStr, size=size, dp=decimalPlaces,
+                        type=self.radix[base])
 
         position = constants.MAX7219_REG_DIGIT7
         strValue = formatStr % value
@@ -179,7 +208,7 @@ class sevensegment(device):
 
             if position < constants.MAX7219_REG_DIGIT0:
                 self.clear(deviceId)
-                raise OverflowError('{0} too large for display'.format(strValue));
+                raise OverflowError('{0} too large for display'.format(strValue))
 
             if char == '.':
                 continue
@@ -192,16 +221,76 @@ class sevensegment(device):
         self.flush()
 
 
-#class matrix(device):
-#
-#    def letter(self, char, font=cp437_FONT):
-#        for col in range(self.NUM_DIGITS):
-#            send_byte(col + 1, font[char][col])#
-#
-#    def show_message(self, text, transition, font=cp437_FONT):
-#        prev = ' '
-#        for curr in text:
-#            transition(ord(prev), ord(curr), font)
-#            prev = curr
-#        transition(ord(prev), 32)
+class matrix(device):
+    """
+    Implementation of MAX7219 devices cascaded with a series of 8x8 LED
+    matrix devices. It provides a convenient methods to write letters
+    to specific devices, to scroll a large message from left-to-right, or
+    to set specific pixels. It is assumed the matrices are linearly aligned.
+    """
 
+    def letter(self, deviceId, asciiCode, font=CP437_FONT, redraw=True):
+        """
+        Writes the ASCII letter code to the given device in the specified font.
+        """
+        assert 0 <= asciiCode < 256
+        col = constants.MAX7219_REG_DIGIT0
+        for value in font[asciiCode]:
+            if col > constants.MAX7219_REG_DIGIT7:
+                self.clear(deviceId)
+                raise OverflowError('Font for \'{0}\' too large for display'.format(asciiCode))
+
+            self.set_byte(deviceId, col, value, redraw=False)
+            col += 1
+
+        if redraw:
+            self.flush()
+
+    def scroll_up(self, redraw=True):
+        """
+        Scrolls the underlying buffer (for all cascaded devices) up one pixel
+        """
+        self._buffer = [value >> 1 for value in self._buffer]
+        if redraw:
+            self.flush()
+
+    def scroll_down(self, redraw=True):
+        """
+        Scrolls the underlying buffer (for all cascaded devices) down one pixel
+        """
+        self._buffer = [value << 1 for value in self._buffer]
+        if redraw:
+            self.flush()
+
+    def show_message(self, text, font=CP437_FONT, delay=0.05):
+        """
+        Transitions the text message across the devices from left-to-right
+        """
+        # Add some spaces on (same number as cascaded devices) so that the
+        # message scrolls off to the left completely.
+        text += ' ' * self._cascaded
+        src = (value for asciiCode in text for value in font[ord(asciiCode)])
+
+        for value in src:
+            time.sleep(delay)
+            self.scroll_left(redraw=False)
+            self._buffer[-1] = value
+            self.flush()
+
+    def pixel(self, x, y, value, redraw=True):
+        """
+        Sets (value = 1) or clears (value = 0) the pixel at the given
+        co-ordinate. It may be more efficient to batch multiple pixel
+        operations together with redraw=False, and then call flush()
+        to redraw just once.
+        """
+        assert 0 <= x < len(self._buffer)
+        assert 0 <= y < 8
+
+        if value:
+            self._buffer[y] |= (1 << x)
+        else:
+            self._buffer[y] &= ~(1 << x)
+
+        if redraw:
+            self.flush()
