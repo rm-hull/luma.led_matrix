@@ -8,7 +8,7 @@ setup(
     author_email = "richard.hull@destructuring-bind.org",
     description = ("A small library to drive a MAX7219 LED serializer using hardware SPI-Py"),
     license = "MIT",
-    keywords = "raspberry pi rpi led max7219",
+    keywords = "raspberry pi rpi led max7219 matrix seven segment",
     url = "https://github.com/rm-hull/max7219",
     packages=['max7219'],
     package_dir={'max7219': 'src'},
