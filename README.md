@@ -45,6 +45,8 @@ parameter, and generally methods which target specific devices will expect a
 
 For more information, see http://max7219.readthedocs.org/
 
+![max7219 sevensegment](https://raw.githubusercontent.com/rm-hull/max7219/master/docs/images/IMG_2810.JPG)
+
 Pre-requisites
 --------------
 Ensure that the SPI kernel driver is enabled:
@@ -76,17 +78,16 @@ The breakout board has an two headers to allow daisy-chaining:
 
 Building & Installing
 ---------------------
-The [SPI-Py](https://github.com/lthiery/SPI-Py) C-extension has already been 
-included in the source directory, so to build and install: 
-
 For Raspian:
 
     $ sudo apt-get install python-dev
+    $ sudo pip install spidev
     $ sudo python setup.py install
 
 For Arch Linux:
 
     # pacman -Sy base-devel python2
+    # pip install spidev
     # python2 setup.py install
 
 
@@ -108,7 +109,6 @@ References
 ----------
 * http://hackaday.com/2013/01/06/hardware-spi-with-python-on-a-raspberry-pi/
 * http://gammon.com.au/forum/?id=11516
-* https://github.com/lthiery/SPI-Py
 * http://louisthiery.com/spi-python-hardware-spi-for-raspi/
 * http://www.brianhensley.net/2012/07/getting-spi-working-on-raspberry-pi.html
 * http://raspi.tv/2013/8-x-8-led-array-driven-by-max7219-on-the-raspberry-pi-via-python
@@ -117,20 +117,3 @@ References
 License
 -------
 See [MIT License](https://github.com/rm-hull/max7219/blob/master/LICENSE.md).
-
-Portions of this code are derived from https://github.com/lthiery/SPI-Py
-which includes the following license notice:
-
-> COPYRIGHT (C) 2012 Louis Thiery. All rights reserved. 
-Further work by Connor Wolf.
-
-> This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License V2 as published by the 
-Free Software Foundation.
-
-> LIABILITY
->This program is distributed for educational purposes only and is no way 
-suitable for any particular application, especially commercial. There is
-no implied suitability so use at your own risk!
-
-

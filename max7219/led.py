@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import max7219.spi as spi
+import spidev
 import time
 
 from max7219.font import CP437_FONT
@@ -35,30 +35,35 @@ class device(object):
     """
     NUM_DIGITS = 8
 
-    def __init__(self, cascaded=1):
+    def __init__(self, cascaded=1, spi_bus=0, spi_device=0):
         """
         Constructor: cascaded should be the number of cascaded MAX7219
         devices are connected.
         """
         assert cascaded > 0, "Must have at least one device!"
+
         self._cascaded = cascaded
         self._buffer = [0] * self.NUM_DIGITS * self._cascaded
-        spi.openSPI(speed=1000000)
+        self._spi = spidev.SpiDev()
+        self._spi.open(spi_bus, spi_device)
 
-        self._write(
-            constants.MAX7219_REG_SCANLIMIT, 7,    # show all 8 digits
-            constants.MAX7219_REG_DECODEMODE, 0,   # use matrix (not digits)
-            constants.MAX7219_REG_DISPLAYTEST, 0,  # no display test
-            constants.MAX7219_REG_SHUTDOWN, 1)     # not shutdown mode
-        self.brightness(7)                         # intensity: range: 0..15
+        self.command(constants.MAX7219_REG_SCANLIMIT, 7)    # show all 8 digits
+        self.command(constants.MAX7219_REG_DECODEMODE, 0)   # use matrix (not digits)
+        self.command(constants.MAX7219_REG_DISPLAYTEST, 0)  # no display test
+        self.command(constants.MAX7219_REG_SHUTDOWN, 1)     # not shutdown mode
+        self.brightness(7)                                  # intensity: range: 0..15
         self.clear()
 
-    def _write(self, *bytes):
+    def command(self, register, data):
+        assert constants.MAX7219_REG_DECODEMODE <= register <= constants.MAX7219_REG_DISPLAYTEST
+        self._write([register, data] * self._cascaded)
+
+    def _write(self, data):
         """
         Send the bytes (which should comprise of alternating command,
         data values) over the SPI device.
         """
-        spi.transfer(bytes)
+        self._spi.xfer2(list(data))
 
     def _values(self, position):
         """
@@ -97,7 +102,7 @@ class device(object):
         cells to the SPI device.
         """
         for posn in xrange(self.NUM_DIGITS):
-            self._write(*tuple(self._values(posn)))
+            self._write(self._values(posn))
 
     def brightness(self, intensity):
         """
@@ -105,8 +110,7 @@ class device(object):
         intensity level, ranging from 0..16
         """
         assert 0 <= intensity < 16, "Invalid brightness: {0}".format(intensity)
-        for _ in xrange(self._cascaded):
-            self._write(constants.MAX7219_REG_INTENSITY, intensity)
+        self.command(constants.MAX7219_REG_INTENSITY, intensity)
 
     def set_byte(self, deviceId, position, value, redraw=True):
         """
