@@ -11,6 +11,5 @@ setup(
     keywords = "raspberry pi rpi led max7219 matrix seven segment",
     url = "https://github.com/rm-hull/max7219",
     packages=['max7219'],
-    package_dir={'max7219': 'src'},
     ext_modules=[Extension('max7219.spi',['src/spi.c'])]
 )

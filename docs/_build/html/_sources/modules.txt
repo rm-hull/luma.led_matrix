@@ -1,7 +1,7 @@
-src
-===
+max7219
+=======
 
 .. toctree::
    :maxdepth: 4
 
-   src
+   max7219

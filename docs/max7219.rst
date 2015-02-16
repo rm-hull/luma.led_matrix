@@ -1,21 +1,21 @@
-src package
-===========
+max7219 package
+===============
 
 Submodules
 ----------
 
-src.font module
----------------
+max7219.font module
+-------------------
 
-.. automodule:: src.font
+.. automodule:: max7219.font
     :members:
     :undoc-members:
     :show-inheritance:
 
-src.led module
---------------
+max7219.led module
+------------------
 
-.. automodule:: src.led
+.. automodule:: max7219.led
     :members:
     :undoc-members:
     :show-inheritance:
@@ -24,7 +24,7 @@ src.led module
 Module contents
 ---------------
 
-.. automodule:: src
+.. automodule:: max7219
     :members:
     :undoc-members:
     :show-inheritance:
