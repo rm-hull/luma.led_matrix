@@ -7,7 +7,6 @@ from random import randrange
 
 device = led.matrix(cascaded=1)
 
-time.sleep(1)
 device.show_message("MAX7219 LED Matrix Demo")
 
 time.sleep(1)
@@ -15,6 +14,7 @@ device.show_message("Orientation")
 
 time.sleep(1)
 device.letter(0, ord('A'))
+time.sleep(1)
 for _ in range(5):
     for angle in [0, 90, 180, 270]:
         device.orientation(angle)
@@ -25,8 +25,8 @@ time.sleep(1)
 
 device.show_message("Inverse")
 time.sleep(1)
-time.sleep(1)
 device.letter(0, ord('A'))
+time.sleep(1)
 for _ in range(10):
     device.invert(1)
     time.sleep(0.25)
