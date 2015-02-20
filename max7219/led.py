@@ -5,6 +5,7 @@ import spidev
 import time
 
 from max7219.font import CP437_FONT
+from max7219.rotate8x8 import rotate
 
 
 class constants(object):
@@ -65,14 +66,14 @@ class device(object):
         """
         self._spi.xfer2(list(data))
 
-    def _values(self, position):
+    def _values(self, position, buf):
         """
         A generator which yields the digit/column position and the data
         value from that position for each of the cascaded devices.
         """
         for deviceId in xrange(self._cascaded):
             yield position + constants.MAX7219_REG_DIGIT0
-            yield self._buffer[(deviceId * self.NUM_DIGITS) + position]
+            yield buf[(deviceId * self.NUM_DIGITS) + position]
 
     def clear(self, deviceId=None):
         """
@@ -96,13 +97,24 @@ class device(object):
 
         self.flush()
 
+    def _preprocess_buffer(self, buf):
+        """
+        Overload in subclass to provide custom behaviour: see
+        matrix implementation for example.
+        """
+        return buf
+
     def flush(self):
         """
         For each digit/column, cascade out the contents of the buffer
         cells to the SPI device.
         """
+        # Allow subclasses to pre-process the buffer: they shouldn't
+        # alter it, so make a copy first.
+        buf = self._preprocess_buffer(list(self._buffer))
+        assert len(buf) == len(self._buffer), "Preprocessed buffer is wrong size"
         for posn in xrange(self.NUM_DIGITS):
-            self._write(self._values(posn))
+            self._write(self._values(posn, buf))
 
     def brightness(self, intensity):
         """
@@ -233,6 +245,9 @@ class matrix(device):
     to set specific pixels. It is assumed the matrices are linearly aligned.
     """
 
+    _invert = 0
+    _orientation = 0
+
     def letter(self, deviceId, asciiCode, font=CP437_FONT, redraw=True):
         """
         Writes the ASCII letter code to the given device in the specified font.
@@ -296,5 +311,54 @@ class matrix(device):
         else:
             self._buffer[y] &= ~(1 << x)
 
+        if redraw:
+            self.flush()
+
+    def _rotate(self, buf):
+        """
+        Rotates tiles in the buffer by the given orientation
+        """
+        result = []
+        for i in xrange(0, self._cascaded * self.NUM_DIGITS, self.NUM_DIGITS):
+            tile = buf[i:i + self.NUM_DIGITS]
+            for _ in xrange(self._orientation / 90):
+                tile = rotate(tile)
+
+            result += tile
+
+        return result
+
+    def _preprocess_buffer(self, buf):
+        """
+        Inverts and/or orientates the buffer before flushing according to
+        user set parameters
+        """
+        if self._invert:
+            buf = [~x & 0xff for x in buf]
+
+        if self._orientation:
+            buf = self._rotate(buf)
+
+        return super(matrix, self)._preprocess_buffer(buf)
+
+    def invert(self, value, redraw=True):
+        """
+        Sets whether the display should be inverted or not when displaying
+        letters.
+        """
+        assert value in [0, 1, False, True]
+
+        self._invert = value
+        if redraw:
+            self.flush()
+
+    def orientation(self, angle, redraw=True):
+        """
+        Sets the orientation (angle should be 0, 90, 180 or 270) at which
+        the characters are displayed.
+        """
+        assert angle in [0, 90, 180, 270]
+
+        self._orientation = angle
         if redraw:
             self.flush()
