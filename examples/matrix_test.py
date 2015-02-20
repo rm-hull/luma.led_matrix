@@ -1,16 +1,52 @@
 #!/usr/bin/env python
 
+import max7219.font as font
 import max7219.led as led
 import time
 from random import randrange
 
 device = led.matrix(cascaded=1)
-device.show_message("Hello world!")
 
+time.sleep(1)
+device.show_message("MAX7219 LED Matrix Demo")
+
+time.sleep(1)
+device.show_message("Orientation")
+
+time.sleep(1)
+device.letter(0, ord('A'))
+for _ in range(5):
+    for angle in [0, 90, 180, 270]:
+        device.orientation(angle)
+        time.sleep(0.2)
+
+device.orientation(0)
+time.sleep(1)
+
+device.show_message("Inverse")
+time.sleep(1)
+time.sleep(1)
+device.letter(0, ord('A'))
+for _ in range(10):
+    device.invert(1)
+    time.sleep(0.25)
+    device.invert(0)
+    time.sleep(0.25)
+
+time.sleep(1)
+device.show_message("Alternative font!", font=font.SINCLAIRS_FONT)
+
+time.sleep(1)
+device.show_message("CP437 Characters")
+
+time.sleep(1)
 for x in range(256):
 #    device.letter(1, 32 + (x % 64))
     device.letter(0, x)
     time.sleep(0.1)
+
+time.sleep(1)
+device.show_message("Scrolling and pixel setting...")
 
 while True:
     for x in range(500):
