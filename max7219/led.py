@@ -304,12 +304,12 @@ class matrix(device):
         to redraw just once.
         """
         assert 0 <= x < len(self._buffer)
-        assert 0 <= y < 8
+        assert 0 <= y < self.NUM_DIGITS
 
         if value:
-            self._buffer[y] |= (1 << x)
+            self._buffer[x] |= (1 << y)
         else:
-            self._buffer[y] &= ~(1 << x)
+            self._buffer[x] &= ~(1 << y)
 
         if redraw:
             self.flush()
