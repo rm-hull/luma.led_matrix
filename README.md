@@ -3,9 +3,11 @@ MAX7219 Driver
 
 Interfacing LED matrix displays with the MAX7219 driver 
 [[PDF datasheet](https://raw.github.com/rm-hull/max7219/master/docs/MAX7219-datasheet.pdf)] 
-in Python using hardware SPI on the Raspberry Pi. The particular kit I bought 
+in Python using hardware SPI on the Raspberry Pi. The particular LED matrix I bought 
 can be acquired for a few pounds from 
-http://www.banggood.com/MAX7219-Dot-Matrix-Module-DIY-Kit-SCM-Control-Module-For-Arduino-p-72178.html?currency=GBP 
+[Banggood](http://www.banggood.com/MAX7219-Dot-Matrix-Module-DIY-Kit-SCM-Control-Module-For-Arduino-p-72178.html?currency=GBP).
+Likewise 7-segment displays are available from [Ali-Express](http://www.aliexpress.com/item/MAX7219-Red-Module-8-Digit-7-Segment-Digital-LED-Display-Tube-For-Arduino-MCU/1449630475.html).
+There are many other outlets selling both types of devices on Ebay and other such places.
 
 This library has recently had a major overhaul, and is not compatible with the earlier version. 
 It now supports:

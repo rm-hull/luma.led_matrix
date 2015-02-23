@@ -152,7 +152,7 @@ class device(object):
 
     def scroll_right(self, redraw=True):
 
-        del self._buffer[self.NUM_DIGITS - 1]
+        del self._buffer[-1]
         self._buffer.insert(0, 0)
         if redraw:
             self.flush()
@@ -187,6 +187,11 @@ class sevensegment(device):
         'e': 0x4f,
         'f': 0x47
     }
+
+    def letter(self, deviceId, position, char, dot=False, redraw=True):
+        assert dot in [0, 1, False, True]
+        value = self.digits[str(char)] | (dot << 7)
+        self.set_byte(deviceId, position, value, redraw)
 
     def write_number(self, deviceId, value, base=10, decimalPlaces=0,
                      zeroPad=False, leftJustify=False):
@@ -230,8 +235,7 @@ class sevensegment(device):
                 continue
 
             dp = (decimalPlaces > 0 and position == decimalPlaces + 1)
-            value = self.digits[char] | (dp << 7)
-            self.set_byte(deviceId, position, value, redraw=False)
+            self.letter(deviceId, position, char, dot=dp, redraw=False)
             position -= 1
 
         self.flush()
