@@ -1,6 +1,34 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+
+class proportional(object):
+    """
+    Wraps an existing font array, and on on indexing, trims any leading
+    or trailing zero column definitions. This works especially well
+    with scrolling messages, as interspace columns are squeezed to a
+    single pixel.
+    """
+
+    def __init__(self, font):
+        self.font = font
+
+    def __getitem__(self, asciiCode):
+        bitmap = self.font[asciiCode]
+        # Don't trim the space character down
+        if asciiCode == 32:
+            return bitmap
+        else:
+            return self._trim(bitmap) + [0]
+
+    def _trim(self, arr):
+        nonzero = [idx for idx, val in enumerate(arr) if val != 0]
+        if not nonzero:
+            return []
+        first = nonzero[0]
+        last = nonzero[-1]+1
+        return arr[first:last]
+
 # bit patterns for the CP437 font
 # see https://en.wikipedia.org/wiki/Code_page_437 for details
 
@@ -264,14 +292,14 @@ CP437_FONT = [
 ] #  end of CP437_FONT
 
 # -----------------------------------------------------------
-# Bit patterns for SINCLAIRS_FONT
+# Bit patterns for SINCLAIR_FONT
 # (based on the character set from the Sinclair ZX Spectrum)
 # Source: www.henningkarlsen.com/electronics/r_fonts.php
 # Transposed by JLCArchibald
 # Note: Only contains characters 0x20 - 0x7E inclusive
 #       All others will appear as blanks
 
-SINCLAIRS_FONT = [
+SINCLAIR_FONT = [
   [ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 ], # 0x00
   [ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 ], # 0x01
   [ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 ], # 0x02
@@ -528,7 +556,7 @@ SINCLAIRS_FONT = [
   [ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 ], # 0xFD
   [ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 ], # 0xFE
   [ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 ], # 0xFF
-] #  end of SINCLAIRS_FONT
+] #  end of SINCLAIR_FONT
 
 # -----------------------------------------------------------
 # Bit patterns for LCD_FONT
