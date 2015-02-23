@@ -4,7 +4,7 @@
 import spidev
 import time
 
-from max7219.font import CP437_FONT
+from max7219.font import DEFAULT_FONT
 from max7219.rotate8x8 import rotate
 
 
@@ -248,11 +248,15 @@ class matrix(device):
     _invert = 0
     _orientation = 0
 
-    def letter(self, deviceId, asciiCode, font=CP437_FONT, redraw=True):
+    def letter(self, deviceId, asciiCode, font=None, redraw=True):
         """
         Writes the ASCII letter code to the given device in the specified font.
         """
         assert 0 <= asciiCode < 256
+
+        if not font:
+            font = DEFAULT_FONT
+
         col = constants.MAX7219_REG_DIGIT0
         for value in font[asciiCode]:
             if col > constants.MAX7219_REG_DIGIT7:
@@ -281,12 +285,16 @@ class matrix(device):
         if redraw:
             self.flush()
 
-    def show_message(self, text, font=CP437_FONT, delay=0.05):
+    def show_message(self, text, font=None, delay=0.05):
         """
         Transitions the text message across the devices from left-to-right
         """
         # Add some spaces on (same number as cascaded devices) so that the
         # message scrolls off to the left completely.
+
+        if not font:
+            font = DEFAULT_FONT
+
         text += ' ' * self._cascaded
         src = (value for asciiCode in text for value in font[ord(asciiCode)])
 
