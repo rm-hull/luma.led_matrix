@@ -82,7 +82,7 @@ Building & Installing
 ---------------------
 For Raspian:
 
-    $ sudo apt-get install python-dev
+    $ sudo apt-get install python-dev python-pip
     $ sudo pip install spidev
     $ sudo python setup.py install
 
