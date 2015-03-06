@@ -63,8 +63,8 @@ And that the devices are successfully installed in /dev:
     crw------- 1 root root 153, 0 Jan  1  1970 /dev/spidev0.0
     crw------- 1 root root 153, 1 Jan  1  1970 /dev/spidev0.1
     
-Follow the advice in the references below if the devices do not appear before
-proceeding.
+Follow the advice in the building and installing section below, or follow http://www.brianhensley.net/2012/07/getting-spi-working-on-raspberry-pi.html
+if the devices do not appear before proceeding.
 
 GPIO pin-outs
 -------------
@@ -82,7 +82,9 @@ Building & Installing
 ---------------------
 For Raspian:
 
-On setup while in raspbian config or post install by running 'sudo raspi-config' you must enable SPI: 8 Advanced options > A6 SPI > Yes (Would you like the SPI interface enabled?) > OK > Yes (Would you like the SPI kernel module to be loaded by default?) > OK  
+On setup while in raspbian config or post install by running `sudo raspi-config` you must
+enable SPI: 8 Advanced options > A6 SPI > Yes (Would you like the SPI interface enabled?) > 
+OK > Yes (Would you like the SPI kernel module to be loaded by default?) > OK  
 
     $ sudo apt-get install python-dev python-pip
     $ sudo pip install spidev
