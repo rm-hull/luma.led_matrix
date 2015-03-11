@@ -1,10 +1,10 @@
-.. Raspberry Pi MAX7219 driver documentation master file, created by
-   sphinx-quickstart on Sun Feb 15 23:39:14 2015.
+.. max7219 documentation master file, created by
+   sphinx-quickstart on Wed Mar 11 23:24:05 2015.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Raspberry Pi MAX7219 driver's documentation!
-=======================================================
+Welcome to Raspberry PI MAX7219 driver documentation!
+=====================================================
 
 Contents:
 
