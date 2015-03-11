@@ -82,6 +82,7 @@ time.sleep(1)
 a = random.randint(-999, 999)
 b = random.randint(-3223, 999)
 
+device.brightness(3)
 for x in range(500):
     a += random.random() * 10
     b -= 1
