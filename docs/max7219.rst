@@ -1,0 +1,37 @@
+max7219 package		
+===============		
+		
+Submodules		
+----------		
+		
+max7219.font module		
+-------------------		
+		
+.. automodule:: max7219.font		
+    :members:		
+    :undoc-members:		
+    :show-inheritance:		
+		
+max7219.led module		
+------------------		
+		
+.. automodule:: max7219.led		
+    :members:		
+    :undoc-members:		
+    :show-inheritance:		
+		
+max7219.rotate8x8 module		
+------------------------		
+		
+.. automodule:: max7219.rotate8x8		
+    :members:		
+    :undoc-members:		
+    :show-inheritance:		
+		
+Module contents		
+---------------		
+		
+.. automodule:: max7219		
+    :members:		
+    :undoc-members:		
+    :show-inheritance:
