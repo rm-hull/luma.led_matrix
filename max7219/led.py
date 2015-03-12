@@ -27,11 +27,12 @@ class constants(object):
 class device(object):
     """
     Base class for handling multiple cascaded MAX7219 devices.
-    Callers should generally pick either the `sevensegment` or `matrix`
-    subclasses instead depending on which application is required.
+    Callers should generally pick either the :py:class:`sevensegment` or
+    :py:class:`matrix` subclasses instead depending on which application
+    is required.
 
     A buffer is maintained which holds the bytes that will be cascaded
-    every time flush() is called.
+    every time :py:func:`flush` is called.
     """
     NUM_DIGITS = 8
 
@@ -136,7 +137,7 @@ class device(object):
         is not suppled, or set to True, will force a redraw of _all_ buffer
         items: If you are calling this method rapidly/frequently (e.g in a
         loop), it would be more efficient to set to False, and when done,
-        call flush().
+        call :py:func:`flush`.
 
         Prefer to use the higher-level method calls in the subclasses below.
         """
@@ -184,8 +185,8 @@ class sevensegment(device):
     numbers can be either integers or floating point (with the number of
     decimal points configurable).
     """
-    radix = {8: 'o', 10: 'f', 16: 'x'}
-    digits = {
+    _RADIX = {8: 'o', 10: 'f', 16: 'x'}
+    _DIGITS = {
         ' ': 0x00,
         '-': 0x01,
         '0': 0x7e,
@@ -213,7 +214,7 @@ class sevensegment(device):
         at the given deviceId / position.
         """
         assert dot in [0, 1, False, True]
-        value = self.digits[str(char)] | (dot << 7)
+        value = self._DIGITS[str(char)] | (dot << 7)
         self.set_byte(deviceId, position, value, redraw)
 
     def write_number(self, deviceId, value, base=10, decimalPlaces=0,
@@ -224,7 +225,7 @@ class sevensegment(device):
         8 digits, then an OverflowError is raised.
         """
         assert 0 <= deviceId < self._cascaded, "Invalid deviceId: {0}".format(deviceId)
-        assert base in self.radix, "Invalid base: {0}".format(base)
+        assert base in self._RADIX, "Invalid base: {0}".format(base)
 
         # Magic up a printf format string
         size = self.NUM_DIGITS
@@ -241,7 +242,7 @@ class sevensegment(device):
 
         formatStr = '{fmt}{size}.{dp}{type}'.format(
                         fmt=formatStr, size=size, dp=decimalPlaces,
-                        type=self.radix[base])
+                        type=self._RADIX[base])
 
         position = constants.MAX7219_REG_DIGIT7
         strValue = formatStr % value
@@ -335,8 +336,8 @@ class matrix(device):
         """
         Sets (value = 1) or clears (value = 0) the pixel at the given
         co-ordinate. It may be more efficient to batch multiple pixel
-        operations together with redraw=False, and then call flush()
-        to redraw just once.
+        operations together with redraw=False, and then call
+        :py:func:`flush` to redraw just once.
         """
         assert 0 <= x < len(self._buffer)
         assert 0 <= y < self.NUM_DIGITS
