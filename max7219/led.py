@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import spidev
 import time
 
 from max7219.font import DEFAULT_FONT
@@ -28,7 +27,7 @@ class constants(object):
 class device(object):
     """
     Base class for handling multiple cascaded MAX7219 devices.
-    Callers should generally pick either the sevensegment or matrix
+    Callers should generally pick either the `sevensegment` or `matrix`
     subclasses instead depending on which application is required.
 
     A buffer is maintained which holds the bytes that will be cascaded
@@ -38,9 +37,10 @@ class device(object):
 
     def __init__(self, cascaded=1, spi_bus=0, spi_device=0):
         """
-        Constructor: cascaded should be the number of cascaded MAX7219
-        devices are connected.
+        Constructor: `cascaded` should be the number of cascaded MAX7219
+        devices that are connected.
         """
+        import spidev
         assert cascaded > 0, "Must have at least one device!"
 
         self._cascaded = cascaded
@@ -56,6 +56,10 @@ class device(object):
         self.clear()
 
     def command(self, register, data):
+        """
+        Sends a specific register some data, replicated for all cascaded
+        devices
+        """
         assert constants.MAX7219_REG_DECODEMODE <= register <= constants.MAX7219_REG_DISPLAYTEST
         self._write([register, data] * self._cascaded)
 
@@ -119,7 +123,9 @@ class device(object):
     def brightness(self, intensity):
         """
         Sets the brightness level of all cascaded devices to the same
-        intensity level, ranging from 0..16
+        intensity level, ranging from 0..15. Note that setting the brightness
+        to a high level will draw more current, and may cause intermittent
+        issues / crashes if the USB power source is insufficient.
         """
         assert 0 <= intensity < 16, "Invalid brightness: {0}".format(intensity)
         self.command(constants.MAX7219_REG_INTENSITY, intensity)
@@ -144,14 +150,26 @@ class device(object):
             self.flush()
 
     def scroll_left(self, redraw=True):
-
+        """
+        Scrolls the buffer one column to the left. Any data that scrolls off
+        the left side is lost and does not re-appear on the right. An empty
+        column is inserted at the right-most position. If redraw
+        is not suppled, or set to True, will force a redraw of _all_ buffer
+        items
+        """
         del self._buffer[0]
         self._buffer.append(0)
         if redraw:
             self.flush()
 
     def scroll_right(self, redraw=True):
-
+        """
+        Scrolls the buffer one column to the right. Any data that scrolls off
+        the right side is lost and does not re-appear on the left. An empty
+        column is inserted at the left-most position. If redraw
+        is not suppled, or set to True, will force a redraw of _all_ buffer
+        items
+        """
         del self._buffer[-1]
         self._buffer.insert(0, 0)
         if redraw:
@@ -189,6 +207,11 @@ class sevensegment(device):
     }
 
     def letter(self, deviceId, position, char, dot=False, redraw=True):
+        """
+        Looks up the most appropriate character representation for char
+        from the digits table, and writes that bitmap value into the buffer
+        at the given deviceId / position.
+        """
         assert dot in [0, 1, False, True]
         value = self.digits[str(char)] | (dot << 7)
         self.set_byte(deviceId, position, value, redraw)
