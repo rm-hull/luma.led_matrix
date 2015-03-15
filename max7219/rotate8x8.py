@@ -16,7 +16,7 @@ def _table(n):
         0x01000000, 0x01000001, 0x01000100, 0x01000101,
         0x01010000, 0x01010001, 0x01010100, 0x01010101]]
 
-ltab = [_table(i) for i in xrange(7, -1, -1)]
+ltab = [_table(i) for i in range(7, -1, -1)]
 
 
 def rotate(src):
@@ -32,7 +32,7 @@ def rotate(src):
     hi = 0
 
     # Extract
-    for i in xrange(8):
+    for i in range(8):
         value = src[i]
         assert 0 <= value < 256, 'Value {0} outside range 0..255'.format(value)
 

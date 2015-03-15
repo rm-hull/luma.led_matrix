@@ -76,7 +76,7 @@ class device(object):
         A generator which yields the digit/column position and the data
         value from that position for each of the cascaded devices.
         """
-        for deviceId in xrange(self._cascaded):
+        for deviceId in range(self._cascaded):
             yield position + constants.MAX7219_REG_DIGIT0
             yield buf[(deviceId * self.NUM_DIGITS) + position]
 
@@ -94,8 +94,8 @@ class device(object):
             start = deviceId
             end = deviceId + 1
 
-        for deviceId in xrange(start, end):
-            for position in xrange(self.NUM_DIGITS):
+        for deviceId in range(start, end):
+            for position in range(self.NUM_DIGITS):
                 self.set_byte(deviceId,
                               position + constants.MAX7219_REG_DIGIT0,
                               0, redraw=False)
@@ -118,7 +118,7 @@ class device(object):
         # alter it, so make a copy first.
         buf = self._preprocess_buffer(list(self._buffer))
         assert len(buf) == len(self._buffer), "Preprocessed buffer is wrong size"
-        for posn in xrange(self.NUM_DIGITS):
+        for posn in range(self.NUM_DIGITS):
             self._write(self._values(posn, buf))
 
     def brightness(self, intensity):
@@ -355,9 +355,9 @@ class matrix(device):
         Rotates tiles in the buffer by the given orientation
         """
         result = []
-        for i in xrange(0, self._cascaded * self.NUM_DIGITS, self.NUM_DIGITS):
+        for i in range(0, self._cascaded * self.NUM_DIGITS, self.NUM_DIGITS):
             tile = buf[i:i + self.NUM_DIGITS]
-            for _ in xrange(self._orientation / 90):
+            for _ in range(self._orientation // 90):
                 tile = rotate(tile)
 
             result += tile
