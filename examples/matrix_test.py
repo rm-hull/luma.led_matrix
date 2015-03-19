@@ -34,6 +34,10 @@ for _ in range(5):
         device.orientation(angle)
         time.sleep(0.2)
 
+for row in range(8):
+    device.scroll_down()
+    time.sleep(0.2)
+
 device.orientation(0)
 time.sleep(1)
 

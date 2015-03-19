@@ -143,6 +143,7 @@ class device(object):
         """
         assert 0 <= deviceId < self._cascaded, "Invalid deviceId: {0}".format(deviceId)
         assert constants.MAX7219_REG_DIGIT0 <= position <= constants.MAX7219_REG_DIGIT7, "Invalid digit/column: {0}".format(position)
+        assert 0 <= value < 256, 'Value {0} outside range 0..255'.format(value)
 
         offset = (deviceId * self.NUM_DIGITS) + position - constants.MAX7219_REG_DIGIT0
         self._buffer[offset] = value
@@ -309,7 +310,7 @@ class matrix(device):
         """
         Scrolls the underlying buffer (for all cascaded devices) down one pixel
         """
-        self._buffer = [value << 1 for value in self._buffer]
+        self._buffer = [(value << 1) & 0xff for value in self._buffer]
         if redraw:
             self.flush()
 
