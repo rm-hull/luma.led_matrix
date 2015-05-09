@@ -34,7 +34,7 @@ def rotate(src):
     # Extract
     for i in range(8):
         value = src[i]
-        assert 0 <= value < 256, 'Value {0} outside range 0..255'.format(value)
+        assert 0 <= value < 256, 'src[{0}] {1} outside range 0..255'.format(i, value)
 
         low |= ltab[i][value & 0x0f]
         hi |= ltab[i][value >> 4]
