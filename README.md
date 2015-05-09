@@ -68,15 +68,17 @@ if the devices do not appear before proceeding.
 
 GPIO pin-outs
 -------------
-The breakout board has an two headers to allow daisy-chaining:
+The breakout board has two headers to allow daisy-chaining:
 
-| Board Pin | Name | Remarks | RPi Pin | RPi Function |
-|--------:|:-----|:--------|--------:|--------------|
-| 1 | VCC | +5V Power | 2 | 5V0 |
-| 2 | GND | Ground | 6 | GND |
-| 3 | DIN | Data In | 19 | GPIO 10 (MOSI) |
-| 4 | CS | Chip Select | 24 | GPIO 8 (SPI CE0) |
-| 5 | CLK | Clock | 23 | GPIO 11 (SPI CLK) |
+| Board Pin | Name | Remarks     | RPi Pin | RPi Function      |
+|----------:|:-----|:------------|--------:|-------------------|
+| 1         | VCC  | +5V Power   | 2       | 5V0               |
+| 2         | GND  | Ground      | 6       | GND               |
+| 3         | DIN  | Data In     | 19      | GPIO 10 (MOSI)    |
+| 4         | CS   | Chip Select | 24      | GPIO 8 (SPI CE0)  |
+| 5         | CLK  | Clock       | 23      | GPIO 11 (SPI CLK) |
+
+**NOTE:** See below for cascading/daisy-chaining, power supply and level-shifting.
 
 Building & Installing
 ---------------------
@@ -96,6 +98,35 @@ For Arch Linux:
     # pip install spidev
     # python2 setup.py install
 
+Cascading, power supply & level shifting
+----------------------------------------
+The MAX7219 chip supports cascading devices by connecting the DIN of one chip to the DOUT 
+of another chip. For a long time I was puzzled as to why this didnt seem to work properly
+for me, despite spending a lot of time investigating and always assuming it was a bug in
+code.
+
+* Because the Raspberry PI can only supply a limited amount of power from the 5V rail,
+  it is recommended that any LED matrices are powered separately by a 5V supply, and grounded
+  with the Raspberry PI. It is possible to power one or two LED matrices directly from a 
+  Raspberry PI, but any more is likely to cause intermittent faults & crashes.
+  
+* Also because the GPIO ports used for SPI are 3.3V, a simple level shifter (as per the diagram
+  below) should be employed on the DIN, CS and CLK inputs to boost the levels to 5V. Again it
+  is possible to drive them directly by the 3.3V GPIO pins, it is just outside tolerance, and
+  will result in intermittent issues.
+
+![max7219 levelshifter](https://raw.githubusercontent.com/rm-hull/max7219/master/docs/images/level-shifter.jpg)
+
+Despite the above two points, I still had no success getting cascaded matrices
+to work properly.  Revisiting the wiring, I had connected the devices in serial
+connecting the out pins of one device to the in pins of another. This just
+produced garbled images. 
+
+Connecting the CLK lines on the input side all together worked first time. I
+can only assume that there is some noise on the clock line, or a dry solder
+joint somewhere.
+
+![max7219 cascaded](https://raw.githubusercontent.com/rm-hull/max7219/master/docs/images/matrix_cascaded.jpg)
 
 Examples
 --------
@@ -122,4 +153,25 @@ References
 
 License
 -------
-See [MIT License](https://github.com/rm-hull/max7219/blob/master/LICENSE.md).
+The MIT License (MIT)
+
+Copyright (c) 2015 Richard Hull
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
