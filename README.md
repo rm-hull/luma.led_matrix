@@ -88,12 +88,14 @@ On setup while in raspbian config or post install by running `sudo raspi-config`
 enable SPI: 8 Advanced options > A6 SPI > Yes (Would you like the SPI interface enabled?) > 
 OK > Yes (Would you like the SPI kernel module to be loaded by default?) > OK  
 
+    $ cd max7219
     $ sudo apt-get install python-dev python-pip
     $ sudo pip install spidev
     $ sudo python setup.py install
 
 For Arch Linux:
 
+    # cd max7219
     # pacman -Sy base-devel python2
     # pip install spidev
     # python2 setup.py install
