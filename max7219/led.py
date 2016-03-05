@@ -36,10 +36,11 @@ class device(object):
     """
     NUM_DIGITS = 8
 
-    def __init__(self, cascaded=1, spi_bus=0, spi_device=0):
+    def __init__(self, cascaded=1, spi_bus=0, spi_device=0, vertical=False):
         """
         Constructor: `cascaded` should be the number of cascaded MAX7219
-        devices that are connected.
+        devices that are connected. `vertical` should be set to True if
+        the text should start from the header instead perpendicularly.
         """
         import spidev
         assert cascaded > 0, "Must have at least one device!"
@@ -48,6 +49,7 @@ class device(object):
         self._buffer = [0] * self.NUM_DIGITS * self._cascaded
         self._spi = spidev.SpiDev()
         self._spi.open(spi_bus, spi_device)
+        self._vertical = vertical
 
         self.command(constants.MAX7219_REG_SCANLIMIT, 7)    # show all 8 digits
         self.command(constants.MAX7219_REG_DECODEMODE, 0)   # use matrix (not digits)
@@ -118,6 +120,12 @@ class device(object):
         # alter it, so make a copy first.
         buf = self._preprocess_buffer(list(self._buffer))
         assert len(buf) == len(self._buffer), "Preprocessed buffer is wrong size"
+        if self._vertical:
+            tmp_buf = []
+            for x in range(0, self._cascaded):
+                tmp_buf += rotate(buf[x*8:x*8+8])
+            buf = tmp_buf
+
         for posn in range(self.NUM_DIGITS):
             self._write(self._values(posn, buf))
 
