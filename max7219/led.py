@@ -159,6 +159,34 @@ class device(object):
         if redraw:
             self.flush()
 
+    def rotate_left(self, redraw=True):
+        """
+        Scrolls the buffer one column to the left. The data that scrolls off
+        the left side re-appears at the right-most position. If redraw
+        is not suppled, or left set to True, will force a redraw of _all_ buffer
+        items
+        """
+        t = self._buffer[-1]
+        for i in range((self.NUM_DIGITS * self._cascaded) - 1, 0, -1):
+            self._buffer[i] = self._buffer[i - 1]
+        self._buffer[0] = t
+        if redraw:
+            self.flush()
+
+    def rotate_right(self, redraw=True):
+        """
+        Scrolls the buffer one column to the right. The data that scrolls off
+        the right side re-appears at the left-most position. If redraw
+        is not suppled, or left set to True, will force a redraw of _all_ buffer
+        items
+        """
+        t = self._buffer[0]
+        for i in range(0, (self.NUM_DIGITS * self._cascaded) - 1, 1):
+            self._buffer[i] = self._buffer[i + 1]
+        self._buffer[-1] = t
+        if redraw:
+            self.flush()
+
     def scroll_left(self, redraw=True):
         """
         Scrolls the buffer one column to the left. Any data that scrolls off
