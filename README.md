@@ -50,8 +50,8 @@ For more information, see http://max7219.readthedocs.org/
 
 ### Pre-requisites
 
-By default the SPI kernel driver is **NOT** enabled on the Raspberry Pi. You 
-can confirm whether it is enabled using the shell commands below:
+By default, the SPI kernel driver is **NOT** enabled on the Raspberry Pi Raspian image.
+You can confirm whether it is enabled using the shell commands below:
 
     $ dmesg | grep spi
     [    3.769841] bcm2708_spi bcm2708_spi.0: master is unqueued, this is deprecated
@@ -64,7 +64,7 @@ And that the devices are successfully installed in _/dev_:
     crw------- 1 root root 153, 1 Jan  1  1970 /dev/spidev0.1
 
 If you have no _/dev/spi*_ files and nothing is showing using `dmesg` then this
-implies the kernel SPI drivers are not loaded. Enable the SPI as follows (steps 
+implies the kernel SPI driver is not loaded. Enable the SPI as follows (steps 
 taken from https://learn.sparkfun.com/tutorials/raspberry-pi-spi-and-i2c-tutorial#spi-on-pi):
 
 1. Run `sudo raspi-config`
@@ -77,7 +77,8 @@ taken from https://learn.sparkfun.com/tutorials/raspberry-pi-spi-and-i2c-tutoria
 
 ![image](https://cloud.githubusercontent.com/assets/1915543/16681787/b615b20c-44ee-11e6-9533-b0dce2b007b1.png)
 
-After rebooting check that the `dmesg` command shows the drivers are loaded.
+After rebooting re-check that the `dmesg | grep spi` command shows whether 
+SPI driver is loaded before proceeding.
 
 ### GPIO pin-outs
 
@@ -93,20 +94,22 @@ The breakout board has two headers to allow daisy-chaining:
 
 **NOTE:** See below for cascading/daisy-chaining, power supply and level-shifting.
 
-### Building & Installing
+### Building & Installing the Python library
 
-For Raspian:
+Clone the code from github:
 
-On setup while in raspbian config or post install by running `sudo raspi-config` you must
-enable SPI: 8 Advanced options > A6 SPI > Yes (Would you like the SPI interface enabled?) > 
-OK > Yes (Would you like the SPI kernel module to be loaded by default?) > OK  
+    $ git clone https://github.com/rm-hull/max7219.git
+
+Next, follow the specific steps below for your OS.
+
+#### For Raspian:
 
     $ cd max7219
     $ sudo apt-get install python-dev python-pip
     $ sudo pip install spidev
     $ sudo python setup.py install
 
-For Arch Linux:
+#### For Arch Linux:
 
     # cd max7219
     # pacman -Sy base-devel python2
