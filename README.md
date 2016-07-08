@@ -1,5 +1,4 @@
-MAX7219 Driver
-==============
+# MAX7219 Driver
 
 Interfacing LED matrix displays with the MAX7219 driver 
 [[PDF datasheet](https://raw.github.com/rm-hull/max7219/master/docs/MAX7219-datasheet.pdf)] 
@@ -17,8 +16,8 @@ It now supports:
 
 ![max7219 matrix](https://raw.githubusercontent.com/rm-hull/max7219/master/docs/images/devices.jpg)
 
-Python Usage
-------------
+### Python Usage
+
 For the matrix device, initialize the `matrix` class:
 
 ```python
@@ -49,25 +48,39 @@ For more information, see http://max7219.readthedocs.org/
 
 ![max7219 sevensegment](https://raw.githubusercontent.com/rm-hull/max7219/master/docs/images/IMG_2810.JPG)
 
-Pre-requisites
---------------
-Ensure that the SPI kernel driver is enabled:
+### Pre-requisites
+
+By default the SPI kernel driver is **NOT** enabled on the Raspberry Pi. You 
+can confirm whether it is enabled using the shell commands below:
 
     $ dmesg | grep spi
     [    3.769841] bcm2708_spi bcm2708_spi.0: master is unqueued, this is deprecated
     [    3.793364] bcm2708_spi bcm2708_spi.0: SPI Controller at 0x20204000 (irq 80)
 
-And that the devices are successfully installed in /dev:
+And that the devices are successfully installed in _/dev_:
 
     $ ls -l /dev/spi*
     crw------- 1 root root 153, 0 Jan  1  1970 /dev/spidev0.0
     crw------- 1 root root 153, 1 Jan  1  1970 /dev/spidev0.1
-    
-Follow the advice in the building and installing section below, or follow http://www.brianhensley.net/2012/07/getting-spi-working-on-raspberry-pi.html
-if the devices do not appear before proceeding.
 
-GPIO pin-outs
--------------
+If you have no _/dev/spi*_ files and nothing is showing using `dmesg` then this
+implies the kernel SPI drivers are not loaded. Enable the SPI as follows (steps 
+taken from https://learn.sparkfun.com/tutorials/raspberry-pi-spi-and-i2c-tutorial#spi-on-pi):
+
+1. Run `sudo raspi-config`
+2. Use the down arrow to select _9 Advanced Options_
+3. Arrow down to _A6 SPI._
+4. Select **yes** when it asks you to enable SPI,
+5. Also select **yes** when it asks about automatically loading the kernel module.
+6. Use the right arrow to select the **&lt;Finish&gt;** button.
+7. Select **yes** when it asks to reboot.
+
+![image](https://cloud.githubusercontent.com/assets/1915543/16681787/b615b20c-44ee-11e6-9533-b0dce2b007b1.png)
+
+After rebooting check that the `dmesg` command shows the drivers are loaded.
+
+### GPIO pin-outs
+
 The breakout board has two headers to allow daisy-chaining:
 
 | Board Pin | Name | Remarks     | RPi Pin | RPi Function      |
@@ -80,8 +93,8 @@ The breakout board has two headers to allow daisy-chaining:
 
 **NOTE:** See below for cascading/daisy-chaining, power supply and level-shifting.
 
-Building & Installing
----------------------
+### Building & Installing
+
 For Raspian:
 
 On setup while in raspbian config or post install by running `sudo raspi-config` you must
@@ -100,8 +113,8 @@ For Arch Linux:
     # pip install spidev
     # python2 setup.py install
 
-Cascading, power supply & level shifting
-----------------------------------------
+### Cascading, power supply & level shifting
+
 The MAX7219 chip supports cascading devices by connecting the DIN of one chip to the DOUT 
 of another chip. For a long time I was puzzled as to why this didnt seem to work properly
 for me, despite spending a lot of time investigating and always assuming it was a bug in
@@ -130,8 +143,8 @@ joint somewhere.
 
 ![max7219 cascaded](https://raw.githubusercontent.com/rm-hull/max7219/master/docs/images/matrix_cascaded.jpg)
 
-Examples
---------
+## Examples
+
 Run the example code as follows:
 
     $ sudo python examples/matrix_test.py
@@ -144,8 +157,8 @@ or
 instructions to create an spi group, and adding your user to that group, so you don't have to
 run as root: http://quick2wire.com/non-root-access-to-spi-on-the-pi
 
-References
-----------
+## References
+
 * http://hackaday.com/2013/01/06/hardware-spi-with-python-on-a-raspberry-pi/
 * http://gammon.com.au/forum/?id=11516
 * http://louisthiery.com/spi-python-hardware-spi-for-raspi/
@@ -153,11 +166,11 @@ References
 * http://raspi.tv/2013/8-x-8-led-array-driven-by-max7219-on-the-raspberry-pi-via-python
 * http://quick2wire.com/non-root-access-to-spi-on-the-pi
 
-License
--------
-The MIT License (MIT)
+## License
 
-Copyright (c) 2015 Richard Hull
+### The MIT License (MIT)
+
+Copyright (c) 2016 Richard Hull
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -176,4 +189,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
