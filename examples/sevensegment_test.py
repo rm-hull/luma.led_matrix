@@ -44,6 +44,10 @@ def clock(device, deviceId, seconds):
 
 device = led.sevensegment(cascaded=3)
 
+# Alphabet Text
+device.show_message("HELLO EVERYONE!")
+device.show_message("0123456789 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+
 # Digit futzing
 date(device, 1)
 clock(device, 0, seconds=10)
