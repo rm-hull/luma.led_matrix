@@ -3,7 +3,7 @@
 from distutils.core import setup,Extension
 setup(
     name = "max7219",
-    version = "0.1.6",
+    version = "0.2.0",
     author = "Richard Hull",
     author_email = "richard.hull@destructuring-bind.org",
     description = ("A small library to drive a MAX7219 LED serializer using hardware spidev"),
