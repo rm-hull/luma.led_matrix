@@ -415,23 +415,34 @@ class matrix(device):
         if redraw:
             self.flush()
 
-    def show_message(self, text, font=None, delay=0.05):
+    def show_message(self, text, font=DEFAULT_FONT, delay=0.05, always_scroll=False):
         """
-        Transitions the text message across the devices from left-to-right
+        Shows a message on the device. If it's longer then the total width
+        (or always_scroll=True), it transitions the text message across the
+        devices from right-to-left.
         """
-        # Add some spaces on (same number as cascaded devices) so that the
-        # message scrolls off to the left completely.
-
-        if not font:
-            font = DEFAULT_FONT
-
-        text += ' ' * self._cascaded
-        src = (value for asciiCode in text for value in font[ord(asciiCode)])
-
-        for value in src:
-            time.sleep(delay)
-            self.scroll_left(redraw=False)
-            self._buffer[-1] = value
+        display_length = self.NUM_DIGITS * self._cascaded
+        src = [c for ascii_code in text for c in font[ord(ascii_code)]]
+        scroll = always_scroll or len(src) > display_length
+        if scroll:
+            # Add some spaces on (same number as cascaded devices) so that the
+            # message scrolls off to the left completely.
+            src += [c for ascii_code in ' ' * self._cascaded
+                    for c in font[ord(ascii_code)]]
+        else:
+            # How much margin we need on the left so it's centered
+            margin = int((display_length - len(src))/2)
+            # Reset the buffer so no traces of the previous message are left
+            self._buffer = [0]*display_length
+        for pos, value in enumerate(src):
+            if scroll:
+                time.sleep(delay)
+                self.scroll_left(redraw=False)
+                self._buffer[-1] = value
+                self.flush()
+            else:
+                self._buffer[margin+pos] = value
+        if not scroll:
             self.flush()
 
     def pixel(self, x, y, value, redraw=True):
