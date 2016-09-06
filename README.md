@@ -44,7 +44,7 @@ When initializing cascaded devices, it is necessary to specify a `cascaded=...`
 parameter, and generally methods which target specific devices will expect a 
 `deviceId=...` parameter, counting from zero.
 
-For more information, see http://max7219.readthedocs.org/
+For more information, see https://max7219.readthedocs.io/
 
 ![max7219 sevensegment](https://raw.githubusercontent.com/rm-hull/max7219/master/docs/images/IMG_2810.JPG)
 
