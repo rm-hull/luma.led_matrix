@@ -6,9 +6,10 @@ setup(
     version = "0.2.1",
     author = "Richard Hull",
     author_email = "richard.hull@destructuring-bind.org",
-    description = ("A small library to drive a MAX7219 LED serializer using hardware spidev"),
+    description = ("A library to drive a MAX7219 LED serializer using hardware spidev"),
     license = "MIT",
-    keywords = "raspberry pi rpi led max7219 matrix seven segment",
+    keywords = ["raspberry pi", "rpi", "led", "max7219", "matrix", "seven segment", "7 segment"],
     url = "https://github.com/rm-hull/max7219",
+    download_url = "https://github.com/rm-hull/max7219/tarball/0.2.1",
     packages=['max7219'],
 )
