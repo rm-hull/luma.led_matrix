@@ -94,16 +94,14 @@ The breakout board has two headers to allow daisy-chaining:
 
 **NOTE:** See below for cascading/daisy-chaining, power supply and level-shifting.
 
-### Installing the library from PyPi
+### Installing the library
 
-Install the library directly from [pypi](http):
+Install the latest version of the library directly from [PyPI](https://pypi.python.org/pypi?:action=display&name=max7219):
 
     $ sudo apt-get install python-dev python-pip
     $ sudo pip install max7219
 
-### Building the code directly from source
-
-Clone the code from github:
+Alternatively, clone the code from github:
 
     $ git clone https://github.com/rm-hull/max7219.git
 
