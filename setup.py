@@ -11,6 +11,16 @@ setup(
     keywords = ["raspberry pi", "rpi", "led", "max7219", "matrix", "seven segment", "7 segment"],
     url = "https://github.com/rm-hull/max7219",
     download_url = "https://github.com/rm-hull/max7219/tarball/0.2.2",
-    packages=['max7219'],
-    install_requires=["spidev"]
+    packages = ['max7219'],
+    install_requires = ["spidev"],
+    classifiers = [
+        "License :: OSI Approved :: MIT License",
+        "Development Status :: 4 - Beta",
+        "Intended Audience :: Education",
+        "Intended Audience :: Developers",
+        "Topic :: Education",
+        "Topic :: System :: Hardware",
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 3"
+    ]
 )
