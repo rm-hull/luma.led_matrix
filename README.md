@@ -2,8 +2,8 @@
 
 Interfacing LED matrix displays with the MAX7219 driver
 [[PDF datasheet](https://raw.github.com/rm-hull/max7219/master/docs/MAX7219-datasheet.pdf)]
-in Python using hardware SPI on the Raspberry Pi. The particular LED matrix I bought
-can be acquired for a few pounds from
+in Python (both 2.7 and 3.x are supported) using hardware SPI on the Raspberry Pi. The 
+particular LED matrix I bought can be acquired for a few pounds from
 [Banggood](http://www.banggood.com/MAX7219-Dot-Matrix-Module-DIY-Kit-SCM-Control-Module-For-Arduino-p-72178.html?currency=GBP).
 Likewise 7-segment displays are available from [Ali-Express](http://www.aliexpress.com/item/MAX7219-Red-Module-8-Digit-7-Segment-Digital-LED-Display-Tube-For-Arduino-MCU/1449630475.html).
 There are many other outlets selling both types of devices on Ebay and other such places.
@@ -95,6 +95,10 @@ The breakout board has two headers to allow daisy-chaining:
 **NOTE:** See below for cascading/daisy-chaining, power supply and level-shifting.
 
 ### Installing the library
+
+> The library has been tested against Python 2.7 and 3.4. For **Python3** installation, substitute
+> _pip_ ⇒ _pip3_, _python_ ⇒ _python3_, _python-dev_ ⇒ _python3-dev_, and _python-pip_ ⇒ _python3-pip_ 
+> in the below instructions.
 
 Install the latest version of the library directly from [PyPI](https://pypi.python.org/pypi?:action=display&name=max7219):
 
