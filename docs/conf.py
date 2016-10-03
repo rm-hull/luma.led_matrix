@@ -12,13 +12,13 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import sys
-import os
+import os, sys
+from datetime import datetime
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-#sys.path.insert(0, os.path.abspath('.'))
+sys.path.insert(0, os.path.abspath('../max7219'))
 
 # -- General configuration ------------------------------------------------
 
@@ -53,7 +53,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Raspberry Pi MAX7219 Driver'
-copyright = u'2015, Richard Hull'
+copyright = u'2015-{0}, Richard Hull'.format(datetime.now().year)
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
