@@ -1,12 +1,17 @@
 #!/usr/bin/env python
 
-from distutils.core import setup,Extension
+import os
+from distutils.core import setup, Extension
+
+README = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
+
 setup(
     name = "max7219",
     version = "0.2.2",
     author = "Richard Hull",
     author_email = "richard.hull@destructuring-bind.org",
-    description = ("A library to drive a MAX7219 LED serializer using hardware spidev"),
+    description = "A library to drive a MAX7219 LED serializer using hardware spidev",
+    long_description = README,
     license = "MIT",
     keywords = ["raspberry pi", "rpi", "led", "max7219", "matrix", "seven segment", "7 segment"],
     url = "https://github.com/rm-hull/max7219",
