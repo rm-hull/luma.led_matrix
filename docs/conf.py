@@ -34,7 +34,7 @@ extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
     'sphinx.ext.coverage',
-    'sphinx.ext.pngmath',
+    'sphinx.ext.imgmath',
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
 ]
@@ -58,7 +58,6 @@ copyright = u'2015-{0}, Richard Hull'.format(datetime.now().year)
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
-#
 
 from max7219 import __version__
 
@@ -269,6 +268,5 @@ texinfo_documents = [
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
 
-
-# Example configuration for intersphinx: refer to the Python standard library.
+# Configuration for intersphinx
 intersphinx_mapping = {'https://docs.python.org/2/': None}
