@@ -1,5 +1,5 @@
-MAX7219 Driver
-==============
+Raspberry PI MAX7219 driver
+===========================
 
 Interfacing LED matrix displays with the MAX7219 driver
 `[PDF datasheet] <https://raw.github.com/rm-hull/max7219/master/docs/MAX7219-datasheet.pdf>`_
@@ -99,13 +99,12 @@ Board Pin    Name   Remarks       RPi Pin   RPi Function
 5            CLK    Clock         23        GPIO 11 (SPI CLK)
 ============ ====== ============= ========= ====================
 
-.. note:: See below for cascading/daisy-chaining, power supply and level-shifting.
+**Note**: See below for cascading/daisy-chaining, power supply and level-shifting.
 
 Installing the library
 ----------------------
 
-.. note:: The library has been tested against Python 2.7 and 3.4. For **Python3** installation, substitute
-  ``pip`` ⇒ ``pip3``, ``python`` ⇒ ``python3``, ``python-dev`` ⇒ ``python3-dev``, and ``python-pip`` ⇒ ``python3-pip`` in the instructions below.
+**Note**: The library has been tested against Python 2.7 and 3.4. For **Python3** installation, substitute ``pip`` ⇒ ``pip3``, ``python`` ⇒ ``python3``, ``python-dev`` ⇒ ``python3-dev``, and ``python-pip`` ⇒ ``python3-pip`` in the instructions below.
 
 Install the latest version of the library directly from `PyPI <https://pypi.python.org/pypi?:action=display&name=max7219>`_::
 
@@ -115,6 +114,8 @@ Install the latest version of the library directly from `PyPI <https://pypi.pyth
 Alternatively, clone the code from github::
 
   $ git clone https://github.com/rm-hull/max7219.git
+  $ cd max7219
+  $ sudo pip install -e .
 
 Next, follow the specific steps below for your OS.
 
@@ -182,7 +183,7 @@ or::
 
   $ sudo python examples/sevensegment_test.py
 
-.. note:: By default, SPI is only accessible by root (hence using ``sudo`` above). Follow `these <http://quick2wire.com/non-root-access-to-spi-on-the-pi>`_ instructions to create an ``spi`` group, and adding your user to that group, so you don't have to run as root.
+**Note**: By default, SPI is only accessible by root (hence using ``sudo`` above). Follow `these <http://quick2wire.com/non-root-access-to-spi-on-the-pi>`_ instructions to create an ``spi`` group, and adding your user to that group, so you don't have to run as root.
 
 References
 ----------

@@ -1,6 +1,3 @@
-Raspberry PI MAX7219 driver documentation
-=========================================
-
 .. toctree::
    :maxdepth: 2
 
