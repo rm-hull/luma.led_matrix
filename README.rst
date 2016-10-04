@@ -198,6 +198,20 @@ References
 - http://raspi.tv/2013/8-x-8-led-array-driven-by-max7219-on-the-raspberry-pi-via-python
 - http://quick2wire.com/non-root-access-to-spi-on-the-pi
 
+Contributing
+------------
+Pull requests (code changes / documentation / typos / feature requests / setup) are gladly accepted. If you are 
+intending some large-scale changes, please get in touch first to make sure we're on the same page: try and include
+a docstring for any new methods, and try and keep method bodies small, readable and PEP8-compliant.
+
+Contributors
+^^^^^^^^^^^^
+* Thijs Triemstra (@thijstriemstra)
+* Jon Carlos (@webmonger)
+* Unattributed (@wkapga)
+* Taras (@tarasius)
+* Brice Parent (@agripo)
+
 License
 -------
 
