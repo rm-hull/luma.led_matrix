@@ -27,7 +27,7 @@ def date(device, deviceId):
 
 def clock(device, deviceId, seconds):
 
-    for _ in xrange(seconds):
+    for _ in range(seconds):
         now = datetime.now()
         hour = now.hour
         minute = now.minute
@@ -59,15 +59,15 @@ date(device, 1)
 clock(device, 0, seconds=10)
 
 # Brightness
-for x in xrange(5):
-    for intensity in xrange(16):
+for x in range(5):
+    for intensity in range(16):
         device.brightness(intensity)
         time.sleep(0.1)
 device.brightness(7)
 
 # Scrolling
-for x in xrange(2):
-    for _ in xrange(8):
+for x in range(2):
+    for _ in range(8):
         device.scroll_right()
         time.sleep(0.1)
     time.sleep(1)

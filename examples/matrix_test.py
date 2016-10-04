@@ -17,7 +17,7 @@ time.sleep(1)
 device.letter(0, ord('A'))
 time.sleep(1)
 for _ in range(5):
-    for intensity in xrange(16):
+    for intensity in range(16):
         device.brightness(intensity)
         time.sleep(0.1)
 
