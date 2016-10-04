@@ -57,9 +57,11 @@ Pre-requisites
 By default, the SPI kernel driver is **NOT** enabled on the Raspberry Pi Raspian image.
 You can confirm whether it is enabled using the shell commands below::
 
-  $ dmesg | grep spi
-  [    3.769841] bcm2708_spi bcm2708_spi.0: master is unqueued, this is deprecated
-  [    3.793364] bcm2708_spi bcm2708_spi.0: SPI Controller at 0x20204000 (irq 80)
+  $ lsmod | grep -i spi
+  spi_bcm2835             7424  0 
+
+_[Depending on the kernel version, this may report **spi_bcm2807** rather than **spi_bcm2835** - 
+either should be adequate]_
 
 And that the devices are successfully installed in ``/dev``::
 
@@ -67,7 +69,7 @@ And that the devices are successfully installed in ``/dev``::
   crw------- 1 root root 153, 0 Jan  1  1970 /dev/spidev0.0
   crw------- 1 root root 153, 1 Jan  1  1970 /dev/spidev0.1
 
-If you have no ``/dev/spi`` files and nothing is showing using ``dmesg`` then this
+If you have no ``/dev/spi`` files and nothing is showing using ``lsmod`` then this
 implies the kernel SPI driver is not loaded. Enable the SPI as follows (steps
 taken from https://learn.sparkfun.com/tutorials/raspberry-pi-spi-and-i2c-tutorial#spi-on-pi):
 
@@ -81,8 +83,9 @@ taken from https://learn.sparkfun.com/tutorials/raspberry-pi-spi-and-i2c-tutoria
 
 .. image:: https://cloud.githubusercontent.com/assets/1915543/16681787/b615b20c-44ee-11e6-9533-b0dce2b007b1.png
 
-After rebooting re-check that the ``dmesg | grep spi`` command shows whether
-SPI driver is loaded before proceeding.
+After rebooting re-check that the ``lsmod | grep -i spi`` command shows whether
+SPI driver is loaded before proceeding. If you are stil experiencing problems, refer to the official 
+Raspberry Pi `SPI troubleshooting guide <https://www.raspberrypi.org/documentation/hardware/raspberrypi/spi/README.md#troubleshooting>`_ for further details, or ask a `new question <https://github.com/rm-hull/max7219/issues/new>`_ - but please remember to add as much detail as possible.
 
 GPIO pin-outs
 -------------
