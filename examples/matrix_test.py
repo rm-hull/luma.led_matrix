@@ -1,17 +1,23 @@
 #!/usr/bin/env python
 
-import max7219.led as led
 import time
-from max7219.font import proportional, SINCLAIR_FONT, TINY_FONT, CP437_FONT
 from random import randrange
 
+import max7219.led as led
+from max7219.font import proportional, SINCLAIR_FONT, TINY_FONT, CP437_FONT
+
+
+# create matrix device
 device = led.matrix(cascaded=1)
 
-device.show_message("MAX7219 LED Matrix Demo", font=proportional(CP437_FONT))
-
-
+msg = "MAX7219 LED Matrix Demo"
+print(msg)
+device.show_message(msg, font=proportional(CP437_FONT))
 time.sleep(1)
-device.show_message("Brightness")
+
+msg = "Brightness"
+print(msg)
+device.show_message(msg)
 
 time.sleep(1)
 device.letter(0, ord('A'))
@@ -22,11 +28,13 @@ for _ in range(5):
         time.sleep(0.1)
 
 device.brightness(7)
-
 time.sleep(1)
-device.show_message("Orientation")
 
+msg = "Orientation"
+print(msg)
+device.show_message(msg)
 time.sleep(1)
+
 device.letter(0, ord('A'))
 time.sleep(1)
 for _ in range(5):
@@ -41,7 +49,9 @@ for row in range(8):
 device.orientation(0)
 time.sleep(1)
 
-device.show_message("Inverse")
+msg = "Inverse"
+print(msg)
+device.show_message(msg)
 time.sleep(1)
 device.letter(0, ord('A'))
 time.sleep(1)
@@ -67,7 +77,9 @@ contains all the printable ASCII characters.",
 font=proportional(TINY_FONT))
 
 time.sleep(1)
-device.show_message("CP437 Characters")
+msg = "CP437 Characters"
+print(msg)
+device.show_message(msg)
 
 time.sleep(1)
 for x in range(256):
@@ -76,7 +88,9 @@ for x in range(256):
     time.sleep(0.1)
 
 time.sleep(1)
-device.show_message("Scrolling and pixel setting...")
+msg = "Scrolling and pixel setting..."
+print(msg)
+device.show_message(msg)
 
 while True:
     for x in range(500):
