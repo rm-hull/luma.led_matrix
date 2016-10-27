@@ -1,17 +1,25 @@
 #!/usr/bin/env python
 
-import max7219.led as led
 import time
-from max7219.font import proportional, SINCLAIR_FONT, TINY_FONT, CP437_FONT
 from random import randrange
 
+import max7219.led as led
+from max7219.font import proportional, SINCLAIR_FONT, TINY_FONT, CP437_FONT
+
+
+# create matrix device
 device = led.matrix(cascaded=1)
+print("Created device")
 
-device.show_message("MAX7219 LED Matrix Demo", font=proportional(CP437_FONT))
-
-
+# start demo
+msg = "MAX7219 LED Matrix Demo"
+print(msg)
+device.show_message(msg, font=proportional(CP437_FONT))
 time.sleep(1)
-device.show_message("Brightness")
+
+msg = "Brightness"
+print(msg)
+device.show_message(msg)
 
 time.sleep(1)
 device.letter(0, ord('A'))
@@ -22,11 +30,13 @@ for _ in range(5):
         time.sleep(0.1)
 
 device.brightness(7)
-
 time.sleep(1)
-device.show_message("Orientation")
 
+msg = "Orientation"
+print(msg)
+device.show_message(msg)
 time.sleep(1)
+
 device.letter(0, ord('A'))
 time.sleep(1)
 for _ in range(5):
@@ -41,7 +51,9 @@ for row in range(8):
 device.orientation(0)
 time.sleep(1)
 
-device.show_message("Inverse")
+msg = "Inverse"
+print(msg)
+device.show_message(msg)
 time.sleep(1)
 device.letter(0, ord('A'))
 time.sleep(1)
@@ -52,22 +64,28 @@ for _ in range(10):
     time.sleep(0.25)
 
 time.sleep(1)
-device.show_message("Alternative font!", font=SINCLAIR_FONT)
+msg = "Alternative font!"
+print(msg)
+device.show_message(msg, font=SINCLAIR_FONT)
 
 time.sleep(1)
-device.show_message("Proportional font - characters are squeezed together!", font=proportional(SINCLAIR_FONT))
+msg = "Proportional font - characters are squeezed together!"
+print(msg)
+device.show_message(msg, font=proportional(SINCLAIR_FONT))
 
 # http://www.squaregear.net/fonts/tiny.shtml
 time.sleep(1)
-device.show_message(
-"Tiny is, I believe, the smallest possible font \
+msg = "Tiny is, I believe, the smallest possible font \
 (in pixel size). It stands at a lofty four pixels \
 tall (five if you count descenders), yet it still \
-contains all the printable ASCII characters.",
-font=proportional(TINY_FONT))
+contains all the printable ASCII characters."
+print(msg)
+device.show_message(msg, font=proportional(TINY_FONT))
 
 time.sleep(1)
-device.show_message("CP437 Characters")
+msg = "CP437 Characters"
+print(msg)
+device.show_message(msg)
 
 time.sleep(1)
 for x in range(256):
@@ -76,7 +94,9 @@ for x in range(256):
     time.sleep(0.1)
 
 time.sleep(1)
-device.show_message("Scrolling and pixel setting...")
+msg = "Scrolling and pixel setting..."
+print(msg)
+device.show_message(msg)
 
 while True:
     for x in range(500):
