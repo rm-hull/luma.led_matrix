@@ -38,7 +38,7 @@ class device(object):
 
     def __init__(self, cascaded=1, spi_bus=0, spi_device=0, vertical=False):
         """
-        Constructor: `cascaded` should be the number of cascaded MAX7219
+        Constructor: `cascaded` should be the number of daisy-chained MAX7219
         devices that are connected. `vertical` should be set to True if
         the text should start from the header instead perpendicularly.
         """

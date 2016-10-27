@@ -173,6 +173,19 @@ joint somewhere.
 .. image:: https://raw.githubusercontent.com/rm-hull/max7219/master/docs/images/matrix_cascaded.jpg
    :alt: max7219 cascaded
 
+If you have more than one device and they are daisy-chained together, you can initialize the
+library with:
+
+.. code:: python
+
+  import max7219.led as led
+
+  device = led.matrix(cascaded = 3)
+  device.show_message("Hello world!")
+
+To address a specific device, most other methods expect a ``deviceId=N`` parameter 
+(where N=0..cascaded-1).
+
 Examples
 --------
 
