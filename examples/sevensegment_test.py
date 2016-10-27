@@ -54,7 +54,7 @@ def clock(device, deviceId, seconds):
 
 def main():
     # create seven segment device
-    device = led.sevensegment(cascaded=3)
+    device = led.sevensegment(cascaded=1)
 
     print('Simple text...')
     for _ in range(8):
@@ -69,7 +69,8 @@ def main():
     device.show_message("0123456789 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
     # Digit futzing
-    date(device, 1)
+    date(device, 0)
+    time.sleep(5)
     clock(device, 0, seconds=10)
 
     # Brightness
@@ -98,28 +99,25 @@ def main():
     # Hex numbers
     print('Hex numbers...')
     for x in range(0xfa909, 0xfab2a):
-        device.write_number(deviceId=1, value=x, base=16, leftJustify=True)
+        device.write_number(deviceId=0, value=x, base=16, leftJustify=True)
         time.sleep(0.025)
 
     print('Clear device...')
-    device.clear(deviceId=1)
-    time.sleep(1)
-
     device.clear()
     time.sleep(1)
 
     print('Random numbers...')
     a = random.randint(-999, 999)
-    b = random.randint(-3223, 999)
+    # b = random.randint(-3223, 999)
 
     device.brightness(3)
     for x in range(500):
         a += random.random() * 10
-        b -= 1
-        c = a + b / (random.random() * 43)
+        # b -= 1
+        # c = a + b / (random.random() * 43)
         device.write_number(deviceId=0, value=a, decimalPlaces=1)
-        device.write_number(deviceId=1, value=b, zeroPad=True)
-        device.write_number(deviceId=2, value=c, decimalPlaces=2)
+        # device.write_number(deviceId=1, value=b, zeroPad=True)
+        # device.write_number(deviceId=2, value=c, decimalPlaces=2)
         time.sleep(0.5)
 
 
