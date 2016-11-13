@@ -1,0 +1,13 @@
+include README.rst LICENSE.md tox.ini
+
+recursive-include max7219 *.py
+
+recursive-include examples *
+
+recursive-include docs *
+prune docs/_build
+
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]
+recursive-exclude * *~
+recursive-exclude * .coverage
