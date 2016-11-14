@@ -1,8 +1,8 @@
 Raspberry PI MAX7219 driver
 ===========================
-.. image:: https://travis-ci.org/rm-hull/max7219.svg?branch=master
-    :target: https://travis-ci.org/rm-hull/max7219
-    
+.. image:: https://travis-ci.org/rm-hull/max7219.svg?branch=master   :target: https://travis-ci.org/rm-hull/max7219
+.. image:: https://img.shields.io/pypi/v/max7219.svg   :target: https://pypi.python.org/pypi/max7219
+
 Interfacing LED matrix displays with the MAX7219 driver
 `[PDF datasheet] <https://raw.github.com/rm-hull/max7219/master/docs/MAX7219-datasheet.pdf>`_
 in Python (both 2.7 and 3.x are supported) using hardware SPI on the Raspberry Pi. A LED matrix can be acquired for a few pounds from outlets like 
