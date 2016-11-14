@@ -60,8 +60,8 @@ You can confirm whether it is enabled using the shell commands below::
   $ lsmod | grep -i spi
   spi_bcm2835             7424  0 
 
-_[Depending on the kernel version, this may report **spi_bcm2807** rather than **spi_bcm2835** - 
-either should be adequate]_
+Depending on the kernel version, this may report **spi_bcm2807** rather than **spi_bcm2835** - 
+either should be adequate.
 
 And that the devices are successfully installed in ``/dev``::
 
