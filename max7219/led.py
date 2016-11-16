@@ -24,6 +24,16 @@ class constants(object):
     MAX7219_REG_DISPLAYTEST = 0xF
 
 
+class loop(object):
+
+    def call_soon(self, f, *args):
+        f(*args)
+
+    def call_later(self, delay, f, *args):
+        time.sleep(delay)
+        f(*args)
+
+
 class device(object):
     """
     Base class for handling multiple cascaded MAX7219 devices.
@@ -366,18 +376,25 @@ class sevensegment(device):
 
         self.flush()
 
-    def show_message(self, text, delay=0.4):
+    def show_message(self, text, delay=0.4, event_loop=loop()):
         """
         Transitions the text message across the devices from left-to-right
         """
         # Add some spaces on (same number as cascaded devices) so that the
         # message scrolls off to the left completely.
         text += ' ' * self._cascaded * 8
-        for value in text:
-            time.sleep(delay)
-            self.scroll_right(redraw=False)
-            self._buffer[0] = self._DIGITS.get(value, self._UNDEFINED)
-            self.flush()
+        values = (ch for ch in text)
+        def __disp(gen):
+            try:
+                value = next(gen)
+                self.scroll_right(redraw=False)
+                self._buffer[0] = self._DIGITS.get(value, self._UNDEFINED)
+                self.flush()
+                event_loop.call_later(delay, __disp, gen)
+            except StopIteration:
+                pass
+
+        event_loop.call_soon(__disp, values)
 
 
 class matrix(device):
@@ -428,7 +445,8 @@ class matrix(device):
         if redraw:
             self.flush()
 
-    def show_message(self, text, font=None, delay=0.05, always_scroll=False):
+    def show_message(self, text, font=None, delay=0.05, always_scroll=False,
+                     event_loop=loop()):
         """
         Shows a message on the device. If it's longer then the total width
         (or always_scroll=True), it transitions the text message across the
@@ -445,20 +463,26 @@ class matrix(device):
             # message scrolls off to the left completely.
             src += [c for ascii_code in ' ' * self._cascaded
                     for c in font[ord(ascii_code)]]
+
+            def __disp(gen):
+                try:
+                    value = next(gen)
+                    self.scroll_left(redraw=False)
+                    self._buffer[-1] = value
+                    self.flush()
+                    event_loop.call_later(delay, __disp, gen)
+                except StopIteration:
+                    pass
+
+            event_loop.call_soon(__disp, iter(src))
+
         else:
             # How much margin we need on the left so it's centered
             margin = int((display_length - len(src))/2)
             # Reset the buffer so no traces of the previous message are left
             self._buffer = [0] * display_length
-        for pos, value in enumerate(src):
-            if scroll:
-                time.sleep(delay)
-                self.scroll_left(redraw=False)
-                self._buffer[-1] = value
-                self.flush()
-            else:
+            for pos, value in enumerate(src):
                 self._buffer[margin+pos] = value
-        if not scroll:
             self.flush()
 
     def pixel(self, x, y, value, redraw=True):
