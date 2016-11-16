@@ -26,12 +26,12 @@ class proportional(object):
         if not nonzero:
             return []
         first = nonzero[0]
-        last = nonzero[-1]+1
+        last = nonzero[-1] + 1
         return arr[first:last]
+
 
 # bit patterns for the CP437 font
 # see https://en.wikipedia.org/wiki/Code_page_437 for details
-
 CP437_FONT = [
     [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00],  # 0x00
     [0x7E, 0x81, 0x95, 0xB1, 0xB1, 0x95, 0x81, 0x7E],  # 0x01

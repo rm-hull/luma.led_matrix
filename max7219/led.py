@@ -123,7 +123,7 @@ class device(object):
         if self._vertical:
             tmp_buf = []
             for x in range(0, self._cascaded):
-                tmp_buf += rotate(buf[x*8:x*8+8])
+                tmp_buf += rotate(buf[x * 8:x * 8 + 8])
             buf = tmp_buf
 
         for posn in range(self.NUM_DIGITS):
@@ -447,7 +447,7 @@ class matrix(device):
                     for c in font[ord(ascii_code)]]
         else:
             # How much margin we need on the left so it's centered
-            margin = int((display_length - len(src))/2)
+            margin = int((display_length - len(src)) / 2)
             # Reset the buffer so no traces of the previous message are left
             self._buffer = [0] * display_length
         for pos, value in enumerate(src):
@@ -457,7 +457,7 @@ class matrix(device):
                 self._buffer[-1] = value
                 self.flush()
             else:
-                self._buffer[margin+pos] = value
+                self._buffer[margin + pos] = value
         if not scroll:
             self.flush()
 
