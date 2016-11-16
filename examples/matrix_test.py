@@ -89,7 +89,7 @@ device.show_message(msg)
 
 time.sleep(1)
 for x in range(256):
-#    device.letter(1, 32 + (x % 64))
+    # device.letter(1, 32 + (x % 64))
     device.letter(0, x)
     time.sleep(0.1)
 
