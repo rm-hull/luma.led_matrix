@@ -1,4 +1,4 @@
-include README.rst LICENSE.md tox.ini
+include README.rst LICENSE.rst tox.ini
 
 recursive-include max7219 *.py
 
