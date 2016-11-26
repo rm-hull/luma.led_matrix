@@ -1,8 +1,8 @@
 .. toctree::
    :maxdepth: 2
 
-Raspberry PI MAX7219 driver
-===========================
+LED Matrix/7-Segment (MAX7219) driver
+=====================================
 .. image:: https://travis-ci.org/rm-hull/max7219.svg?branch=master
    :target: https://travis-ci.org/rm-hull/max7219
    
@@ -54,10 +54,13 @@ When initializing cascaded devices, it is necessary to specify a ``cascaded=...`
 parameter, and generally methods which target specific devices will expect a
 ``deviceId=...`` parameter, counting from zero.
 
-For more information, see https://max7219.readthedocs.io/
-
 .. image:: images/IMG_2810.JPG
    :alt: max7219 sevensegment
+
+API Documentation
+-----------------
+
+:ref:`modindex`
 
 Pre-requisites
 --------------
@@ -68,8 +71,8 @@ You can confirm whether it is enabled using the shell commands below::
   $ lsmod | grep -i spi
   spi_bcm2835             7424  0 
 
-Depending on the kernel version, this may report **spi_bcm2807** rather than **spi_bcm2835** - 
-either should be adequate.
+Depending on the hardware/kernel version, this may report **spi_bcm2807** rather 
+than **spi_bcm2835** - either should be adequate.
 
 And that the devices are successfully installed in ``/dev``::
 
@@ -226,10 +229,4 @@ References
 - http://raspi.tv/2013/8-x-8-led-array-driven-by-max7219-on-the-raspberry-pi-via-python
 - http://quick2wire.com/non-root-access-to-spi-on-the-pi
 
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. include:: ../LICENSE.rst
