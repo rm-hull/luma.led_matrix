@@ -51,7 +51,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Raspberry Pi MAX7219 Driver'
+project = u'MAX7219 Driver'
 copyright = u'2015-{0}, Richard Hull'.format(datetime.now().year)
 
 # The version info for the project you're documenting, acts as replacement for
@@ -206,7 +206,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'max7219.tex', u'Raspberry Pi MAX7219 Driver Documentation',
+  ('index', 'max7219.tex', u'MAX7219 Driver Documentation',
    u'Richard Hull', 'manual'),
 ]
 
@@ -236,7 +236,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'max7219', u'Raspberry Pi MAX7219 Driver Documentation',
+    ('index', 'max7219', u'MAX7219 Driver Documentation',
      [u'Richard Hull'], 1)
 ]
 
@@ -250,7 +250,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'max7219', u'Raspberry Pi MAX7219 Driver Documentation',
+  ('index', 'max7219', u'MAX7219 Driver Documentation',
    u'Richard Hull', 'max7219', 'One line description of project.',
    'Miscellaneous'),
 ]
