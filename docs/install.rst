@@ -65,7 +65,7 @@ Board Pin    Name   Remarks       RPi Pin   RPi Function
 
 Installing from the cheeseshop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. note: This is the preferred installation mechanism.
+.. note:: This is the preferred installation mechanism.
 
 Install the latest version of the library directly from
 `PyPI <https://pypi.python.org/pypi?:action=display&name=max7219>`_::
