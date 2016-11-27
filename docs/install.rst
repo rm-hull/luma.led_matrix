@@ -1,13 +1,13 @@
 Installation
 ------------
-.. note:: The library has been tested against Python 2.7 and 3.4. 
+.. note:: The library has been tested against Python 2.7 and 3.x.
 
    For **Python3** installation, substitute the following in the 
    instructions below.
 
    * ``pip`` ⇒ ``pip3``, 
    * ``python`` ⇒ ``python3``, 
-   * ``python-dev`` ⇒ ``python3-dev``, and
+   * ``python-dev`` ⇒ ``python3-dev``,
    * ``python-pip`` ⇒ ``python3-pip``.
 
 Pre-requisites
@@ -16,7 +16,7 @@ By default, the SPI kernel driver is **NOT** enabled on the Raspberry Pi Raspian
 You can confirm whether it is enabled using the shell commands below::
 
   $ lsmod | grep -i spi
-  spi_bcm2835             7424  0 
+  spi_bcm2835             7424  0
 
 Depending on the hardware/kernel version, this may report **spi_bcm2807** rather 
 than **spi_bcm2835** - either should be adequate.
@@ -98,5 +98,3 @@ Arch Linux
   pacman -Sy base-devel python2
   pip install spidev
   python2 setup.py install
-
-
