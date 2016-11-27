@@ -65,23 +65,19 @@ Board Pin    Name   Remarks       RPi Pin   RPi Function
 
 Installing from the cheeseshop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-PyPi hosts a version which can be installed with::
+.. note: This is the preferred installation mechanism.
 
-  $ sudo pip install --upgrade max7219
-
-Installing from source
-^^^^^^^^^^^^^^^^^^^^^^
 Install the latest version of the library directly from
 `PyPI <https://pypi.python.org/pypi?:action=display&name=max7219>`_::
 
   $ sudo apt-get install python-dev python-pip
-  $ sudo pip install max7219
+  $ sudo pip install --upgrade max7219
 
+Installing from source
+^^^^^^^^^^^^^^^^^^^^^^
 Alternatively, clone the code from github::
 
   $ git clone https://github.com/rm-hull/max7219.git
-  $ cd max7219
-  $ sudo pip install -e .
 
 Next, follow the specific steps below for your OS.
 

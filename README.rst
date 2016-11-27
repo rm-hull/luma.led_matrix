@@ -2,15 +2,15 @@ Raspberry PI MAX7219 driver
 ===========================
 .. image:: https://travis-ci.org/rm-hull/max7219.svg?branch=master
    :target: https://travis-ci.org/rm-hull/max7219
-   
-.. image:: https://img.shields.io/pypi/v/max7219.svg
-   :target: https://pypi.python.org/pypi/max7219
 
 .. image:: https://img.shields.io/maintenance/yes/2016.svg?maxAge=2592000
 
+.. image:: https://img.shields.io/pypi/v/max7219.svg
+   :target: https://pypi.python.org/pypi/max7219
+
 Interfacing LED matrix displays with the MAX7219 driver
 `[PDF datasheet] <https://raw.github.com/rm-hull/max7219/master/docs/MAX7219-datasheet.pdf>`_
-in Python (both 2.7 and 3.4 are supported) using hardware SPI on the Raspberry Pi. A LED matrix
+in Python (both 2.7 and 3.x are supported) using hardware SPI on the Raspberry Pi. A LED matrix
 can be acquired for a few pounds from outlets like 
 `Banggood <http://www.banggood.com/MAX7219-Dot-Matrix-Module-DIY-Kit-SCM-Control-Module-For-Arduino-p-72178.html?currency=GBP>`_.
 Likewise 7-segment displays are available from
@@ -28,20 +28,6 @@ This library supports:
 Documentation
 -------------
 Full documentation with installation instructions and examples can be found on https://max7219.readthedocs.io.
-
-Contributing
-------------
-Pull requests (code changes / documentation / typos / feature requests / setup) are gladly accepted. If you are 
-intending some large-scale changes, please get in touch first to make sure we're on the same page: try and include
-a docstring for any new methods, and try and keep method bodies small, readable and PEP8-compliant.
-
-Contributors
-^^^^^^^^^^^^
-* Thijs Triemstra (@thijstriemstra)
-* Jon Carlos (@webmonger)
-* Unattributed (@wkapga)
-* Taras (@tarasius)
-* Brice Parent (@agripo)
 
 License
 -------
