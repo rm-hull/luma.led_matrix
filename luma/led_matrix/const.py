@@ -11,4 +11,3 @@ class max7219(object):
     SCANLIMIT = 0x0B
     SHUTDOWN = 0x0C
     DISPLAYTEST = 0x0F
-
