@@ -1,12 +1,12 @@
 LED Matrix/7-Segment (MAX7219) driver
 =====================================
-.. image:: https://travis-ci.org/rm-hull/max7219.svg?branch=master
-   :target: https://travis-ci.org/rm-hull/max7219
+.. image:: https://travis-ci.org/rm-hull/luma.led_matrix.svg?branch=master
+   :target: https://travis-ci.org/rm-hull/luma.led_matrix
    
 .. image:: https://img.shields.io/maintenance/yes/2017.svg?maxAge=2592000
 
-.. image:: https://img.shields.io/pypi/v/max7219.svg
-   :target: https://pypi.python.org/pypi/max7219
+.. image:: https://img.shields.io/pypi/v/luma.led_matrix.svg
+   :target: https://pypi.python.org/pypi/luma.led_matrix
 
 .. toctree::
    :maxdepth: 2

@@ -1,11 +1,9 @@
-include README.rst LICENSE.rst tox.ini
+include VERSION.txt README.rst CHANGES.rst CONTRIBUTING.rst LICENSE.rst tox.ini setup.cfg .coveragerc
 
-recursive-include max7219 *.py
+recursive-include luma *.py
 
-recursive-include examples *
-
-recursive-include docs *
-prune docs/_build
+recursive-include doc *
+prune doc/_build
 
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]

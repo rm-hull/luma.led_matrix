@@ -44,7 +44,7 @@ taken from https://learn.sparkfun.com/tutorials/raspberry-pi-spi-and-i2c-tutoria
 After rebooting re-check that the ``lsmod | grep -i spi`` command shows whether
 SPI driver is loaded before proceeding. If you are stil experiencing problems, refer to the official 
 Raspberry Pi `SPI troubleshooting guide <https://www.raspberrypi.org/documentation/hardware/raspberrypi/spi/README.md#troubleshooting>`_
-for further details, or ask a `new question <https://github.com/rm-hull/max7219/issues/new>`_ - but
+for further details, or ask a `new question <https://github.com/rm-hull/luma.led_matrix/issues/new>`_ - but
 please remember to add as much detail as possible.
 
 GPIO pin-outs
@@ -68,16 +68,16 @@ Installing from the cheeseshop
 .. note:: This is the preferred installation mechanism.
 
 Install the latest version of the library directly from
-`PyPI <https://pypi.python.org/pypi?:action=display&name=max7219>`_::
+`PyPI <https://pypi.python.org/pypi?:action=display&name=luma.led_matrix>`_::
 
   $ sudo apt-get install python-dev python-pip
-  $ sudo pip install --upgrade max7219
+  $ sudo pip install --upgrade luma.led_matrix
 
 Installing from source
 ^^^^^^^^^^^^^^^^^^^^^^
 Alternatively, clone the code from github::
 
-  $ git clone https://github.com/rm-hull/max7219.git
+  $ git clone https://github.com/rm-hull/luma.led_matrix.git
 
 Next, follow the specific steps below for your OS.
 
@@ -85,7 +85,7 @@ Raspbian
 """"""""
 .. code:: bash
 
-  $ cd max7219
+  $ cd luma.led_matrix
   $ sudo apt-get install python-dev python-pip
   $ sudo pip install spidev
   $ sudo python setup.py install
@@ -94,7 +94,7 @@ Arch Linux
 """"""""""
 .. code:: bash
 
-  cd max7219
+  cd luma.led_matrix
   pacman -Sy base-devel python2
   pip install spidev
   python2 setup.py install

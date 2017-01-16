@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# max7219 documentation build configuration file, created by
+# luma.led_matrix documentation build configuration file, created by
 # sphinx-quickstart on Wed Mar 11 23:24:05 2015.
 #
 # This file is execfile()d with the current directory set to its
@@ -32,10 +32,13 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.doctest',
     'sphinx.ext.intersphinx',
+    'sphinx.ext.autosectionlabel',
     'sphinx.ext.todo',
     'sphinx.ext.coverage',
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
+    'sphinx.ext.inheritance_diagram',
+    'sphinx.ext.extlinks'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -51,17 +54,15 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'MAX7219 Driver'
+project = u'Luma.LED_Matrix: Display driver for MAX7219'
 copyright = u'2015-{0}, Richard Hull'.format(datetime.now().year)
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 
-from max7219 import __version__
+version = open("../VERSION.txt").read().strip()
 
-# The short X.Y version.
-version = __version__
 # The full version, including alpha/beta/rc tags.
 release = version
 
@@ -186,7 +187,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'max7219doc'
+htmlhelp_basename = 'luma.led_matrix_doc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -206,7 +207,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'max7219.tex', u'MAX7219 Driver Documentation',
+  ('index', 'luma.led_matrix.tex', u'Luma.LED_Matrix Documentation',
    u'Richard Hull', 'manual'),
 ]
 
@@ -236,7 +237,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'max7219', u'MAX7219 Driver Documentation',
+    ('index', 'luma.led_matrix', u'Luma.LED_Matrix Documentation',
      [u'Richard Hull'], 1)
 ]
 
@@ -250,8 +251,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'max7219', u'MAX7219 Driver Documentation',
-   u'Richard Hull', 'max7219', 'One line description of project.',
+  ('index', 'luma.led_matrix', u'Luma.LED_Matrix Documentation',
+   u'Richard Hull', 'luma.led_matrix', 'One line description of project.',
    'Miscellaneous'),
 ]
 
@@ -268,4 +269,8 @@ texinfo_documents = [
 #texinfo_no_detailmenu = False
 
 # Configuration for intersphinx
-intersphinx_mapping = {'https://docs.python.org/2/': None}
+intersphinx_mapping = {
+    'python': ('https://docs.python.org/2', None),
+    'pillow': ('https://pillow.readthedocs.io/en/latest', None),
+    'luma.core': ('https://luma-core.readthedocs.io/en/latest', None)
+}

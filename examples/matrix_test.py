@@ -8,7 +8,7 @@ from max7219.font import proportional, SINCLAIR_FONT, TINY_FONT, CP437_FONT
 
 
 # create matrix device
-device = led.matrix(cascaded=1)
+device = led.matrix(cascaded=2)
 print("Created device")
 
 # start demo

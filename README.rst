@@ -1,15 +1,15 @@
-Raspberry PI MAX7219 driver
-===========================
-.. image:: https://travis-ci.org/rm-hull/max7219.svg?branch=master
-   :target: https://travis-ci.org/rm-hull/max7219
+Luma.LED_Matrix: Display drivers for MAX7219
+============================================
+.. image:: https://travis-ci.org/rm-hull/luma.led_matrix.svg?branch=master
+   :target: https://travis-ci.org/rm-hull/luma.led_matrix
 
 .. image:: https://img.shields.io/maintenance/yes/2017.svg?maxAge=2592000
 
-.. image:: https://img.shields.io/pypi/v/max7219.svg
-   :target: https://pypi.python.org/pypi/max7219
+.. image:: https://img.shields.io/pypi/v/luma.led_matrix.svg
+   :target: https://pypi.python.org/pypi/luma.led_matrix
 
 Interfacing LED matrix displays with the MAX7219 driver
-`[PDF datasheet] <https://raw.github.com/rm-hull/max7219/master/docs/MAX7219-datasheet.pdf>`_
+`[PDF datasheet] <https://raw.github.com/rm-hull/luma.led_matrix/master/doc/tech-spec/MAX7219.pdf>`_
 in Python (both 2.7 and 3.x are supported) using hardware SPI on the Raspberry Pi. A LED matrix
 can be acquired for a few pounds from outlets like 
 `Banggood <http://www.banggood.com/MAX7219-Dot-Matrix-Module-DIY-Kit-SCM-Control-Module-For-Arduino-p-72178.html?currency=GBP>`_.
@@ -22,12 +22,12 @@ This library supports:
 * multiple cascaded devices
 * LED matrix and seven-segment variants
 
-.. image:: https://raw.githubusercontent.com/rm-hull/max7219/master/docs/images/devices.jpg
+.. image:: https://raw.githubusercontent.com/rm-hull/luma.led_matrix/master/doc/images/devices.jpg
    :alt: max7219 matrix
 
 Documentation
 -------------
-Full documentation with installation instructions and examples can be found on https://max7219.readthedocs.io.
+Full documentation with installation instructions and examples can be found on https://luma-led_matrix.readthedocs.io.
 
 License
 -------

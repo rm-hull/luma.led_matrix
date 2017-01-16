@@ -8,7 +8,7 @@ PEP8-compliant.
 
 GitHub
 ^^^^^^
-The source code is available to clone at: http://github.com/rm-hull/max7219.git
+The source code is available to clone at: http://github.com/rm-hull/lum.led_matrix.git
 
 Contributors
 ^^^^^^^^^^^^

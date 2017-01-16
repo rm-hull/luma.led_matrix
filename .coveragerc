@@ -1,0 +1,7 @@
+# .coveragerc to control coverage.py
+[run]
+source = luma.led_matrix
+omit =
+    setup.py
+    .tox/*
+    doc/*
