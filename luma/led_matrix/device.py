@@ -10,7 +10,7 @@
 #   from PIL import ImageDraw
 #
 #   serial = spi(port=0, device=0)
-#   device = max7219(serial, cascaded=2)
+#   device = max7219(serial, width=8, height=8)
 #
 #   with canvas(device) as draw:
 #      draw.rectangle(device.bounding_box, outline="white", fill="black")
@@ -30,8 +30,10 @@
 # to the device
 
 from luma.core.device import device
+from luma.core.render import canvas
 import luma.core.error
 import luma.led_matrix.const
+from luma.led_matrix.segment_mapper import dot_muncher
 
 
 class max7219(device):
@@ -41,15 +43,23 @@ class max7219(device):
     sequence is pumped to the display to properly configure it. Further control
     commands can then be called to affect the brightness and other settings.
     """
-    def __init__(self, serial_interface=None, width=8, height=8, rotate=0):
+    def __init__(self, serial_interface=None, width=8, height=8, cascaded=None, rotate=0):
         super(max7219, self).__init__(luma.led_matrix.const.max7219, serial_interface)
+
+        # Derive (override) the width and height if a cascaded param supplied
+        if cascaded is not None:
+            width = cascaded * 8
+            height = 8
+
         self.capabilities(width, height, rotate)
 
+        # Currently only allow a strip of matrices
+        # TODO: Future enhancement - allow blocks, e.g 40x16 (5x2 blocks)
         if width % 8 != 0 or height != 8:
             raise luma.core.error.DeviceDisplayModeError(
                 "Unsupported display mode: {0} x {1}".format(width, height))
 
-        self.cascaded = width // 8
+        self.cascaded = cascaded or width // 8
 
         self.data([self._const.SCANLIMIT, 7] * self.cascaded)
         self.data([self._const.DECODEMODE, 0] * self.cascaded)
@@ -102,3 +112,65 @@ class max7219(device):
         low-power sleep mode.
         """
         self.data([self._const.SHUTDOWN, 0] * self.cascaded)
+
+
+class sevensegment(object):
+
+    def __init__(self, device, undefined="_", mapper=dot_muncher):
+        self.device = device
+        self.undefined = undefined
+        self.segment_mapper = mapper
+        self._bufsize = device.width * device.height // 8
+        self.text = ""
+
+    @property
+    def text(self):
+        return self._text_buffer
+
+    @text.setter
+    def text(self, value):
+        self._text_buffer = observable(bytearray(value), observer=self.flush)
+        self.flush(self._text_buffer)
+
+    def flush(self, buf):
+        data = bytearray(self.segment_mapper(buf, notfound=self.undefined)).ljust(self._bufsize, '\0')
+
+        if len(data) > self._bufsize:
+            raise OverflowError("Device's capabilities insufficent for value '{0}'".format(self._text_buffer))
+
+        with canvas(self.device) as draw:
+            for x, byte in enumerate(reversed(data)):
+                for y in range(8):
+                    if byte & 0x01:
+                        draw.point((x, y), fill="white")
+                    byte >>= 1
+
+
+class observable(object):
+
+    def __init__(self, target, observer):
+        self.target = target
+        self.observer = observer
+
+    def __len__(self):
+        return self.target.__len__()
+
+    def __iter__(self):
+        return self.target.__iter__()
+
+    def __getitem__(self, key):
+        return self.target.__getitem__(key)
+
+    def __setitem__(self, key, value):
+        self.target.__setitem__(key, value)
+        self.observer(self)
+
+    def __delitem__(self, key):
+        self.target.__delitem__(key)
+        self.observer(self)
+
+    def __str__(self):
+        return self.target.__str__()
+
+    def __repr__(self):
+        return self.target.__repr__()
