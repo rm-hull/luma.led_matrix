@@ -3,5 +3,5 @@
 # See LICENSE.rst for details.
 
 """
-LCD display driver for PCD8544 devices.
+LCD display driver for max7219 devices.
 """
