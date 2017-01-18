@@ -63,8 +63,8 @@ Board Pin    Name   Remarks       RPi Pin   RPi Function
 
 .. seealso:: See below for cascading/daisy-chaining, power supply and level-shifting.
 
-Installing from the cheeseshop
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Installing from PyPi
+^^^^^^^^^^^^^^^^^^^^
 .. note:: This is the preferred installation mechanism.
 
 Install the latest version of the library directly from

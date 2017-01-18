@@ -7,7 +7,6 @@
 #   from luma.core.serial import spi
 #   from luma.core.render import canvas
 #   from luma.led_matrix.device import max7219
-#   from PIL import ImageDraw
 #
 #   serial = spi(port=0, device=0)
 #   device = max7219(serial, width=8, height=8)
