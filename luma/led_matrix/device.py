@@ -128,7 +128,7 @@ class sevensegment(object):
 
     @text.setter
     def text(self, value):
-        self._text_buffer = observable(bytearray(value), observer=self.flush)
+        self._text_buffer = observable(bytearray(value, 'utf8'), observer=self.flush)
         self.flush(self._text_buffer)
 
     def flush(self, buf):
