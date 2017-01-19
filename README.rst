@@ -45,7 +45,7 @@ Version 0.3.0 was released on 19 January 2017: this came with a rename of the
 github project from **max7219** to **luma.led_matrix** to reflect the changing
 nature of the codebase.
 
-There is no direct migration path, but the old `documentation <https://max7219.readthedocs.io>`_
+There is no direct migration path, but the old `docs <https://max7219.readthedocs.io>`_
 and `PyPi packages <https://pypi.python.org/pypi/max7219>`_ will remain
 available indefinitely, but that deprecated codebase will no longer recieve 
 updates or fixes.
