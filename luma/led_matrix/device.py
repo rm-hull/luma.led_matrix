@@ -80,7 +80,7 @@ class max7219(device):
 
         for digit in range(8):
             buf = []
-            for daisychained_device in reversed(range(self.cascaded)):
+            for daisychained_device in reversed(list(range(self.cascaded))):
                 byte = 0
                 for y in range(self._h):
                     x = (daisychained_device * 8) + digit
@@ -128,11 +128,11 @@ class sevensegment(object):
 
     @text.setter
     def text(self, value):
-        self._text_buffer = observable(bytearray(value, 'utf8'), observer=self.flush)
+        self._text_buffer = observable(bytearray(value, "uft-8"), observer=self.flush)
         self.flush(self._text_buffer)
 
     def flush(self, buf):
-        data = bytearray(self.segment_mapper(buf, notfound=self.undefined)).ljust(self._bufsize, '\0')
+        data = bytearray(self.segment_mapper(buf, notfound=self.undefined), "utf-8").ljust(self._bufsize, '\0')
 
         if len(data) > self._bufsize:
             raise OverflowError("Device's capabilities insufficent for value '{0}'".format(self._text_buffer))
