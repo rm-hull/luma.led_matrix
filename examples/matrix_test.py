@@ -1,115 +1,74 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# Copyright (c) 2017 Richard Hull and contributors
+# See LICENSE.rst for details.
 
 import time
-from random import randrange
 
-import max7219.led as led
-from max7219.font import proportional, SINCLAIR_FONT, TINY_FONT, CP437_FONT
+import luma.led_matrix.legacy as legacy
+from luma.led_matrix.device import max7219
+from luma.core.serial import spi
+from luma.core.render import canvas
 
 
-# create matrix device
-device = led.matrix(cascaded=1)
-print("Created device")
+def demo():
+    # create matrix device
+    serial = spi(port=0, device=0)
+    device = max7219(serial, cascaded=2)
+    print("Created device")
 
-# start demo
-msg = "MAX7219 LED Matrix Demo"
-print(msg)
-device.show_message(msg, font=proportional(CP437_FONT))
-time.sleep(1)
+    # start demo
+    msg = "MAX7219 LED Matrix Demo"
+    print(msg)
+    legacy.show_message(device, msg, font=legacy.proportional(legacy.CP437_FONT))
+    time.sleep(1)
 
-msg = "Brightness"
-print(msg)
-device.show_message(msg)
+    msg = "Brightness"
+    print(msg)
+    legacy.show_message(device, msg)
 
-time.sleep(1)
-device.letter(0, ord('A'))
-time.sleep(1)
-for _ in range(5):
-    for intensity in range(16):
-        device.brightness(intensity)
-        time.sleep(0.1)
+    time.sleep(1)
+    with canvas(device) as draw:
+        legacy.text(draw, (0, 0), text="A", fill="white")
 
-device.brightness(7)
-time.sleep(1)
+    time.sleep(1)
+    for _ in range(5):
+        for intensity in range(16):
+            device.contrast(intensity * 16)
+            time.sleep(0.1)
 
-msg = "Orientation"
-print(msg)
-device.show_message(msg)
-time.sleep(1)
+    device.contrast(0x80)
+    time.sleep(1)
 
-device.letter(0, ord('A'))
-time.sleep(1)
-for _ in range(5):
-    for angle in [0, 90, 180, 270]:
-        device.orientation(angle)
-        time.sleep(0.2)
+    msg = "Alternative font!"
+    print(msg)
+    legacy.show_message(device, msg, font=legacy.SINCLAIR_FONT)
 
-for row in range(8):
-    device.scroll_down()
-    time.sleep(0.2)
+    time.sleep(1)
+    msg = "Proportional font - characters are squeezed together!"
+    print(msg)
+    legacy.show_message(device, msg, font=legacy.proportional(legacy.SINCLAIR_FONT))
 
-device.orientation(0)
-time.sleep(1)
+    # http://www.squaregear.net/fonts/tiny.shtml
+    time.sleep(1)
+    msg = "Tiny is, I believe, the smallest possible font \
+    (in pixel size). It stands at a lofty four pixels \
+    tall (five if you count descenders), yet it still \
+    contains all the printable ASCII characters."
+    print(msg)
+    legacy.show_message(device, msg, font=legacy.proportional(legacy.TINY_FONT))
 
-msg = "Inverse"
-print(msg)
-device.show_message(msg)
-time.sleep(1)
-device.letter(0, ord('A'))
-time.sleep(1)
-for _ in range(10):
-    device.invert(1)
-    time.sleep(0.25)
-    device.invert(0)
-    time.sleep(0.25)
+    time.sleep(1)
+    msg = "CP437 Characters"
+    print(msg)
+    legacy.show_message(device, msg)
 
-time.sleep(1)
-msg = "Alternative font!"
-print(msg)
-device.show_message(msg, font=SINCLAIR_FONT)
+    time.sleep(1)
+    for x in range(256):
+        with canvas(device) as draw:
+            legacy.text(draw, (0, 0), text=chr(x), fill="white")
+            time.sleep(0.1)
 
-time.sleep(1)
-msg = "Proportional font - characters are squeezed together!"
-print(msg)
-device.show_message(msg, font=proportional(SINCLAIR_FONT))
 
-# http://www.squaregear.net/fonts/tiny.shtml
-time.sleep(1)
-msg = "Tiny is, I believe, the smallest possible font \
-(in pixel size). It stands at a lofty four pixels \
-tall (five if you count descenders), yet it still \
-contains all the printable ASCII characters."
-print(msg)
-device.show_message(msg, font=proportional(TINY_FONT))
-
-time.sleep(1)
-msg = "CP437 Characters"
-print(msg)
-device.show_message(msg)
-
-time.sleep(1)
-for x in range(256):
-    # device.letter(1, 32 + (x % 64))
-    device.letter(0, x)
-    time.sleep(0.1)
-
-time.sleep(1)
-msg = "Scrolling and pixel setting..."
-print(msg)
-device.show_message(msg)
-
-while True:
-    for x in range(500):
-        device.pixel(4, 4, 1, redraw=False)
-        direction = randrange(8)
-        if direction == 7 or direction == 0 or direction == 1:
-            device.scroll_up(redraw=False)
-        if direction == 1 or direction == 2 or direction == 3:
-            device.scroll_right(redraw=False)
-        if direction == 3 or direction == 4 or direction == 5:
-            device.scroll_down(redraw=False)
-        if direction == 5 or direction == 6 or direction == 7:
-            device.scroll_left(redraw=False)
-
-        device.flush()
-        time.sleep(0.01)
+if __name__ == "__main__":
+    demo()
