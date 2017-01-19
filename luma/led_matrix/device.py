@@ -80,7 +80,7 @@ class max7219(device):
 
         for digit in range(8):
             buf = []
-            for daisychained_device in reversed(range(self.cascaded)):
+            for daisychained_device in reversed(list(range(self.cascaded))):
                 byte = 0
                 for y in range(self._h):
                     x = (daisychained_device * 8) + digit
