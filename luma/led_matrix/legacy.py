@@ -1395,4 +1395,3 @@ def show_message(device, msg, font=DEFAULT_FONT):
         virtual.set_position((i, 0))
         i += 1
         time.sleep(0.03)
-
