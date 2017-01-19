@@ -86,7 +86,7 @@ def regular(text, notfound="_"):
 
 def dot_muncher(text, notfound="_"):
     undefined = _DIGITS[notfound]
-    iterator = iter(text.decode("utf-8"))
+    iterator = iter(text)
     last = _DIGITS.get(next(iterator))
     try:
         while True:
