@@ -223,11 +223,11 @@ Examples
 Ensure you have followed the installation instructions below.
 Run the example code as follows::
 
-  $ sudo python examples/matrix_test.py
+  $ sudo python examples/matrix_demo.py
 
 or::
 
-  $ sudo python examples/sevensegment_test.py
+  $ sudo python examples/sevensegment_demo.py
 
 Further examples are available in the `luma.examples
 <https://github.com/rm-hull/luma.examples>`_. git repository. Follow the
