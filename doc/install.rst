@@ -1,6 +1,6 @@
 Installation
 ------------
-.. note:: The library has been tested against Python 2.7 and 3.x.
+.. note:: The library has been tested against Python 2.7 and 3.4+.
 
    For **Python3** installation, substitute the following in the 
    instructions below.
