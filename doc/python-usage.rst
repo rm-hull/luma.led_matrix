@@ -47,7 +47,7 @@ garbage collected.
 
    .. code:: python
 
-     import luma.lcd_matrix.legacy as legacy
+     from luma.lcd_matrix import legacy
 
      with canvas(device) as draw:
         legacy.text(draw, text="A", font=legacy.CP437_FONT)
