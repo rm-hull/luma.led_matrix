@@ -128,11 +128,11 @@ class sevensegment(object):
 
     @text.setter
     def text(self, value):
-        self._text_buffer = observable(bytearray(value), observer=self.flush)
+        self._text_buffer = observable(bytearray(value, "uft-8"), observer=self.flush)
         self.flush(self._text_buffer)
 
     def flush(self, buf):
-        data = bytearray(self.segment_mapper(buf, notfound=self.undefined)).ljust(self._bufsize, '\0')
+        data = bytearray(self.segment_mapper(buf, notfound=self.undefined), "utf-8").ljust(self._bufsize, '\0')
 
         if len(data) > self._bufsize:
             raise OverflowError("Device's capabilities insufficent for value '{0}'".format(self._text_buffer))
