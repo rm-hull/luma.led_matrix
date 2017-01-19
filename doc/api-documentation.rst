@@ -38,9 +38,9 @@ luma.led_matrix.device
     :undoc-members:
     :show-inheritance:
 
-luma.led_matrix.legacy_fonts
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. automodule:: luma.led_matrix.legacy_fonts
+luma.led_matrix.legacy
+^^^^^^^^^^^^^^^^^^^^^^
+.. automodule:: luma.led_matrix.legacy
     :members:
     :undoc-members:
     :show-inheritance:

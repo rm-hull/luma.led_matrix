@@ -2,6 +2,11 @@
 # Copyright (c) 2017 Richard Hull and contributors
 # See LICENSE.rst for details.
 
+import time
+
+from luma.core.render import canvas
+from luma.core.virtual import viewport
+
 
 class proportional(object):
     """
@@ -1358,15 +1363,12 @@ TINY_FONT = [
 DEFAULT_FONT = CP437_FONT
 
 
-from PIL import ImageDraw
-
-
-def legacy_textsize(text, font=DEFAULT_FONT):
+def textsize(text, font=DEFAULT_FONT):
     src = [c for ascii_code in text for c in font[ord(ascii_code)]]
     return (len(src), 8)
 
 
-def legacy_text(draw, xy, text, fill=None, font=DEFAULT_FONT):
+def text(draw, xy, text, fill=None, font=DEFAULT_FONT):
     x, y = xy
     for ch in text:
         for byte in font[ord(ch)]:
@@ -1375,9 +1377,22 @@ def legacy_text(draw, xy, text, fill=None, font=DEFAULT_FONT):
                     draw.point((x, y + j), fill=fill)
 
                 byte >>= 1
-
             x += 1
 
 
-ImageDraw.legacy_textsize = legacy_textsize
-ImageDraw.legacy_text = legacy_text
+def show_message(device, msg, font=DEFAULT_FONT):
+    with canvas(device) as draw:
+        w, h = textsize(msg, font)
+
+    x = device.width
+    virtual = viewport(device, width=w + x + x, height=h)
+
+    with canvas(virtual) as draw:
+        text(draw, (x, 0), msg, font=font, fill="white")
+
+    i = 0
+    while i < w + x:
+        virtual.set_position((i, 0))
+        i += 1
+        time.sleep(0.03)
+

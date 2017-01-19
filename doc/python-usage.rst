@@ -47,13 +47,13 @@ garbage collected.
 
    .. code:: python
 
-     from luma.lcd_matrix.legacy_fonts import CP437_FONT, legacy_text
+     import luma.lcd_matrix.legacy as legacy
 
      with canvas(device) as draw:
-        legacy_font(draw, text="A", font=CP437_FONT)
+        legacy.text(draw, text="A", font=legacy.CP437_FONT)
 
    The fixed-width fonts can be "converted" on-the-fly to proportionally
-   spaced by wrapping them with the :py:class:`luma.led_matrix.legacy_fonts.proportional` 
+   spaced by wrapping them with the :py:class:`luma.led_matrix.legacy.proportional` 
    class.
 
 Scrolling / Virtual viewports
