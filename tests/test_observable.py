@@ -54,7 +54,7 @@ def test_setitem():
 def test_setslice():
     bell = test_bell()
     buf = observable(bytearray("hello", "utf-8"), bell.ding)
-    buf[1:4] = "app"
+    buf[1:4] = bytearray("app", "utf-8")
     assert buf.decode("utf-8") == "happo"
     assert bell.called == 2
 
