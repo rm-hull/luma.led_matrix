@@ -134,7 +134,7 @@ class sevensegment(object):
         data = bytearray(self.segment_mapper(buf, notfound=self.undefined)).ljust(self._bufsize, b'\0')
 
         if len(data) > self._bufsize:
-            raise OverflowError("Device's capabilities insufficent for value '{0}'".format(self._text_buffer))
+            raise OverflowError("Device's capabilities insufficent for value '{0}'".format(buf))
 
         with canvas(self.device) as draw:
             for x, byte in enumerate(reversed(data)):
