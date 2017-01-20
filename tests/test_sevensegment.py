@@ -44,5 +44,5 @@ def test_setter_getter():
     device = capture(file_template=fname, width=24, height=8, mode="1", transform="none")
     seg = sevensegment(device)
     seg.text = "1.61803398875"
-    assert seg.text.decode("utf-8") == "1.61803398875"
+    assert seg.text == "1.61803398875"
     assert md5(reference) == md5(fname)

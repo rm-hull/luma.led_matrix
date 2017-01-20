@@ -1363,12 +1363,14 @@ TINY_FONT = [
 DEFAULT_FONT = CP437_FONT
 
 
-def textsize(text, font=DEFAULT_FONT):
+def textsize(text, font=None):
+    font = font or DEFAULT_FONT
     src = [c for ascii_code in text for c in font[ord(ascii_code)]]
     return (len(src), 8)
 
 
-def text(draw, xy, text, fill=None, font=DEFAULT_FONT):
+def text(draw, xy, text, fill=None, font=None):
+    font = font or DEFAULT_FONT
     x, y = xy
     for ch in text:
         for byte in font[ord(ch)]:
@@ -1380,7 +1382,8 @@ def text(draw, xy, text, fill=None, font=DEFAULT_FONT):
             x += 1
 
 
-def show_message(device, msg, font=DEFAULT_FONT):
+def show_message(device, msg, font=None):
+    font = font or DEFAULT_FONT
     with canvas(device) as draw:
         w, h = textsize(msg, font)
 
