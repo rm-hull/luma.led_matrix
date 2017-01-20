@@ -114,7 +114,20 @@ class max7219(device):
 
 
 class sevensegment(object):
+    """
+    Abstraction that wraps a MAX7219 device, this class provides a ``text``
+    property which can be used to set and get a value, which is propagated
+    onto the underlying device.
 
+    :param device: A MAX7219 device instance
+    :param undefined: The default character to substitute when an unrenderable
+        character is supplied to the text property.
+    :type undefined: char
+    :param mapper: A function that maps bytearrays into the correct
+        representation for the 7-segment physical layout. By default, a "dot"
+        muncher implementation is used which places dots inline with the
+        preceeding character.
+    """
     def __init__(self, device, undefined="_", mapper=dot_muncher):
         self.device = device
         self.undefined = undefined
@@ -124,10 +137,20 @@ class sevensegment(object):
 
     @property
     def text(self):
+        """
+        Returns the current state of the text buffer. This may not reflect
+        accurately what is displayed on the seven-segment device, as certain
+        alpha-numerics and most punctuation cannot be rendered on the limited
+        display
+        """
         return self._text_buffer
 
     @text.setter
     def text(self, value):
+        """
+        Updates the seven-segment display with the given value. If there is not
+        enough space to show the full text, an ``OverflowException`` is raised.
+        """
         self._text_buffer = observable(bytearray(value, "utf-8"), observer=self._flush)
 
     def _flush(self, buf):
@@ -145,7 +168,11 @@ class sevensegment(object):
 
 
 class observable(object):
-
+    """
+    Wraps any container object such that on inserting, updating or deleting,
+    an observer is notified with a payload of the target. All other special name
+    methods are passed through parameters unhindered.
+    """
     def __init__(self, target, observer):
         self.target = target
         self.observer = observer
