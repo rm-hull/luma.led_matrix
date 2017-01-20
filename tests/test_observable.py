@@ -46,8 +46,16 @@ def test_getitem():
 def test_setitem():
     bell = test_bell()
     buf = observable(bytearray("hello", "utf-8"), bell.ding)
-    buf[0] = "y"
+    buf[0] = ord("y")
     assert buf.decode("utf-8") == "yello"
+    assert bell.called == 2
+
+
+def test_setslice():
+    bell = test_bell()
+    buf = observable(bytearray("hello", "utf-8"), bell.ding)
+    buf[1:4] = "app"
+    assert buf.decode("utf-8") == "happo"
     assert bell.called == 2
 
 
