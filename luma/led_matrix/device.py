@@ -150,6 +150,7 @@ class observable(object):
     def __init__(self, target, observer):
         self.target = target
         self.observer = observer
+        self.observer(self.target)
 
     def __len__(self):
         return self.target.__len__()
@@ -162,11 +163,11 @@ class observable(object):
 
     def __setitem__(self, key, value):
         self.target.__setitem__(key, value)
-        self.observer(self)
+        self.observer(self.target)
 
     def __delitem__(self, key):
         self.target.__delitem__(key)
-        self.observer(self)
+        self.observer(self.target)
 
     def __str__(self):
         return self.target.__str__()
