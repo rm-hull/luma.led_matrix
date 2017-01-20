@@ -47,7 +47,7 @@ def test_setitem():
     bell = test_bell()
     buf = observable(bytearray("hello", "utf-8"), bell.ding)
     buf[0] = "y"
-    assert str(buf) == "yello"
+    assert buf.decode("utf-8") == "yello"
     assert bell.called == 2
 
 
@@ -55,7 +55,7 @@ def test_delitem():
     bell = test_bell()
     buf = observable(bytearray("hello", "utf-8"), bell.ding)
     del buf[4]
-    assert str(buf) == "hell"
+    assert buf.decode("utf-8") == "hell"
     assert bell.called == 2
 
 
@@ -63,13 +63,6 @@ def test_getslice():
     bell = test_bell()
     buf = observable(bytearray("hello", "utf-8"), bell.ding)
     assert buf[2:4] == bytearray("ll", "utf-8")
-    assert bell.called == 1
-
-
-def test_str():
-    bell = test_bell()
-    buf = observable(bytearray("hello", "utf-8"), bell.ding)
-    assert str(buf) == "hello"
     assert bell.called == 1
 
 
