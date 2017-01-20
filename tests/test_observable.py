@@ -4,7 +4,7 @@
 # See LICENSE.rst for details.
 
 
-from luma.led_matrix.device import observable
+from luma.led_matrix.helpers import observable, mutable_string
 
 
 class test_bell(object):
@@ -38,39 +38,39 @@ def test_getattribute():
 
 def test_getitem():
     bell = test_bell()
-    buf = observable(bytearray("hello", "utf-8"), bell.ding)
-    assert buf[2] == ord("l")
+    buf = observable(mutable_string("hello"), bell.ding)
+    assert buf[2] == "l"
     assert bell.called == 1
 
 
 def test_setitem():
     bell = test_bell()
-    buf = observable(bytearray("hello", "utf-8"), bell.ding)
-    buf[0] = ord("y")
-    assert buf.decode("utf-8") == "yello"
+    buf = observable(mutable_string("hello"), bell.ding)
+    buf[0] = "y"
+    assert str(buf) == "yello"
     assert bell.called == 2
 
 
 def test_setslice():
     bell = test_bell()
-    buf = observable(bytearray("hello", "utf-8"), bell.ding)
-    buf[1:4] = bytearray("app", "utf-8")
-    assert buf.decode("utf-8") == "happo"
+    buf = observable(mutable_string("hello"), bell.ding)
+    buf[1:4] = "ipp"
+    assert str(buf) == "hippo"
     assert bell.called == 2
 
 
 def test_delitem():
     bell = test_bell()
-    buf = observable(bytearray("hello", "utf-8"), bell.ding)
+    buf = observable(mutable_string("hello"), bell.ding)
     del buf[4]
-    assert buf.decode("utf-8") == "hell"
+    assert str(buf) == "hell"
     assert bell.called == 2
 
 
 def test_getslice():
     bell = test_bell()
-    buf = observable(bytearray("hello", "utf-8"), bell.ding)
-    assert buf[2:4] == bytearray("ll", "utf-8")
+    buf = observable(mutable_string("hello"), bell.ding)
+    assert buf[2:4] == "ll"
     assert bell.called == 1
 
 

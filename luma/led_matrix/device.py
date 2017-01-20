@@ -33,6 +33,7 @@ from luma.core.render import canvas
 import luma.core.error
 import luma.led_matrix.const
 from luma.led_matrix.segment_mapper import dot_muncher
+from luma.led_matrix.helpers import mutable_string, observable
 
 
 class max7219(device):
@@ -123,7 +124,7 @@ class sevensegment(object):
     :param undefined: The default character to substitute when an unrenderable
         character is supplied to the text property.
     :type undefined: char
-    :param mapper: A function that maps bytearrays into the correct
+    :param mapper: A function that maps strings into the correct
         representation for the 7-segment physical layout. By default, a "dot"
         muncher implementation is used which places dots inline with the
         preceeding character.
@@ -143,7 +144,7 @@ class sevensegment(object):
         alpha-numerics and most punctuation cannot be rendered on the limited
         display
         """
-        return self._text_buffer
+        return str(self._text_buffer)
 
     @text.setter
     def text(self, value):
@@ -151,13 +152,13 @@ class sevensegment(object):
         Updates the seven-segment display with the given value. If there is not
         enough space to show the full text, an ``OverflowException`` is raised.
         """
-        self._text_buffer = observable(bytearray(value, "utf-8"), observer=self._flush)
+        self._text_buffer = observable(mutable_string(value), observer=self._flush)
 
     def _flush(self, buf):
         data = bytearray(self.segment_mapper(buf, notfound=self.undefined)).ljust(self._bufsize, b'\0')
 
         if len(data) > self._bufsize:
-            raise OverflowError("Device's capabilities insufficent for value '{0}'".format(buf.decode("utf-8")))
+            raise OverflowError("Device's capabilities insufficent for value '{0}'".format(buf))
 
         with canvas(self.device) as draw:
             for x, byte in enumerate(reversed(data)):
@@ -165,41 +166,3 @@ class sevensegment(object):
                     if byte & 0x01:
                         draw.point((x, y), fill="white")
                     byte >>= 1
-
-
-class observable(object):
-    """
-    Wraps any container object such that on inserting, updating or deleting,
-    an observer is notified with a payload of the target. All other special name
-    methods are passed through parameters unhindered.
-    """
-    def __init__(self, target, observer):
-        self.target = target
-        self.observer = observer
-        self.observer(self.target)
-
-    def __len__(self):
-        return self.target.__len__()
-
-    def __iter__(self):
-        return self.target.__iter__()
-
-    def __getattr__(self, attr):
-        return self.target.__getattribute__(attr)
-
-    def __getitem__(self, key):
-        return self.target.__getitem__(key)
-
-    def __setitem__(self, key, value):
-        self.target.__setitem__(key, value)
-        self.observer(self.target)
-
-    def __delitem__(self, key):
-        self.target.__delitem__(key)
-        self.observer(self.target)
-
-    def __str__(self):
-        return self.target.__str__()
-
-    def __repr__(self):
-        return self.target.__repr__()
