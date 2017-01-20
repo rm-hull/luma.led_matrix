@@ -158,6 +158,9 @@ class observable(object):
     def __iter__(self):
         return self.target.__iter__()
 
+    def __getattr__(self, attr):
+        return self.target.__getattribute__(attr)
+
     def __getitem__(self, key):
         return self.target.__getitem__(key)
 
