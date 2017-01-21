@@ -144,7 +144,7 @@ class sevensegment(object):
         alpha-numerics and most punctuation cannot be rendered on the limited
         display
         """
-        return str(self._text_buffer)
+        return self._text_buffer
 
     @text.setter
     def text(self, value):
