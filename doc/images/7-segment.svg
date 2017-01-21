@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+xmlns:xlink="http://www.w3.org/1999/xlink"
+width="480" height="400" viewBox="0 0 192 160" style="background-color: #000">
+<g stroke="#333" stroke-width=".25" fill="#F00">
+<g id="y"><g id="x"><g id="w">
+<g id="v"><g id="u"><g id="t"><g id="s">
+<path d="m10,2-1-1h-6l-1,1 1,1h6zl-1,1v6l1,1
+1-1v-6zm0,16-1-1v-6l1-1 1,1v6zl-1-1h-6l-1,1
+1,1h6zm-8-8-1,1v6l1,1 1-1v-6zl-1-1v-6l1-1
+1,1v6zl1,1h6l1-1-1-1h-6z" fill="#222"/></g>
+<use xlink:href="#s" x="12"/>
+<path d="m22,2-1-1h-6l-1,1 1,1h6z"/></g>
+<use xlink:href="#t" x="24"/>
+<path d="m34,2-1,1v6l1,1 1-1v-6zm12,0-1,1v6l1,1 1-1v-6z"/></g>
+<use xlink:href="#u" x="48"/>
+<path d="m58,10-1,1v6l1,1 1-1v-6zm12,0-1,1v6l1,1
+1-1v-6zm12,0-1,1v6l1,1 1-1v-6zm12,0-1,1v6l1,1 1-1v-6z"/></g>
+<use xlink:href="#v" x="96"/>
+<g id="r"><path d="m98,18 1,1h6l1-1-1-1h-6zm12,0
+1,1h6l1-1-1-1h-6zm12,0 1,1h6l1-1-1-1h-6zm12,0
+1,1h6l1-1-1-1h-6z"/></g>
+<use xlink:href="#r" x="48"/></g>
+<use xlink:href="#w" y="20"/>
+<g id="q"><g id="p"><g id="o">
+<path d="m2,30-1,1v6l1,1 1-1v-6zm12,0-1,1v6l1,1 1-1v-6z"/></g>
+<use xlink:href="#o" x="24"/></g>
+<use xlink:href="#p" x="48"/></g>
+<use xlink:href="#q" x="96"/>
+</g><use xlink:href="#x" y="40"/>
+<g id="n"><g id="m"><g id="l"><g id="k">
+<path d="m2,42-1,1v6l1,1 1-1v-6zm12,0-1,1v6l1,1 1-1v-6z"/></g>
+<use xlink:href="#k" y="20"/></g>
+<use xlink:href="#l" x="24"/></g>
+<use xlink:href="#m" x="48"/></g>
+<use xlink:href="#n" x="96"/>
+</g><use xlink:href="#y" y="80"/>
+<g id="j"><g id="i"><g id="h"><g id="g"><g id="f">
+<path d="m2,90 1,1h6l1-1-1-1h-6zm12,0 1,1h6l1-1-1-1h-6z"/></g>
+<use xlink:href="#f" x="24"/></g>
+<use xlink:href="#g" y="20"/></g>
+<use xlink:href="#h" x="48"/></g>
+<use xlink:href="#i" y="40"/></g>
+<use xlink:href="#j" x="96"/>
+</g></svg>
