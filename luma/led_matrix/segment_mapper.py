@@ -94,11 +94,10 @@ def dot_muncher(text, notfound="_"):
 
             if curr == 0x80:
                 yield curr | last
-            elif last == 0x80:
-                pass
-            else:
+            elif last != 0x80:
                 yield last
 
             last = curr
     except StopIteration:
-        yield last
+        if last != 0x80:
+            yield last

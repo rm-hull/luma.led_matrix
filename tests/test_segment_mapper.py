@@ -20,6 +20,14 @@ def test_dot_muncher_with_dot():
     assert list(results) == [0x79 | 0x80, 0x30, 0x33, 0x30, 0x5b, 0x7b]
 
 
+def test_dot_muncher_with_dot_at_end():
+    buf = mutable_string("  525920")
+    buf[7:] = "0."
+    print(buf)
+    results = dot_muncher(buf)
+    assert list(results) == [0x00, 0x00, 0x5b, 0x6d, 0x5b, 0x7b, 0x6d, 0x7e | 0x80]
+
+
 def test_dot_muncher_with_multiple_dot():
     buf = mutable_string("127.0.0.1")
     results = dot_muncher(buf)

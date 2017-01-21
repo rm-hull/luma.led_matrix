@@ -40,7 +40,6 @@ def test_setter_getter():
         'golden_ratio.png'))
 
     fname = NamedTemporaryFile(suffix=".png").name
-    print(fname)
     device = capture(file_template=fname, width=24, height=8, mode="1", transform="none")
     seg = sevensegment(device)
     seg.text = "1.61803398875"
