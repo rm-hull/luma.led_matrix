@@ -30,7 +30,6 @@
 
 from luma.core.device import device
 from luma.core.render import canvas
-from luma.core.serial import spi
 import luma.core.error
 import luma.led_matrix.const
 from luma.led_matrix.segment_mapper import dot_muncher
@@ -44,7 +43,7 @@ class max7219(device):
     sequence is pumped to the display to properly configure it. Further control
     commands can then be called to affect the brightness and other settings.
     """
-    def __init__(self, serial_interface=spi(), width=8, height=8, cascaded=None, rotate=0):
+    def __init__(self, serial_interface=None, width=8, height=8, cascaded=None, rotate=0):
         super(max7219, self).__init__(luma.led_matrix.const.max7219, serial_interface)
 
         # Derive (override) the width and height if a cascaded param supplied
