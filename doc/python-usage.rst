@@ -220,7 +220,7 @@ buffer allows, but onyl because dots are folded into their host character.
 
 Examples
 ^^^^^^^^
-Ensure you have followed the installation instructions below.
+Ensure you have followed the installation instructions in the next section.
 Run the example code as follows::
 
   $ sudo python examples/matrix_demo.py
@@ -232,6 +232,10 @@ or::
 Further examples are available in the `luma.examples
 <https://github.com/rm-hull/luma.examples>`_. git repository. Follow the
 instructions in the README for more details.
+
+A small example application using `ZeroSeg
+<http://https://thepihut.com/products/zeroseg>`_ to display TOTP secrets can be
+found in https://github.com/rm-hull/zaup.
 
 Emulators
 ^^^^^^^^^

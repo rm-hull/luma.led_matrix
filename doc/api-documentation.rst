@@ -38,6 +38,13 @@ luma.led_matrix.device
     :undoc-members:
     :show-inheritance:
 
+luma.led_matrix.helpers
+^^^^^^^^^^^^^^^^^^^^^^^
+.. automodule:: luma.led_matrix.helpers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 luma.led_matrix.legacy
 ^^^^^^^^^^^^^^^^^^^^^^
 .. automodule:: luma.led_matrix.legacy
