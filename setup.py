@@ -25,6 +25,7 @@ setup(
     install_requires=["luma.core>=0.1.11"],
     setup_requires=["pytest-runner"],
     tests_require=["mock", "pytest", "pytest-cov", "python-coveralls"],
+    zip_safe=False,
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Development Status :: 4 - Beta",
