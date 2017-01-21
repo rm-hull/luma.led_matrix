@@ -17,4 +17,4 @@ Contributors
 * Unattributed (@wkapga)
 * Taras (@tarasius)
 * Brice Parent (@agripo)
-* @twdkeule
+* Thomas De Keulenaer (@twdkeule)
