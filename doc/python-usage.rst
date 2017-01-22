@@ -176,8 +176,8 @@ height *must* only be 8. This has future scope for arranging in blocks in, say
 
 7-Segment LED Displays
 ^^^^^^^^^^^^^^^^^^^^^^
-For the 7-segment device, initialize the ``sevensegment`` class, and wrap
-it around the created device:
+For the 7-segment device, initialize the :py:class`luma.led_matrix.device.sevensegment` 
+class, and wrap it around a previously created ``max7219`` device:
 
 .. code:: python
     
@@ -218,16 +218,68 @@ buffer allows, but onyl because dots are folded into their host character.
 .. image:: images/IMG_2810.JPG
    :alt: max7219 sevensegment
 
+WS2812 NeoPixels
+^^^^^^^^^^^^^^^^
+
+For a strip of neopixels, initialize the :py:class`luma.led_matrix.device.neopixel`
+class, supplying a parameter ``cascaded=N`` where *N* is the number of 
+daisy-chained LEDs. This creates a drawing surface 100 pixels long, and lights 
+up three specific pixels, and a contiguous block:
+
+.. code:: python
+
+   from luma.core.render import canvas
+   from luma.led_matrix.device import neopixel
+   
+   device = neopixel(cascaded=100)
+
+   with canvas(device) as draw:
+       draw.point((0,0), fill="white")
+       draw.point((4,0), fill="blue")
+       draw.point((11,0), fill="orange")
+       draw.rectange((20, 0, 40, 0), fill="red")
+
+If you have a device like Pimoroni's `Unicorn pHat <https://shop.pimoroni.com/products/unicorn-phat>`_, 
+initialize the device with ``width=N`` and ``height=N`` attributes instead:
+
+.. code:: python
+
+   from luma.core.render import canvas
+   from luma.led_matrix.device import neopixel
+   
+   # Pimoroni's Unicorn pHat is 8x4 neopixels
+   device = neopixel(width=8, height=4)
+
+   with canvas(device) as draw:
+       draw.line((0, 0, 0, device.height), fill="red")
+       draw.line((1, 0, 1, device.height), fill="orange")
+       draw.line((2, 0, 2, device.height), fill="yellow")
+       draw.line((3, 0, 3, device.height), fill="green")
+       draw.line((4, 0, 4, device.height), fill="blue")
+       draw.line((5, 0, 5, device.height), fill="indigo")
+       draw.line((6, 0, 6, device.height), fill="violet")
+       draw.line((7, 0, 7, device.height), fill="white")
+
+.. note::
+   The neopixel driver uses the `ws2812 <https://pypi.python.org/pypi/ws2812>`_
+   PyPi package to interface to the daisychained LEDs. It uses DMA (direct memory
+   access) via ``/dev/mem`` which means that it has to run in privileged mode
+   (via ``sudo`` root access).
+
 Examples
 ^^^^^^^^
 Ensure you have followed the installation instructions in the next section.
 Run the example code as follows::
 
-  $ sudo python examples/matrix_demo.py
+  $ python examples/matrix_demo.py
 
 or::
 
-  $ sudo python examples/sevensegment_demo.py
+  $ python examples/sevensegment_demo.py
+
+or::
+
+  $ sudo python examples/neopixel_demo.py
 
 Further examples are available in the `luma.examples
 <https://github.com/rm-hull/luma.examples>`_. git repository. Follow the

@@ -10,8 +10,11 @@ Installation
    * ``python-dev`` ⇒ ``python3-dev``,
    * ``python-pip`` ⇒ ``python3-pip``.
 
+MAX7219 Devices (SPI)
+^^^^^^^^^^^^^^^^^^^^^
+
 Pre-requisites
-^^^^^^^^^^^^^^
+""""""""""""""
 By default, the SPI kernel driver is **NOT** enabled on the Raspberry Pi Raspian image.
 You can confirm whether it is enabled using the shell commands below::
 
@@ -48,7 +51,7 @@ for further details, or ask a `new question <https://github.com/rm-hull/luma.led
 please remember to add as much detail as possible.
 
 GPIO pin-outs
-^^^^^^^^^^^^^
+"""""""""""""
 The breakout board has two headers to allow daisy-chaining:
 
 ============ ====== ============= ========= ====================
@@ -63,6 +66,30 @@ Board Pin    Name   Remarks       RPi Pin   RPi Function
 
 .. seealso:: See below for cascading/daisy-chaining, power supply and level-shifting.
 
+WS2812 NeoPixels (DMA)
+^^^^^^^^^^^^^^^^^^^^^^
+
+GPIO pin-outs
+"""""""""""""
+Typically, WS2812 NeoPixels reqire VCC, VSS (GND) and DI pins connecting to the
+Raspberry Pi, where the DI pin is usually connected to a PWM control pin such
+as GPIO 18.
+
+============ ====== ============= ========= ====================
+Board Pin    Name   Remarks       RPi Pin   RPi Function
+------------ ------ ------------- --------- --------------------
+1            DO     Data Out      -         -
+2            DI     Data In       12        GPIO 18 (PWM0)
+3            VCC    +5V Power     2         5V0
+4            NC     Not connected -         -
+5            VDD    Not connected -         -
+6            VSS    Ground        6         GND
+============ ====== ============= ========= ====================
+
+The DO pin should be connected to the DI pin on the next (daisy-chained)
+neopixel, while the VCC and VSS are supplied in-parallel to all LED's.
+WS2812b devices now are becoming more prevalent, and only have 4 pins.
+
 Installing from PyPi
 ^^^^^^^^^^^^^^^^^^^^
 .. note:: This is the preferred installation mechanism.
@@ -70,7 +97,8 @@ Installing from PyPi
 Install the latest version of the library directly from
 `PyPI <https://pypi.python.org/pypi?:action=display&name=luma.led_matrix>`_::
 
-  $ sudo apt-get install python-dev python-pip
+  $ sudo usermod -a -G spi,gpio pi
+  $ sudo apt-get install python-dev python-pip libfreetype6-dev libjpeg8-dev libsdl1.2-dev
   $ sudo pip install --upgrade luma.led_matrix
 
 Installing from source
@@ -86,8 +114,8 @@ Raspbian
 .. code:: bash
 
   $ cd luma.led_matrix
-  $ sudo apt-get install python-dev python-pip
-  $ sudo pip install spidev
+  $ sudo usermod -a -G spi,gpio pi
+  $ sudo apt-get install python-dev python-pip libfreetype6-dev libjpeg8-dev libsdl1.2-dev
   $ sudo python setup.py install
 
 Arch Linux
@@ -96,5 +124,4 @@ Arch Linux
 
   cd luma.led_matrix
   pacman -Sy base-devel python2
-  pip install spidev
   python2 setup.py install
