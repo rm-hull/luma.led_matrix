@@ -1,8 +1,8 @@
-`luma.core <https://github.com/rm-hull/luma.core>`_ **|** 
-`luma.examples <https://github.com/rm-hull/luma.examples>`_ **|** 
-`luma.lcd <https://github.com/rm-hull/luma.lcd>`_ **|** 
+`luma.core <https://github.com/rm-hull/luma.core>`__ **|** 
+`luma.examples <https://github.com/rm-hull/luma.examples>`__ **|** 
+`luma.lcd <https://github.com/rm-hull/luma.lcd>`__ **|** 
 luma.led_matrix **|** 
-`luma.oled <https://github.com/rm-hull/luma.oled>`_ 
+`luma.oled <https://github.com/rm-hull/luma.oled>`__ 
 
 Luma.LED_Matrix: Display drivers for MAX7219
 ============================================
