@@ -84,7 +84,7 @@ def main():
     seg.text = "_" * seg.device.width
     time.sleep(1.0)
 
-    for i, ch in enumerate([9,8,7,6,5,4,3,2]):
+    for i, ch in enumerate([9, 8, 7, 6, 5, 4, 3, 2]):
         seg.text[i] = str(ch)
         time.sleep(0.6)
 
