@@ -1,3 +1,9 @@
+`luma.core <https://github.com/rm-hull/luma.core>`_ **|** 
+`luma.examples <https://github.com/rm-hull/luma.examples>`_ **|** 
+`luma.lcd <https://github.com/rm-hull/luma.lcd>`_ **|** 
+luma.led_matrix **|** 
+`luma.oled <https://github.com/rm-hull/luma.oled>`_ 
+
 Luma.LED_Matrix: Display drivers for MAX7219
 ============================================
 .. image:: https://travis-ci.org/rm-hull/luma.led_matrix.svg?branch=master
