@@ -106,8 +106,8 @@ Installing from source
 ^^^^^^^^^^^^^^^^^^^^^^
 Alternatively, clone the code from github (for Raspian, other OSes may be different)::
 
+  $ sudo usermod -a -G spi,gpio pi
   $ git clone https://github.com/rm-hull/luma.led_matrix.git
   $ cd luma.led_matrix
-  $ sudo usermod -a -G spi,gpio pi
   $ sudo apt-get install python-dev python-pip libfreetype6-dev libjpeg8-dev libsdl1.2-dev
   $ sudo python setup.py install
