@@ -99,29 +99,15 @@ Install the latest version of the library directly from
 
   $ sudo usermod -a -G spi,gpio pi
   $ sudo apt-get install python-dev python-pip libfreetype6-dev libjpeg8-dev libsdl1.2-dev
-  $ sudo pip install --upgrade luma.led_matrix
+  $ sudo -H pip install --upgrade pip
+  $ sudo -H pip install --upgrade luma.led_matrix
 
 Installing from source
 ^^^^^^^^^^^^^^^^^^^^^^
-Alternatively, clone the code from github::
+Alternatively, clone the code from github (for Raspian, other OSes may be different)::
 
   $ git clone https://github.com/rm-hull/luma.led_matrix.git
-
-Next, follow the specific steps below for your OS.
-
-Raspbian
-""""""""
-.. code:: bash
-
   $ cd luma.led_matrix
   $ sudo usermod -a -G spi,gpio pi
   $ sudo apt-get install python-dev python-pip libfreetype6-dev libjpeg8-dev libsdl1.2-dev
   $ sudo python setup.py install
-
-Arch Linux
-""""""""""
-.. code:: bash
-
-  cd luma.led_matrix
-  pacman -Sy base-devel python2
-  python2 setup.py install
