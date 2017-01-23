@@ -95,7 +95,10 @@ class max7219(device):
 
     def contrast(self, value):
         """
-        Sets the LED intensity
+        Sets the LED intensity to the desired level, in the range 0-255.
+
+        :param level: Desired contrast level in the range of 0-255.
+        :type level: int
         """
         assert(0 <= value <= 255)
         self.data([self._const.INTENSITY, value >> 4] * self.cascaded)
@@ -152,6 +155,11 @@ class sevensegment(object):
         """
         Updates the seven-segment display with the given value. If there is not
         enough space to show the full text, an ``OverflowException`` is raised.
+
+        :param value: The value to render onto the device. Any characters which
+            cannot be rendered will be converted into the ``undefined``
+            character supplied in the constructor.
+        :type value: string
         """
         self._text_buffer = observable(mutable_string(value), observer=self._flush)
 
@@ -175,6 +183,21 @@ class neopixel(device):
     daisy-chained together with WS281x chips. On creation, the array is
     initialized with the correct number of cascaded devices. Further control
     commands can then be called to affect the brightness and other settings.
+
+    :param dma_interface: The WS2812 interface to write to (usually omit this
+        parameter and it will default to the correct value - it is only needed
+        for testing whereby a mock implementation is supplied)
+    :param width: The number of pixels laid out horizontally
+    :type width: int
+    :param height: The number of pixels laid out vertically
+    :type width: int
+    :param cascaded: The number of pixels in a single strip - if supplied, this
+        will override ``width`` and ``height``.
+    :type width: int
+    :param rotate: Whether the device dimenstions should be rotated in-situ:
+        A value of: 0=0°, 1=90°, 2=180°, 3=270°. If not supplied, zero is
+        assumed.
+    :type rotate: int
     """
     def __init__(self, dma_interface=None, width=8, height=4, cascaded=None, rotate=0):
         super(neopixel, self).__init__(const=None, serial_interface=noop)
@@ -185,20 +208,20 @@ class neopixel(device):
             height = 1
 
         self.capabilities(width, height, rotate, mode="RGB")
-        self._ws2812 = dma_interface or self._init_ws281x(width * height)
+        self._ws2812 = dma_interface or self.__ws2812__()
+        self._ws2812.init(width * height)
 
         self.contrast(0x70)
         self.clear()
         self.show()
 
-    def _init_ws281x(self, numPixels):
+    def __ws281x__(self, numPixels):
         import ws2812
-        ws2812.init(numPixels)
         return ws2812
 
     def display(self, image):
         """
-        Takes a 24-bit :py:mod:`PIL.Image` and dumps it to the daisy-chained
+        Takes a 24-bit RGB :py:mod:`PIL.Image` and dumps it to the daisy-chained
         WS2812 neopixels.
         """
         assert(image.mode == self.mode)
@@ -224,7 +247,10 @@ class neopixel(device):
 
     def contrast(self, value):
         """
-        Sets the LED intensity
+        Sets the LED intensity to the desired level, in the range 0-255.
+
+        :param level: Desired contrast level in the range of 0-255.
+        :type level: int
         """
         assert(0 <= value <= 255)
         ws = self._ws2812

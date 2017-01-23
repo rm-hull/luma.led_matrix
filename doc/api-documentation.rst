@@ -28,6 +28,7 @@ Breaking changes
 """"""""""""""""""""""""""""
 .. automodule:: luma.led_matrix.const
     :members:
+    :inherited-members:
     :undoc-members:
     :show-inheritance:
 
@@ -35,6 +36,7 @@ Breaking changes
 """""""""""""""""""""""""""""
 .. automodule:: luma.led_matrix.device
     :members:
+    :inherited-members:
     :undoc-members:
     :show-inheritance:
 
@@ -42,6 +44,7 @@ Breaking changes
 """"""""""""""""""""""""""""""
 .. automodule:: luma.led_matrix.helpers
     :members:
+    :inherited-members:
     :undoc-members:
     :show-inheritance:
 
@@ -49,6 +52,7 @@ Breaking changes
 """""""""""""""""""""""""""""
 .. automodule:: luma.led_matrix.legacy
     :members:
+    :inherited-members:
     :undoc-members:
     :show-inheritance:
 
@@ -56,5 +60,6 @@ Breaking changes
 """""""""""""""""""""""""""""""""""""
 .. automodule:: luma.led_matrix.segment_mapper
     :members:
+    :inherited-members:
     :undoc-members:
     :show-inheritance:
