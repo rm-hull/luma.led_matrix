@@ -4,8 +4,8 @@
 luma.led_matrix **|** 
 `luma.oled <https://github.com/rm-hull/luma.oled>`__ 
 
-Luma.LED_Matrix: Display drivers for MAX7219
-============================================
+Luma.LED_Matrix: Display drivers for MAX7219, WS2812
+====================================================
 .. image:: https://travis-ci.org/rm-hull/luma.led_matrix.svg?branch=master
    :target: https://travis-ci.org/rm-hull/luma.led_matrix
 
@@ -23,13 +23,13 @@ Luma.LED_Matrix: Display drivers for MAX7219
 
 .. image:: https://img.shields.io/maintenance/yes/2017.svg?maxAge=2592000
 
-Python library interfacing LED matrix displays with the MAX7219 driver using
-SPI on the Raspberry Pi and other linux-based single board computers - it
-provides a Pillow-compatible drawing canvas, and other functionality to
-support:
+Python library interfacing LED matrix displays with the MAX7219 driver (using
+SPI) and WS2812 NeoPixels (using DMA) on the Raspberry Pi and other linux-based
+single board computers - it provides a Pillow-compatible drawing canvas, and
+other functionality to support:
 
 * multiple cascaded devices
-* LED matrix and seven-segment variants
+* LED matrix, seven-segment and NeoPixel variants
 * scrolling/panning capability,
 * terminal-style printing,
 * state management,

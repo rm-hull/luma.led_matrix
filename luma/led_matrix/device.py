@@ -28,6 +28,7 @@
 # As before, as soon as the with block completes, the canvas buffer is flushed
 # to the device
 
+from luma.core.serial import noop
 from luma.core.device import device
 from luma.core.render import canvas
 import luma.core.error
@@ -166,3 +167,74 @@ class sevensegment(object):
                     if byte & 0x01:
                         draw.point((x, y), fill="white")
                     byte >>= 1
+
+
+class neopixel(device):
+    """
+    Encapsulates the serial interface to a series of RGB neopixels
+    daisy-chained together with WS281x chips. On creation, the array is
+    initialized with the correct number of cascaded devices. Further control
+    commands can then be called to affect the brightness and other settings.
+    """
+    def __init__(self, dma_interface=None, width=8, height=4, cascaded=None, rotate=0):
+        super(neopixel, self).__init__(const=None, serial_interface=noop)
+
+        # Derive (override) the width and height if a cascaded param supplied
+        if cascaded is not None:
+            width = cascaded
+            height = 1
+
+        self.capabilities(width, height, rotate, mode="RGB")
+        self._ws2812 = dma_interface or self._init_ws281x(width * height)
+
+        self.contrast(0x70)
+        self.clear()
+        self.show()
+
+    def _init_ws281x(self, numPixels):
+        import ws2812
+        ws2812.init(numPixels)
+        return ws2812
+
+    def display(self, image):
+        """
+        Takes a 24-bit :py:mod:`PIL.Image` and dumps it to the daisy-chained
+        WS2812 neopixels.
+        """
+        assert(image.mode == self.mode)
+        assert(image.size == self.size)
+
+        ws = self._ws2812
+        for idx, (r, g, b) in enumerate(image.getdata()):
+            ws.setPixelColor(idx, r, g, b)
+
+        ws.show()
+
+    def show(self):
+        """
+        Not supported
+        """
+        pass
+
+    def hide(self):
+        """
+        Not supported
+        """
+        pass
+
+    def contrast(self, value):
+        """
+        Sets the LED intensity
+        """
+        assert(0 <= value <= 255)
+        ws = self._ws2812
+        ws.setBrightness(value / 255.0)
+        ws.show()
+
+    def cleanup(self):
+        """
+        Attempt to reset the device & switching it off prior to exiting the
+        python process.
+        """
+        super(neopixel, self).cleanup()
+        self._ws2812.terminate()
