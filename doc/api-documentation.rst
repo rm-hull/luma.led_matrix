@@ -25,35 +25,35 @@ Breaking changes
 
 
 luma.led_matrix.const
-^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""
 .. automodule:: luma.led_matrix.const
     :members:
     :undoc-members:
     :show-inheritance:
 
 luma.led_matrix.device
-^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""
 .. automodule:: luma.led_matrix.device
     :members:
     :undoc-members:
     :show-inheritance:
 
 luma.led_matrix.helpers
-^^^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""""
 .. automodule:: luma.led_matrix.helpers
     :members:
     :undoc-members:
     :show-inheritance:
 
 luma.led_matrix.legacy
-^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""
 .. automodule:: luma.led_matrix.legacy
     :members:
     :undoc-members:
     :show-inheritance:
 
 luma.led_matrix.segment_mapper
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""""""
 .. automodule:: luma.led_matrix.segment_mapper
     :members:
     :undoc-members:
