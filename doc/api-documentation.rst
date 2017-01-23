@@ -24,36 +24,36 @@ Breaking changes
    devices, so that they could reuse core components.
 
 
-luma.led_matrix.const
-"""""""""""""""""""""
+:mod:`luma.led_matrix.const`
+""""""""""""""""""""""""""""
 .. automodule:: luma.led_matrix.const
     :members:
     :undoc-members:
     :show-inheritance:
 
-luma.led_matrix.device
-""""""""""""""""""""""
+:mod:`luma.led_matrix.device`
+"""""""""""""""""""""""""""""
 .. automodule:: luma.led_matrix.device
     :members:
     :undoc-members:
     :show-inheritance:
 
-luma.led_matrix.helpers
-"""""""""""""""""""""""
+:mod:`luma.led_matrix.helpers`
+""""""""""""""""""""""""""""""
 .. automodule:: luma.led_matrix.helpers
     :members:
     :undoc-members:
     :show-inheritance:
 
-luma.led_matrix.legacy
-""""""""""""""""""""""
+:mod:`luma.led_matrix.legacy`
+"""""""""""""""""""""""""""""
 .. automodule:: luma.led_matrix.legacy
     :members:
     :undoc-members:
     :show-inheritance:
 
-luma.led_matrix.segment_mapper
-""""""""""""""""""""""""""""""
+:mod:`luma.led_matrix.segment_mapper`
+"""""""""""""""""""""""""""""""""""""
 .. automodule:: luma.led_matrix.segment_mapper
     :members:
     :undoc-members:
