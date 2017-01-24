@@ -3,7 +3,7 @@ Python Usage
 
 8x8 LED Matrices
 ^^^^^^^^^^^^^^^^
-For the matrix device, initialize the :py:class`luma.led_matrix.device.max7219`
+For the matrix device, initialize the :py:class:`luma.led_matrix.device.max7219`
 class, as follows:
 
 .. code:: python
@@ -315,7 +315,7 @@ or::
 .. note::
    *Pygame* is required to use any of the emulated devices, but it is **NOT**
    installed as a dependency by default, and so must be manually installed
-   before using any of these emulation devices.
+   before using any of these emulation devices (e.g. ``pip install pygame``).
 
 
 .. image:: images/emulator.gif
