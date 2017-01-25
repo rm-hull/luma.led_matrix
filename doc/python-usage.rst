@@ -59,9 +59,9 @@ garbage collected.
 Scrolling / Virtual viewports
 """""""""""""""""""""""""""""
 A single 8x8 LED matrix clearly hasn't got a lot of area for displaying useful
-information; Obviously the can be daisy-chained together to provide a longer
+information. Obviously they can be daisy-chained together to provide a longer
 line of text, but as this library extends `luma.core <https://github.com/rm-hull/luma.core>`_, 
-then we can use the :py:class :`luma.core.virtual.viewport` class to allow scrolling support:
+then we can use the :py:class:`luma.core.virtual.viewport` class to allow scrolling support:
 
 .. code:: python
 
@@ -213,7 +213,7 @@ used here, but note if inserted text exceeds the underlying buffer size, a
 Floating point numbers (or text with '.') are handled slightly differently - the
 decimal-place is fused in place on the character immediately preceding it. This
 means that it is technically possible to get more characters displayed than the 
-buffer allows, but onyl because dots are folded into their host character.
+buffer allows, but only because dots are folded into their host character.
 
 .. image:: images/IMG_2810.JPG
    :alt: max7219 sevensegment
