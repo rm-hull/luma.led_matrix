@@ -14,18 +14,18 @@ from luma.core.render import canvas
 def demo():
     # create matrix device
     serial = spi(port=0, device=0)
-    device = max7219(serial, cascaded=2)
+    device = max7219(serial, cascaded=1)
     print("Created device")
 
     # start demo
     msg = "MAX7219 LED Matrix Demo"
     print(msg)
-    legacy.show_message(device, msg, font=legacy.proportional(legacy.CP437_FONT))
+    legacy.show_message(device, msg, fill="white", font=legacy.proportional(legacy.CP437_FONT))
     time.sleep(1)
 
     msg = "Brightness"
     print(msg)
-    legacy.show_message(device, msg)
+    legacy.show_message(device, msg, fill="white")
 
     time.sleep(1)
     with canvas(device) as draw:
@@ -42,12 +42,12 @@ def demo():
 
     msg = "Alternative font!"
     print(msg)
-    legacy.show_message(device, msg, font=legacy.SINCLAIR_FONT)
+    legacy.show_message(device, msg, fill="white", font=legacy.SINCLAIR_FONT)
 
     time.sleep(1)
     msg = "Proportional font - characters are squeezed together!"
     print(msg)
-    legacy.show_message(device, msg, font=legacy.proportional(legacy.SINCLAIR_FONT))
+    legacy.show_message(device, msg, fill="white", font=legacy.proportional(legacy.SINCLAIR_FONT))
 
     # http://www.squaregear.net/fonts/tiny.shtml
     time.sleep(1)
