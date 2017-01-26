@@ -220,8 +220,7 @@ buffer allows, but only because dots are folded into their host character.
 
 WS2812 NeoPixels
 ^^^^^^^^^^^^^^^^
-
-For a strip of neopixels, initialize the :py:class`luma.led_matrix.device.neopixel`
+For a strip of neopixels, initialize the :py:class:`luma.led_matrix.device.neopixel`
 class, supplying a parameter ``cascaded=N`` where *N* is the number of 
 daisy-chained LEDs. This creates a drawing surface 100 pixels long, and lights 
 up three specific pixels, and a contiguous block:
@@ -265,6 +264,9 @@ initialize the device with ``width=N`` and ``height=N`` attributes instead:
    PyPi package to interface to the daisychained LEDs. It uses DMA (direct memory
    access) via ``/dev/mem`` which means that it has to run in privileged mode
    (via ``sudo`` root access).
+
+The same viewport, scroll support, portrait/landscape orientation and color model
+idioms provided in luma.core are equally applicable to the neopixel implementation.
 
 Examples
 ^^^^^^^^
