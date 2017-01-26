@@ -207,6 +207,7 @@ class neopixel(device):
             width = cascaded
             height = 1
 
+        self.cascaded = width * height
         self.capabilities(width, height, rotate, mode="RGB")
         self._ws2812 = dma_interface or self.__ws2812__()
         self._ws2812.init(width * height)
