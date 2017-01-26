@@ -39,4 +39,3 @@ def test_text_char():
         call((5, 8), fill='white'),
         call((6, 8), fill='white')
     ])
-
