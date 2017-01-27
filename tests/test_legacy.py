@@ -4,12 +4,23 @@
 # See LICENSE.rst for details.
 
 
+import hashlib
+import os.path
+from tempfile import NamedTemporaryFile
+from PIL import Image
+
 try:
     from unittest.mock import call, Mock
 except ImportError:
     from mock import call, Mock
 
-from luma.led_matrix.legacy import text, textsize, proportional, CP437_FONT, LCD_FONT
+from luma.core.emulator import gifanim
+from luma.led_matrix.legacy import text, show_message, textsize, proportional, CP437_FONT, LCD_FONT
+
+
+def md5(fname):
+    with open(fname, 'rb') as fp:
+        return hashlib.md5(fp.read()).hexdigest()
 
 
 def test_textsize():
@@ -39,3 +50,28 @@ def test_text_char():
         call((5, 8), fill='white'),
         call((6, 8), fill='white')
     ])
+
+
+def test_show_message():
+    reference = os.path.abspath(os.path.join(
+        os.path.dirname(__file__),
+        'reference',
+        'show_message.gif'))
+
+    fname = NamedTemporaryFile(suffix=".gif").name
+    device = gifanim(width=40, height=8, transform="none", filename=fname)
+
+    show_message(device, "Hello world!", delay=0, fill="white")
+
+    device.write_animation()
+
+    ref = Image.open(reference)
+    act = Image.open(fname)
+
+    try:
+        while True:
+            assert ref == act
+            ref.seek(ref.tell() + 1)
+            act.seek(act.tell() + 1)
+    except EOFError:
+        pass

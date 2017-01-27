@@ -1382,11 +1382,9 @@ def text(draw, xy, text, fill=None, font=None):
             x += 1
 
 
-def show_message(device, msg, y_offset=0, fill=None, font=None):
+def show_message(device, msg, y_offset=0, delay=0.03, fill=None, font=None):
     font = font or DEFAULT_FONT
-    with canvas(device) as draw:
-        w, h = textsize(msg, font)
-
+    w, h = textsize(msg, font)
     x = device.width
     virtual = viewport(device, width=w + x + x, height=h)
 
@@ -1396,5 +1394,5 @@ def show_message(device, msg, y_offset=0, fill=None, font=None):
     i = 0
     while i < w + x:
         virtual.set_position((i, 0))
+        time.sleep(delay)
         i += 1
-        time.sleep(0.03)
