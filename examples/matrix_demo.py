@@ -3,6 +3,8 @@
 # Copyright (c) 2017 Richard Hull and contributors
 # See LICENSE.rst for details.
 
+import re
+import sys
 import time
 
 from luma.led_matrix import legacy
@@ -11,10 +13,10 @@ from luma.core.serial import spi
 from luma.core.render import canvas
 
 
-def demo():
+def demo(n):
     # create matrix device
     serial = spi(port=0, device=0)
-    device = max7219(serial, cascaded=1)
+    device = max7219(serial, cascaded=n or 1)
     print("Created device")
 
     # start demo
@@ -55,8 +57,9 @@ def demo():
     (in pixel size). It stands at a lofty four pixels \
     tall (five if you count descenders), yet it still \
     contains all the printable ASCII characters."
+    msg = re.sub(" +", " ", msg)
     print(msg)
-    legacy.show_message(device, msg, font=legacy.proportional(legacy.TINY_FONT))
+    legacy.show_message(device, msg, fill="white", font=legacy.proportional(legacy.TINY_FONT))
 
     time.sleep(1)
     msg = "CP437 Characters"
@@ -71,4 +74,9 @@ def demo():
 
 
 if __name__ == "__main__":
-    demo()
+    try:
+        cascaded = int(sys.argv[1])
+    except:
+        cascaded = 1
+
+    demo(cascaded)

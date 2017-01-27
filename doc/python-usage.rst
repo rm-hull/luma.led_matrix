@@ -275,11 +275,14 @@ Run the example code as follows::
 
   $ python examples/matrix_demo.py
 
-or::
+The matrix demo accepts a number as its first argument, which is used as the
+number of daisy-chained devices. If omitted, it defaults to 1.
+
+Similarly::
 
   $ python examples/sevensegment_demo.py
 
-or::
+and::
 
   $ sudo python examples/neopixel_demo.py
 
