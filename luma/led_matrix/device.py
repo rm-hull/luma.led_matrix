@@ -216,7 +216,7 @@ class neopixel(device):
         self.clear()
         self.show()
 
-    def __ws281x__(self, numPixels):
+    def __ws2812__(self, numPixels):
         import ws2812
         return ws2812
 
