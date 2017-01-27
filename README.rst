@@ -34,6 +34,7 @@ other functionality to support:
 * terminal-style printing,
 * state management,
 * dithering to monochrome,
+* pygame emulator,
 * Python 2.7 and 3.4+ are both supported
 
 .. image:: https://raw.githubusercontent.com/rm-hull/luma.led_matrix/master/doc/images/devices.jpg
@@ -44,6 +45,15 @@ like `Banggood <http://www.banggood.com/MAX7219-Dot-Matrix-Module-DIY-Kit-SCM-Co
 Likewise 7-segment displays are available from `Ali-Express
 <http://www.aliexpress.com/item/MAX7219-Red-Module-8-Digit-7-Segment-Digital-LED-Display-Tube-For-Arduino-MCU/1449630475.html>`_
 or `Ebay <http://www.ebay.com/itm/-/172317726225>`_.
+
+.. image:: https://raw.githubusercontent.com/rm-hull/luma.led_matrix/master/doc/images/IMG_2810.JPG
+   :alt: max7219 sevensegment
+
+.. image:: https://raw.githubusercontent.com/rm-hull/luma.led_matrix/master/doc/images/matrix_cascaded.jpg
+   :alt: max7219 cascaded
+   
+.. image:: https://raw.githubusercontent.com/rm-hull/luma.led_matrix/master/doc/images/emulator.gif
+   :alt: max7219 emulator
 
 Breaking changes
 ----------------
