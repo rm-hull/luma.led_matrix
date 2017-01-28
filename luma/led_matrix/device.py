@@ -198,8 +198,13 @@ class neopixel(device):
         A value of: 0=0°, 1=90°, 2=180°, 3=270°. If not supplied, zero is
         assumed.
     :type rotate: int
+    :param mapping: An (optional) array of integer values that translate the
+        pixel to physical offsets. If supplied, should be the same size as
+        ``width * height``
+    :type mapping: int[]
     """
-    def __init__(self, dma_interface=None, width=8, height=4, cascaded=None, rotate=0):
+    def __init__(self, dma_interface=None, width=8, height=4, cascaded=None,
+                 rotate=0, mapping=None):
         super(neopixel, self).__init__(const=None, serial_interface=noop)
 
         # Derive (override) the width and height if a cascaded param supplied
@@ -209,6 +214,8 @@ class neopixel(device):
 
         self.cascaded = width * height
         self.capabilities(width, height, rotate, mode="RGB")
+        self._mapping = list(mapping or range(self.cascaded))
+        assert(self.cascaded == len(self._mapping))
         self._ws2812 = dma_interface or self.__ws2812__()
         self._ws2812.init(width * height)
 
@@ -229,8 +236,9 @@ class neopixel(device):
         assert(image.size == self.size)
 
         ws = self._ws2812
+        m = self._mapping
         for idx, (r, g, b) in enumerate(image.getdata()):
-            ws.setPixelColor(idx, r, g, b)
+            ws.setPixelColor(m[idx], r, g, b)
 
         ws.show()
 
@@ -265,3 +273,17 @@ class neopixel(device):
         """
         super(neopixel, self).cleanup()
         self._ws2812.terminate()
+
+
+# 8x8 Unicorn HAT has a 'snake-like' layout, so this translation
+# mapper linearizes that arrangement into a 'scan-like' layout.
+UNICORN_HAT = [
+    7,  6,  5,  4,  3,  2,  1,  0,
+    8,  9,  10, 11, 12, 13, 14, 15,
+    23, 22, 21, 20, 19, 18, 17, 16,
+    24, 25, 26, 27, 28, 29, 30, 31,
+    39, 38, 37, 36, 35, 34, 33, 32,
+    40, 41, 42, 43, 44, 45, 46, 47,
+    55, 54, 53, 52, 51, 50, 49, 48,
+    56, 57, 58, 59, 60, 61, 62, 63
+]

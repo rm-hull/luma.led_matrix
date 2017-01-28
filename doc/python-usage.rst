@@ -268,6 +268,30 @@ initialize the device with ``width=N`` and ``height=N`` attributes instead:
 The same viewport, scroll support, portrait/landscape orientation and color model
 idioms provided in luma.core are equally applicable to the neopixel implementation.
 
+Pimoroni Unicorn HAT
+""""""""""""""""""""
+Pimoroni sells the `Unicorn HAT <https://shop.pimoroni.com/products/unicorn-hat>`_, 
+comprising 64 WS2812b NeoPixels in an 8x8 arrangement. The pixels are cascaded, but
+arranged in a 'snake' layout, rather than a 'scan' layout. In order to accomodate this,
+a translation mapping is required, as follows:
+
+.. code:: python
+
+    import time
+
+    from luma.led_matrix.device import neopixel, UNICORN_HAT
+    from luma.core.render import canvas
+
+    device = neopixel(width=8, height=8, mapping=UNICORN_HAT)
+
+    for y in range(device.height):
+        for x in range(device.width):
+            with canvas(device) as draw:
+                draw.point((x, y), fill="green")
+            time.sleep(0.5)
+
+This should animate a green dot moving left-to-right down each line.
+
 Examples
 ^^^^^^^^
 Ensure you have followed the installation instructions in the next section.
