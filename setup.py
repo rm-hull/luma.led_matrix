@@ -31,13 +31,17 @@ setup(
         "Development Status :: 4 - Beta",
         "Intended Audience :: Education",
         "Intended Audience :: Developers",
+        "Intended Audience :: Science/Research",
         "Topic :: Education",
         "Topic :: System :: Hardware",
+        "Topic :: System :: Hardware :: Hardware Drivers",
         "Programming Language :: Python :: 2",
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.4",
         "Programming Language :: Python :: 3.5",
-        "Programming Language :: Python :: 3.6"
+        "Programming Language :: Python :: 3.6",
+        "Operating System :: POSIX",
+        "Operating System :: Unix"
     ]
 )
