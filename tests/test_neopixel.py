@@ -86,3 +86,17 @@ def test_display():
         call(15, 0xFF, 0, 0),
     ])
     # ws2812.show.assert_called()
+
+
+def test_mapping():
+    num_pixels = 16
+    device = neopixel(ws2812, cascaded=num_pixels, mapping=reversed(list(range(num_pixels))))
+    ws2812.reset_mock()
+
+    with canvas(device) as draw:
+        for i in range(device.cascaded):
+            draw.point((i, 0), (i, 0, 0))
+
+    expected = [call(num_pixels - i - 1, i, 0, 0) for i in range(num_pixels)]
+    ws2812.setPixelColor.assert_has_calls(expected)
+    # ws2812.show.assert_called()
