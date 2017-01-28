@@ -176,7 +176,7 @@ height *must* only be 8. This has future scope for arranging in blocks in, say
 
 7-Segment LED Displays
 ^^^^^^^^^^^^^^^^^^^^^^
-For the 7-segment device, initialize the :py:class`luma.led_matrix.device.sevensegment` 
+For the 7-segment device, initialize the :py:class:`luma.led_matrix.device.sevensegment` 
 class, and wrap it around a previously created ``max7219`` device:
 
 .. code:: python
