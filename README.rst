@@ -4,8 +4,10 @@
 luma.led_matrix **|** 
 `luma.oled <https://github.com/rm-hull/luma.oled>`__ 
 
-Luma.LED_Matrix: Display drivers for MAX7219, WS2812
-====================================================
+Luma.LED_Matrix 
+===============
+**Display drivers for MAX7219, WS2812**
+
 .. image:: https://travis-ci.org/rm-hull/luma.led_matrix.svg?branch=master
    :target: https://travis-ci.org/rm-hull/luma.led_matrix
 
