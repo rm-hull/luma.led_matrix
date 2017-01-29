@@ -84,8 +84,8 @@ class max7219(device):
             buf = []
             for daisychained_device in reversed(list(range(self.cascaded))):
                 byte = 0
+                x = (daisychained_device * 8) + digit
                 for y in range(self._h):
-                    x = (daisychained_device * 8) + digit
                     pixel = image.getpixel((x, y))
                     if pixel > 0:
                         byte |= 1 << y
