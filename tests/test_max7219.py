@@ -103,12 +103,51 @@ def test_display():
         draw.rectangle(device.bounding_box, outline="white")
 
     serial.data.assert_has_calls([
-        call([0x01, 0x81, 0x01, 0xFF]),
-        call([0x02, 0x81, 0x02, 0x81]),
-        call([0x03, 0x81, 0x03, 0x81]),
-        call([0x04, 0x81, 0x04, 0x81]),
-        call([0x05, 0x81, 0x05, 0x81]),
-        call([0x06, 0x81, 0x06, 0x81]),
-        call([0x07, 0x81, 0x07, 0x81]),
-        call([0x08, 0xFF, 0x08, 0x81])
+        call([1, 0x81, 1, 0xFF]),
+        call([2, 0x81, 2, 0x81]),
+        call([3, 0x81, 3, 0x81]),
+        call([4, 0x81, 4, 0x81]),
+        call([5, 0x81, 5, 0x81]),
+        call([6, 0x81, 6, 0x81]),
+        call([7, 0x81, 7, 0x81]),
+        call([8, 0xFF, 8, 0x81])
     ])
+
+
+def test_common_row_anode():
+    device = max7219(serial, cascaded=2, common_row_cathode=False)
+    serial.reset_mock()
+
+    with canvas(device) as draw:
+        draw.rectangle((0, 0, 15, 3), outline="white")
+
+    serial.data.assert_has_calls([
+        call([1, 0x09, 1, 0x0F]),
+        call([2, 0x09, 2, 0x09]),
+        call([3, 0x09, 3, 0x09]),
+        call([4, 0x09, 4, 0x09]),
+        call([5, 0x09, 5, 0x09]),
+        call([6, 0x09, 6, 0x09]),
+        call([7, 0x09, 7, 0x09]),
+        call([8, 0x0F, 8, 0x09])
+    ])
+
+
+def test_common_row_cathode():
+    device = max7219(serial, cascaded=2, common_row_cathode=True)
+    serial.reset_mock()
+
+    with canvas(device) as draw:
+        draw.rectangle((0, 0, 15, 3), outline="white")
+
+    serial.data.assert_has_calls([
+        call([1, 0xFF, 1, 0xFF]),
+        call([2, 0x01, 2, 0x80]),
+        call([3, 0x01, 3, 0x80]),
+        call([4, 0xFF, 4, 0xFF]),
+        call([5, 0x00, 5, 0x00]),
+        call([6, 0x00, 6, 0x00]),
+        call([7, 0x00, 7, 0x00]),
+        call([8, 0x00, 8, 0x00])
+    ])
+
