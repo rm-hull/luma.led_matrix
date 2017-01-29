@@ -150,4 +150,3 @@ def test_common_row_cathode():
         call([7, 0x00, 7, 0x00]),
         call([8, 0x00, 8, 0x00])
     ])
-
