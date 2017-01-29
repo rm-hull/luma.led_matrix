@@ -5,6 +5,7 @@ ChangeLog
 | Version    | Description                                                          | Date       |
 +============+======================================================================+============+
 | *Upcoming* | * Add translation mapping to accomodate Pimoroni's 8x8 Unicorn HAT   |            |
+|            | * MAX7219 optimizations                                              |            |
 +------------+----------------------------------------------------------------------+------------+
 | **0.4.2**  | * Fix bug in neopixel initialization                                 | 2017/01/27 |
 |            | * Improved demo scripts                                              |            |
