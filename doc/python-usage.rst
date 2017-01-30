@@ -176,15 +176,15 @@ height *must* only be 8. This has future scope for arranging in blocks in, say
 
 Trouble-shooting / common problems
 """"""""""""""""""""""""""""""""""
-Some online retailers are selling pre-assembled `'4-in-1' LED matrix displays <http://www.ebay.co.uk/itm/371306583204>`_, 
-but they appear to be wired 90° out-of-phase such that horizontal scrolling appears as
-below:
+Some online retailers are selling pre-assembled `'4-in-1' LED matrix displays
+<http://www.ebay.co.uk/itm/371306583204>`_, but they appear to be wired 90°
+out-of-phase such that horizontal scrolling appears as below:
 
 .. image:: images/block_reorientation.gif
    :alt: block alignment
 
 This can be rectified by initializing the :py:class:`luma.led_matrix.device.max7219` 
-device with a parameter of `common_row_cathod=True`:
+device with a parameter of ``common_row_cathode=True``:
 
 .. code:: python
 
