@@ -174,6 +174,30 @@ height *must* only be 8. This has future scope for arranging in blocks in, say
    with canvas(device) as draw:
       draw.rectangle(device.bounding_box, outline="white", fill="black")
 
+Trouble-shooting / common problems
+""""""""""""""""""""""""""""""""""
+Some online retailers are selling pre-assembled `'4-in-1' LED matrix displays <http://www.ebay.co.uk/itm/371306583204>`_, 
+but they appear to be wired 90° out-of-phase such that horizontal scrolling appears as
+below:
+
+.. image:: images/block_reorientation.gif
+   :alt: block alignment
+
+This can be rectified by initializing the :py:class:`luma.led_matrix.device.max7219` 
+device with a parameter of `common_row_cathod=True`:
+
+.. code:: python
+
+   from luma.core.serial import spi
+   from luma.core.render import canvas
+   from luma.led_matrix.device import max7219, sevensegment
+
+   serial = spi(port=0, device=0)
+   device = max7219(serial, cascaded=4, common_row_cathode=True)
+
+Every time a display render is subsequenly requested, the underlying image
+representation is corrected to reverse the 90° phase shift.
+
 7-Segment LED Displays
 ^^^^^^^^^^^^^^^^^^^^^^
 For the 7-segment device, initialize the :py:class:`luma.led_matrix.device.sevensegment` 
