@@ -75,7 +75,7 @@ class max7219(device):
         """
         Performs the inherited behviour (if any), and if the LED matrix is
         declared to being a common row cathode, each 8x8 block of pixels
-        is rotated 90° counter-clockwise.
+        is rotated 90° clockwise.
         """
         image = super(max7219, self).preprocess(image)
 
@@ -83,7 +83,7 @@ class max7219(device):
             for y in range(0, self._h, 8):
                 for x in range(0, self._w, 8):
                     box = (x, y, x + 8, y + 8)
-                    rotated_block = image.crop(box).rotate(90)
+                    rotated_block = image.crop(box).rotate(-90)
                     image.paste(rotated_block, box)
 
         return image

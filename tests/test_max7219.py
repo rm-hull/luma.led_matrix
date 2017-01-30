@@ -114,7 +114,7 @@ def test_display():
     ])
 
 
-def test_common_row_anode():
+def test_normal_alignment():
     device = max7219(serial, cascaded=2, common_row_cathode=False)
     serial.reset_mock()
 
@@ -133,7 +133,7 @@ def test_common_row_anode():
     ])
 
 
-def test_common_row_cathode():
+def test_block_realignment():
     device = max7219(serial, cascaded=2, common_row_cathode=True)
     serial.reset_mock()
 
@@ -141,12 +141,12 @@ def test_common_row_cathode():
         draw.rectangle((0, 0, 15, 3), outline="white")
 
     serial.data.assert_has_calls([
-        call([1, 0xFF, 1, 0xFF]),
-        call([2, 0x01, 2, 0x80]),
-        call([3, 0x01, 3, 0x80]),
-        call([4, 0xFF, 4, 0xFF]),
-        call([5, 0x00, 5, 0x00]),
-        call([6, 0x00, 6, 0x00]),
-        call([7, 0x00, 7, 0x00]),
-        call([8, 0x00, 8, 0x00])
+        call([1, 0x00, 1, 0x00]),
+        call([2, 0x00, 2, 0x00]),
+        call([3, 0x00, 3, 0x00]),
+        call([4, 0x00, 4, 0x00]),
+        call([5, 0xFF, 5, 0xFF]),
+        call([6, 0x80, 6, 0x01]),
+        call([7, 0x80, 7, 0x01]),
+        call([8, 0xFF, 8, 0xFF])
     ])
