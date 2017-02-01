@@ -4,8 +4,8 @@
 # See LICENSE.rst for details.
 
 import re
-import sys
 import time
+import argparse
 
 from luma.led_matrix import legacy
 from luma.led_matrix.device import max7219
@@ -13,10 +13,10 @@ from luma.core.serial import spi
 from luma.core.render import canvas
 
 
-def demo(n):
+def demo(n, block_orientation):
     # create matrix device
     serial = spi(port=0, device=0)
-    device = max7219(serial, cascaded=n or 1)
+    device = max7219(serial, cascaded=n or 1, block_orientation=block_orientation)
     print("Created device")
 
     # start demo
@@ -74,9 +74,15 @@ def demo(n):
 
 
 if __name__ == "__main__":
-    try:
-        cascaded = int(sys.argv[1])
-    except:
-        cascaded = 1
+    parser = argparse.ArgumentParser(description='matrix_demo arguments',
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
-    demo(cascaded)
+    parser.add_argument('--cascaded', '-n', type=int, default=1, help='Number of cascaded MAX7219 LED matrices')
+    parser.add_argument('--block-orientation', type=str, default='horizontal', choices=['horizontal', 'vertical'], help='Corrects block orientation when wired vertically')
+
+    args = parser.parse_args()
+
+    try:
+        demo(args.cascaded, args.block_orientation)
+    except KeyboardInterrupt:
+        pass
