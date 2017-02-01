@@ -115,7 +115,7 @@ def test_display():
 
 
 def test_normal_alignment():
-    device = max7219(serial, cascaded=2, common_row_cathode=False)
+    device = max7219(serial, cascaded=2, block_orientation="horizontal")
     serial.reset_mock()
 
     with canvas(device) as draw:
@@ -134,7 +134,7 @@ def test_normal_alignment():
 
 
 def test_block_realignment():
-    device = max7219(serial, cascaded=2, common_row_cathode=True)
+    device = max7219(serial, cascaded=2, block_orientation="vertical")
     serial.reset_mock()
 
     with canvas(device) as draw:
@@ -150,3 +150,8 @@ def test_block_realignment():
         call([7, 0x80, 7, 0x01]),
         call([8, 0xFF, 8, 0xFF])
     ])
+
+
+def test_unknown_block_orientation():
+    with pytest.raises(AssertionError):
+        max7219(serial, cascaded=2, block_orientation="sausages")

@@ -44,7 +44,7 @@ class max7219(device):
     sequence is pumped to the display to properly configure it. Further control
     commands can then be called to affect the brightness and other settings.
     """
-    def __init__(self, serial_interface=None, width=8, height=8, cascaded=None, rotate=0, common_row_cathode=False):
+    def __init__(self, serial_interface=None, width=8, height=8, cascaded=None, rotate=0, block_orientation="horizontal"):
         super(max7219, self).__init__(luma.led_matrix.const.max7219, serial_interface)
 
         # Derive (override) the width and height if a cascaded param supplied
@@ -61,7 +61,8 @@ class max7219(device):
                 "Unsupported display mode: {0} x {1}".format(width, height))
 
         self.cascaded = cascaded or width // 8
-        self._common_row_cathode = common_row_cathode
+        assert(block_orientation in ["horizontal", "vertical"])
+        self._block_orientation = block_orientation
 
         self.data([self._const.SCANLIMIT, 7] * self.cascaded)
         self.data([self._const.DECODEMODE, 0] * self.cascaded)
@@ -79,7 +80,7 @@ class max7219(device):
         """
         image = super(max7219, self).preprocess(image)
 
-        if self._common_row_cathode:
+        if self._block_orientation == "vertical":
             for y in range(0, self._h, 8):
                 for x in range(0, self._w, 8):
                     box = (x, y, x + 8, y + 8)
