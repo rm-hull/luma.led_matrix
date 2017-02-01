@@ -212,16 +212,16 @@ class neopixel(device):
         self.capabilities(width, height, rotate, mode="RGB")
         self._mapping = list(mapping or range(self.cascaded))
         assert(self.cascaded == len(self._mapping))
-        self._ws2812 = dma_interface or self.__ws2812__()
-        self._ws2812.init(width * height)
+        self._ws = dma_interface or self.__ws281x__()(num=width * height, pin=18)
+        self._ws.begin()
 
         self.contrast(0x70)
         self.clear()
         self.show()
 
-    def __ws2812__(self):
-        import ws2812
-        return ws2812
+    def __ws281x__(self):
+        from neopixel import Adafruit_NeoPixel
+        return Adafruit_NeoPixel
 
     def display(self, image):
         """
@@ -231,10 +231,10 @@ class neopixel(device):
         assert(image.mode == self.mode)
         assert(image.size == self.size)
 
-        ws = self._ws2812
+        ws = self._ws
         m = self._mapping
         for idx, (r, g, b) in enumerate(image.getdata()):
-            ws.setPixelColor(m[idx], r, g, b)
+            ws.setPixelColorRGB(m[idx], r, g, b)
 
         ws.show()
 
@@ -258,17 +258,9 @@ class neopixel(device):
         :type level: int
         """
         assert(0 <= value <= 255)
-        ws = self._ws2812
-        ws.setBrightness(value / 255.0)
+        ws = self._ws
+        ws.setBrightness(value)
         ws.show()
-
-    def cleanup(self):
-        """
-        Attempt to reset the device & switching it off prior to exiting the
-        python process.
-        """
-        super(neopixel, self).cleanup()
-        self._ws2812.terminate()
 
 
 # 8x8 Unicorn HAT has a 'snake-like' layout, so this translation

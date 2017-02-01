@@ -22,7 +22,7 @@ def test_init_cascaded():
     assert device.width == 7
     assert device.height == 1
     ws2812.init.assert_called_once_with(7)
-    ws2812.setPixelColor.assert_has_calls([
+    ws2812.setPixelColorRGB.assert_has_calls([
         call(i, 0, 0, 0) for i in range(7)])
 
 
@@ -30,7 +30,7 @@ def test_init_4x8():
     device = neopixel(ws2812)
     assert device.cascaded == 32
     ws2812.init.assert_called_once_with(32)
-    ws2812.setPixelColor.assert_has_calls([
+    ws2812.setPixelColorRGB.assert_has_calls([
         call(i, 0, 0, 0) for i in range(32)])
 
 
@@ -38,7 +38,7 @@ def test_hide():
     device = neopixel(ws2812, cascaded=5)
     ws2812.reset_mock()
     device.hide()
-    ws2812.setPixelColor.assert_not_called()
+    ws2812.setPixelColorRGB.assert_not_called()
     ws2812.show.assert_not_called()
 
 
@@ -46,7 +46,7 @@ def test_show():
     device = neopixel(ws2812, cascaded=5)
     ws2812.reset_mock()
     device.show()
-    ws2812.setPixelColor.assert_not_called()
+    ws2812.setPixelColorRGB.assert_not_called()
     ws2812.show.assert_not_called()
 
 
@@ -64,7 +64,7 @@ def test_display():
     with canvas(device) as draw:
         draw.rectangle(device.bounding_box, outline="red")
 
-    ws2812.setPixelColor.assert_has_calls([
+    ws2812.setPixelColorRGB.assert_has_calls([
         call(0, 0xFF, 0, 0),
         call(1, 0xFF, 0, 0),
         call(2, 0xFF, 0, 0),
@@ -95,6 +95,6 @@ def test_mapping():
             draw.point((i, 0), (i, 0, 0))
 
     expected = [call(num_pixels - i - 1, i, 0, 0) for i in range(num_pixels)]
-    ws2812.setPixelColor.assert_has_calls(expected)
+    ws2812.setPixelColorRGB.assert_has_calls(expected)
 
     assert ws2812.show.called
