@@ -323,10 +323,26 @@ Run the example code as follows::
 
   $ python examples/matrix_demo.py
 
-The matrix demo accepts a number as its first argument, which is used as the
-number of daisy-chained devices. If omitted, it defaults to 1.
+The matrix demo accepts optional flags to configure the number of cascaded
+devices and correct the block orientation phase shift when using 4x8x8
+matrices::
 
-Similarly::
+    $ python examples/matrix_demo.py -h
+    usage: matrix_demo.py [-h] [--cascaded CASCADED]
+                          [--block-orientation {horizontal,vertical}]
+
+    matrix_demo arguments
+
+    optional arguments:
+    -h, --help            show this help message and exit
+    --cascaded CASCADED, -n CASCADED
+                          Number of cascaded MAX7219 LED matrices (default: 1)
+    --block-orientation {horizontal,vertical}
+                          Corrects block orientation when wired vertically
+                          (default: horizontal)
+
+Similarly, there is a basic demo of the capabilities of the
+:py:class:`luma.led_matrix.device.sevensegment` wrapper::
 
   $ python examples/sevensegment_demo.py
 
