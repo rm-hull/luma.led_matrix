@@ -184,7 +184,7 @@ out-of-phase such that horizontal scrolling appears as below:
    :alt: block alignment
 
 This can be rectified by initializing the :py:class:`luma.led_matrix.device.max7219` 
-device with a parameter of ``common_row_cathode=True``:
+device with a parameter of ``block_orientation="vertical"``:
 
 .. code:: python
 
@@ -193,7 +193,7 @@ device with a parameter of ``common_row_cathode=True``:
    from luma.led_matrix.device import max7219, sevensegment
 
    serial = spi(port=0, device=0)
-   device = max7219(serial, cascaded=4, common_row_cathode=True)
+   device = max7219(serial, cascaded=4, block_orientation="vertical")
 
 Every time a display render is subsequenly requested, the underlying image
 representation is corrected to reverse the 90° phase shift.
