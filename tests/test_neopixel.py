@@ -85,8 +85,7 @@ def test_display():
         call(14, 0xFF, 0, 0),
         call(15, 0xFF, 0, 0),
     ])
-    # FIXME: #70 - Figure out why this fails on py34 only
-    # ws2812.show.assert_called()
+    assert ws2812.show.called
 
 
 def test_mapping():
@@ -100,5 +99,5 @@ def test_mapping():
 
     expected = [call(num_pixels - i - 1, i, 0, 0) for i in range(num_pixels)]
     ws2812.setPixelColor.assert_has_calls(expected)
-    # FIXME: #70 - Figure out why this fails on py34 only
-    # ws2812.show.assert_called()
+
+    assert ws2812.show.called
