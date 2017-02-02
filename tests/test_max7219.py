@@ -103,12 +103,55 @@ def test_display():
         draw.rectangle(device.bounding_box, outline="white")
 
     serial.data.assert_has_calls([
-        call([0x01, 0x81, 0x01, 0xFF]),
-        call([0x02, 0x81, 0x02, 0x81]),
-        call([0x03, 0x81, 0x03, 0x81]),
-        call([0x04, 0x81, 0x04, 0x81]),
-        call([0x05, 0x81, 0x05, 0x81]),
-        call([0x06, 0x81, 0x06, 0x81]),
-        call([0x07, 0x81, 0x07, 0x81]),
-        call([0x08, 0xFF, 0x08, 0x81])
+        call([1, 0x81, 1, 0xFF]),
+        call([2, 0x81, 2, 0x81]),
+        call([3, 0x81, 3, 0x81]),
+        call([4, 0x81, 4, 0x81]),
+        call([5, 0x81, 5, 0x81]),
+        call([6, 0x81, 6, 0x81]),
+        call([7, 0x81, 7, 0x81]),
+        call([8, 0xFF, 8, 0x81])
     ])
+
+
+def test_normal_alignment():
+    device = max7219(serial, cascaded=2, block_orientation="horizontal")
+    serial.reset_mock()
+
+    with canvas(device) as draw:
+        draw.rectangle((0, 0, 15, 3), outline="white")
+
+    serial.data.assert_has_calls([
+        call([1, 0x09, 1, 0x0F]),
+        call([2, 0x09, 2, 0x09]),
+        call([3, 0x09, 3, 0x09]),
+        call([4, 0x09, 4, 0x09]),
+        call([5, 0x09, 5, 0x09]),
+        call([6, 0x09, 6, 0x09]),
+        call([7, 0x09, 7, 0x09]),
+        call([8, 0x0F, 8, 0x09])
+    ])
+
+
+def test_block_realignment():
+    device = max7219(serial, cascaded=2, block_orientation="vertical")
+    serial.reset_mock()
+
+    with canvas(device) as draw:
+        draw.rectangle((0, 0, 15, 3), outline="white")
+
+    serial.data.assert_has_calls([
+        call([1, 0x00, 1, 0x00]),
+        call([2, 0x00, 2, 0x00]),
+        call([3, 0x00, 3, 0x00]),
+        call([4, 0x00, 4, 0x00]),
+        call([5, 0xFF, 5, 0xFF]),
+        call([6, 0x80, 6, 0x01]),
+        call([7, 0x80, 7, 0x01]),
+        call([8, 0xFF, 8, 0xFF])
+    ])
+
+
+def test_unknown_block_orientation():
+    with pytest.raises(AssertionError):
+        max7219(serial, cascaded=2, block_orientation="sausages")

@@ -174,6 +174,30 @@ height *must* only be 8. This has future scope for arranging in blocks in, say
    with canvas(device) as draw:
       draw.rectangle(device.bounding_box, outline="white", fill="black")
 
+Trouble-shooting / common problems
+""""""""""""""""""""""""""""""""""
+Some online retailers are selling pre-assembled `'4-in-1' LED matrix displays
+<http://www.ebay.co.uk/itm/371306583204>`_, but they appear to be wired 90°
+out-of-phase such that horizontal scrolling appears as below:
+
+.. image:: images/block_reorientation.gif
+   :alt: block alignment
+
+This can be rectified by initializing the :py:class:`luma.led_matrix.device.max7219` 
+device with a parameter of ``block_orientation="vertical"``:
+
+.. code:: python
+
+   from luma.core.serial import spi
+   from luma.core.render import canvas
+   from luma.led_matrix.device import max7219, sevensegment
+
+   serial = spi(port=0, device=0)
+   device = max7219(serial, cascaded=4, block_orientation="vertical")
+
+Every time a display render is subsequenly requested, the underlying image
+representation is corrected to reverse the 90° phase shift.
+
 7-Segment LED Displays
 ^^^^^^^^^^^^^^^^^^^^^^
 For the 7-segment device, initialize the :py:class:`luma.led_matrix.device.sevensegment` 
@@ -299,10 +323,26 @@ Run the example code as follows::
 
   $ python examples/matrix_demo.py
 
-The matrix demo accepts a number as its first argument, which is used as the
-number of daisy-chained devices. If omitted, it defaults to 1.
+The matrix demo accepts optional flags to configure the number of cascaded
+devices and correct the block orientation phase shift when using 4x8x8
+matrices::
 
-Similarly::
+    $ python examples/matrix_demo.py -h
+    usage: matrix_demo.py [-h] [--cascaded CASCADED]
+                          [--block-orientation {horizontal,vertical}]
+
+    matrix_demo arguments
+
+    optional arguments:
+    -h, --help            show this help message and exit
+    --cascaded CASCADED, -n CASCADED
+                          Number of cascaded MAX7219 LED matrices (default: 1)
+    --block-orientation {horizontal,vertical}
+                          Corrects block orientation when wired vertically
+                          (default: horizontal)
+
+Similarly, there is a basic demo of the capabilities of the
+:py:class:`luma.led_matrix.device.sevensegment` wrapper::
 
   $ python examples/sevensegment_demo.py
 
