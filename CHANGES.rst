@@ -4,7 +4,7 @@ ChangeLog
 +------------+----------------------------------------------------------------------+------------+
 | Version    | Description                                                          | Date       |
 +============+======================================================================+============+
-| *Upcoming* | *TBC*                                                                |            |
+| *Upcoming* | * Support both common-row anode and common-row cathode LED matrices  |            |
 +------------+----------------------------------------------------------------------+------------+
 | **0.4.3**  | * Add translation mapping to accomodate Pimoroni's 8x8 Unicorn HAT   | 2017/01/29 |
 |            | * MAX7219 optimizations                                              |            |
