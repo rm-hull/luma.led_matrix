@@ -346,7 +346,7 @@ Similarly, there is a basic demo of the capabilities of the
 
   $ python examples/sevensegment_demo.py
 
-and::
+and for the :py:class:`luma.led_matrix.device.neopixel` device::
 
   $ sudo python examples/neopixel_demo.py
 
@@ -355,7 +355,7 @@ Further examples are available in the `luma.examples
 instructions in the README for more details.
 
 A small example application using `ZeroSeg
-<http://https://thepihut.com/products/zeroseg>`_ to display TOTP secrets can be
+<https://thepihut.com/products/zeroseg>`_ to display TOTP secrets can be
 found in https://github.com/rm-hull/zaup.
 
 Emulators
