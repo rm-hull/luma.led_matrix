@@ -81,6 +81,7 @@ class max7219(device):
         image = super(max7219, self).preprocess(image)
 
         if self._block_orientation == "vertical":
+            image = image.copy()
             for y in range(0, self._h, 8):
                 for x in range(0, self._w, 8):
                     box = (x, y, x + 8, y + 8)
