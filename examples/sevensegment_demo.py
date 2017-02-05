@@ -11,7 +11,7 @@ import time
 from datetime import datetime
 
 from luma.led_matrix.device import max7219, sevensegment
-from luma.core.serial import spi
+from luma.core.serial import spi, noop
 from luma.core.virtual import viewport
 
 
@@ -68,7 +68,7 @@ def show_message_alt(seg, msg, delay=0.1):
 
 def main():
     # create seven segment device
-    serial = spi()
+    serial = spi(port=0, device=0, gpio=noop())
     device = max7219(serial, cascaded=1)
     seg = sevensegment(device)
 

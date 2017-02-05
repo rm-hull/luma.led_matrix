@@ -9,13 +9,13 @@ import argparse
 
 from luma.led_matrix import legacy
 from luma.led_matrix.device import max7219
-from luma.core.serial import spi
+from luma.core.serial import spi, noop
 from luma.core.render import canvas
 
 
 def demo(n, block_orientation):
     # create matrix device
-    serial = spi(port=0, device=0)
+    serial = spi(port=0, device=0, gpio=noop())
     device = max7219(serial, cascaded=n or 1, block_orientation=block_orientation)
     print("Created device")
 
