@@ -8,7 +8,7 @@ PEP8-compliant.
 
 GitHub
 ^^^^^^
-The source code is available to clone at: http://github.com/rm-hull/luma.led_matrix.git
+The source code is available to clone at: http://github.com/rm-hull/luma.led_matrix
 
 Contributors
 ^^^^^^^^^^^^
