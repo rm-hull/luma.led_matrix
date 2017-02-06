@@ -8,11 +8,11 @@ class, as follows:
 
 .. code:: python
 
-   from luma.core.serial import spi
+   from luma.core.serial import spi, noop
    from luma.core.render import canvas
    from luma.led_matrix.device import max7219
    
-   serial = spi(port=0, device=0)
+   serial = spi(port=0, device=0, gpio=noop())
    device = max7219(serial)
 
 The display device should now be configured for use. The specific
@@ -67,12 +67,12 @@ then we can use the :py:class:`luma.core.virtual.viewport` class to allow scroll
 
    import time
 
-   from luma.core.serial import spi
+   from luma.core.serial import spi, noop
    from luma.core.render import canvas
    from luma.core.virtual import viewport
    from luma.led_matrix.device import max7219
    
-   serial = spi(port=0, device=0)
+   serial = spi(port=0, device=0, gpio=noop())
    device = max7219(serial)
    
    virtual = viewport(device, width=200, height=100)
@@ -143,11 +143,11 @@ indicate the number of daisychained devices:
 
 .. code:: python
 
-   from luma.core.serial import spi
+   from luma.core.serial import spi, noop
    from luma.core.render import canvas
    from luma.led_matrix.device import max7219
 
-   serial = spi(port=0, device=0)
+   serial = spi(port=0, device=0, gpio=noop())
    device = max7219(serial, cascaded=3)
 
    with canvas(device) as draw:
@@ -164,11 +164,11 @@ height *must* only be 8. This has future scope for arranging in blocks in, say
 
 .. code:: python
 
-   from luma.core.serial import spi
+   from luma.core.serial import spi, noop
    from luma.core.render import canvas
    from luma.led_matrix.device import max7219
 
-   serial = spi(port=0, device=0)
+   serial = spi(port=0, device=0, gpio=noop())
    device = max7219(serial, width=24, height=8)
 
    with canvas(device) as draw:
@@ -188,11 +188,11 @@ device with a parameter of ``block_orientation="vertical"``:
 
 .. code:: python
 
-   from luma.core.serial import spi
+   from luma.core.serial import spi, noop
    from luma.core.render import canvas
    from luma.led_matrix.device import max7219, sevensegment
 
-   serial = spi(port=0, device=0)
+   serial = spi(port=0, device=0, gpio=noop())
    device = max7219(serial, cascaded=4, block_orientation="vertical")
 
 Every time a display render is subsequenly requested, the underlying image
@@ -205,11 +205,11 @@ class, and wrap it around a previously created ``max7219`` device:
 
 .. code:: python
     
-   from luma.core.serial import spi
+   from luma.core.serial import spi, noop
    from luma.core.render import canvas
    from luma.led_matrix.device import max7219, sevensegment
 
-   serial = spi(port=0, device=0)
+   serial = spi(port=0, device=0, gpio=noop())
    device = max7219(serial, cascaded=2)
    seg = sevensegment(device)
 
@@ -315,48 +315,6 @@ a translation mapping is required, as follows:
             time.sleep(0.5)
 
 This should animate a green dot moving left-to-right down each line.
-
-Examples
-^^^^^^^^
-Ensure you have followed the installation instructions in the next section.
-Run the example code as follows::
-
-  $ python examples/matrix_demo.py
-
-The matrix demo accepts optional flags to configure the number of cascaded
-devices and correct the block orientation phase shift when using 4x8x8
-matrices::
-
-    $ python examples/matrix_demo.py -h
-    usage: matrix_demo.py [-h] [--cascaded CASCADED]
-                          [--block-orientation {horizontal,vertical}]
-
-    matrix_demo arguments
-
-    optional arguments:
-    -h, --help            show this help message and exit
-    --cascaded CASCADED, -n CASCADED
-                          Number of cascaded MAX7219 LED matrices (default: 1)
-    --block-orientation {horizontal,vertical}
-                          Corrects block orientation when wired vertically
-                          (default: horizontal)
-
-Similarly, there is a basic demo of the capabilities of the
-:py:class:`luma.led_matrix.device.sevensegment` wrapper::
-
-  $ python examples/sevensegment_demo.py
-
-and for the :py:class:`luma.led_matrix.device.neopixel` device::
-
-  $ sudo python examples/neopixel_demo.py
-
-Further examples are available in the `luma.examples
-<https://github.com/rm-hull/luma.examples>`_. git repository. Follow the
-instructions in the README for more details.
-
-A small example application using `ZeroSeg
-<https://thepihut.com/products/zeroseg>`_ to display TOTP secrets can be
-found in https://github.com/rm-hull/zaup.
 
 Emulators
 ^^^^^^^^^

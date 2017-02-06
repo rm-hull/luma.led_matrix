@@ -10,11 +10,11 @@ Installation
    * ``python-dev`` ⇒ ``python3-dev``,
    * ``python-pip`` ⇒ ``python3-pip``.
 
-MAX7219 Devices (SPI)
-^^^^^^^^^^^^^^^^^^^^^
-
 Pre-requisites
-""""""""""""""
+^^^^^^^^^^^^^^
+
+MAX7219 Devices
+"""""""""""""""
 By default, the SPI kernel driver is **NOT** enabled on the Raspberry Pi Raspian image.
 You can confirm whether it is enabled using the shell commands below::
 
@@ -51,7 +51,10 @@ for further details, or ask a `new question <https://github.com/rm-hull/luma.led
 please remember to add as much detail as possible.
 
 GPIO pin-outs
-"""""""""""""
+^^^^^^^^^^^^^
+
+MAX7219 Devices (SPI)
+"""""""""""""""""""""
 The breakout board has two headers to allow daisy-chaining:
 
 ============ ====== ============= ========= ====================
@@ -64,13 +67,11 @@ Board Pin    Name   Remarks       RPi Pin   RPi Function
 5            CLK    Clock         23        GPIO 11 (SPI CLK)
 ============ ====== ============= ========= ====================
 
-.. seealso:: See below for cascading/daisy-chaining, power supply and level-shifting.
+.. seealso:: See notes section for cascading/daisy-chaining, power supply and
+   level-shifting.
 
 WS2812 NeoPixels (DMA)
-^^^^^^^^^^^^^^^^^^^^^^
-
-GPIO pin-outs
-"""""""""""""
+""""""""""""""""""""""
 Typically, WS2812 NeoPixels reqire VCC, VSS (GND) and DI pins connecting to the
 Raspberry Pi, where the DI pin is usually connected to a PWM control pin such
 as GPIO 18.
@@ -92,22 +93,64 @@ WS2812b devices now are becoming more prevalent, and only have 4 pins.
 
 Installing from PyPi
 ^^^^^^^^^^^^^^^^^^^^
-.. note:: This is the preferred installation mechanism.
+Install the dependencies for library first with::
 
-Install the latest version of the library directly from
+  $ sudo usermod -a -G spi,gpio pi
+  $ sudo apt-get install python-dev python-pip libfreetype6-dev libjpeg-dev
+  $ sudo -i pip install --upgrade pip
+  $ sudo apt-get purge python-pip
+
+.. warning:: The default pip bundled with apt on Raspbian is really old, and can 
+   cause components to not be installed properly. Please ensure that **pip 9.0.1** 
+   is installed prior to continuing::
+   
+      $ pip --version
+      pip 9.0.1 from /usr/local/lib/python2.7/dist-packages (python 2.7)
+
+Proceed to install latest version of the library directly from
 `PyPI <https://pypi.python.org/pypi?:action=display&name=luma.led_matrix>`_::
 
-  $ sudo usermod -a -G spi,gpio pi
-  $ sudo apt-get install python-dev python-pip libfreetype6-dev libjpeg8-dev
-  $ sudo -H pip install --upgrade pip
   $ sudo -H pip install --upgrade luma.led_matrix
 
-Installing from source
-^^^^^^^^^^^^^^^^^^^^^^
-Alternatively, clone the code from github (for Raspian, other OSes may be different)::
+Examples
+^^^^^^^^
+Ensure you have followed the installation instructions above.
+Clone the `repo <https://github.com/rm-hull/luma.led_matrix>`__ from github,
+and run the example code as follows::
 
-  $ sudo usermod -a -G spi,gpio pi
-  $ git clone https://github.com/rm-hull/luma.led_matrix.git
-  $ cd luma.led_matrix
-  $ sudo apt-get install python-dev python-pip libfreetype6-dev libjpeg8-dev
-  $ sudo python setup.py install
+  $ python examples/matrix_demo.py
+
+The matrix demo accepts optional flags to configure the number of cascaded
+devices and correct the block orientation phase shift when using 4x8x8
+matrices::
+
+    $ python examples/matrix_demo.py -h
+    usage: matrix_demo.py [-h] [--cascaded CASCADED]
+                          [--block-orientation {horizontal,vertical}]
+
+    matrix_demo arguments
+
+    optional arguments:
+    -h, --help            show this help message and exit
+    --cascaded CASCADED, -n CASCADED
+                          Number of cascaded MAX7219 LED matrices (default: 1)
+    --block-orientation {horizontal,vertical}
+                          Corrects block orientation when wired vertically
+                          (default: horizontal)
+
+Similarly, there is a basic demo of the capabilities of the
+:py:class:`luma.led_matrix.device.sevensegment` wrapper::
+
+  $ python examples/sevensegment_demo.py
+
+and for the :py:class:`luma.led_matrix.device.neopixel` device::
+
+  $ sudo python examples/neopixel_demo.py
+
+Further examples are available in the `luma.examples
+<https://github.com/rm-hull/luma.examples>`_. git repository. Follow the
+instructions in the README for more details.
+
+A small example application using `ZeroSeg
+<https://thepihut.com/products/zeroseg>`_ to display TOTP secrets can be
+found in https://github.com/rm-hull/zaup.

@@ -21,10 +21,10 @@ Luma.LED_Matrix: Display drivers for MAX7219
    :maxdepth: 2
 
    intro
-   python-usage
    install
-   notes
+   python-usage
    api-documentation
+   notes
    references
 
 .. include:: ../CONTRIBUTING.rst
