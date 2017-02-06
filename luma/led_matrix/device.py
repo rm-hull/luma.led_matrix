@@ -4,11 +4,11 @@
 
 # Example usage:
 #
-#   from luma.core.serial import spi
+#   from luma.core.serial import spi, noop
 #   from luma.core.render import canvas
 #   from luma.led_matrix.device import max7219
 #
-#   serial = spi(port=0, device=0)
+#   serial = spi(port=0, device=0, gpio=noop())
 #   device = max7219(serial, width=8, height=8)
 #
 #   with canvas(device) as draw:
