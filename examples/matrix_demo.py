@@ -11,6 +11,7 @@ from luma.led_matrix import legacy
 from luma.led_matrix.device import max7219
 from luma.core.serial import spi, noop
 from luma.core.render import canvas
+from luma.core.virtual import viewport
 
 
 def demo(n, block_orientation):
@@ -24,6 +25,21 @@ def demo(n, block_orientation):
     print(msg)
     legacy.show_message(device, msg, fill="white", font=legacy.proportional(legacy.CP437_FONT))
     time.sleep(1)
+
+    print("Vertical scrolling")
+    words = ["Victor", "Echo", "Romeo", "Tango", "India", "Charlie", "Alpha",
+             "Lima", " ", "Sierra", "Charlie", "Romeo", "Oscar", "Lima", "Lima",
+             "India", "November", "Golf", " "]
+
+    virtual = viewport(device, width=64, height=len(words) * 8)
+    with canvas(virtual) as draw:
+        for i, word in enumerate(words):
+            legacy.text(draw, (0, i * 8), text=word, fill="white",
+                        font=legacy.proportional(legacy.CP437_FONT))
+
+    for i in range(virtual.height - device.height):
+        virtual.set_position((0, i))
+        time.sleep(0.05)
 
     msg = "Brightness"
     print(msg)
