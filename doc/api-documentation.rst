@@ -5,7 +5,7 @@ API Documentation
     :undoc-members:
     :show-inheritance:
 
-.. inheritance-diagram:: luma.core.device luma.core.emulator luma.core.mixin luma.core.virtual luma.led_matrix.device
+.. inheritance-diagram:: luma.core.device luma.core.mixin luma.core.virtual luma.emulator.device luma.led_matrix.device
 
 Breaking changes
 """"""""""""""""
@@ -31,7 +31,6 @@ Breaking changes
     :undoc-members:
     :show-inheritance:
 
-
 :mod:`luma.core.emulator`
 """""""""""""""""""""""""
 .. automodule:: luma.core.emulator
@@ -39,7 +38,6 @@ Breaking changes
     :inherited-members:
     :undoc-members:
     :show-inheritance:
-
 
 :mod:`luma.core.error`
 """"""""""""""""""""""
@@ -49,7 +47,6 @@ Breaking changes
     :undoc-members:
     :show-inheritance:
 
-
 :mod:`luma.core.mixin`
 """"""""""""""""""""""
 .. automodule:: luma.core.mixin
@@ -58,6 +55,19 @@ Breaking changes
     :undoc-members:
     :show-inheritance:
 
+:mod:`luma.core.legacy`
+"""""""""""""""""""""""
+.. automodule:: luma.core.legacy
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`luma.core.legacy.font`
+""""""""""""""""""""""""""""
+.. automodule:: luma.core.legacy.font
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
 :mod:`luma.core.render`
 """""""""""""""""""""""
@@ -67,7 +77,6 @@ Breaking changes
     :undoc-members:
     :show-inheritance:
 
-
 :mod:`luma.core.serial`
 """""""""""""""""""""""
 .. automodule:: luma.core.serial
@@ -75,7 +84,6 @@ Breaking changes
     :inherited-members:
     :undoc-members:
     :show-inheritance:
-
 
 :mod:`luma.core.threadpool`
 """""""""""""""""""""""""""
@@ -85,7 +93,6 @@ Breaking changes
     :undoc-members:
     :show-inheritance:
 
-
 :mod:`luma.core.virtual`
 """"""""""""""""""""""""
 .. automodule:: luma.core.virtual
@@ -93,7 +100,6 @@ Breaking changes
     :inherited-members:
     :undoc-members:
     :show-inheritance: 
-
 
 :mod:`luma.led_matrix.device`
 """""""""""""""""""""""""""""
@@ -103,7 +109,6 @@ Breaking changes
     :undoc-members:
     :show-inheritance:
 
-
 :mod:`luma.led_matrix.helpers`
 """"""""""""""""""""""""""""""
 .. automodule:: luma.led_matrix.helpers
@@ -111,16 +116,6 @@ Breaking changes
     :inherited-members:
     :undoc-members:
     :show-inheritance:
-
-
-:mod:`luma.led_matrix.legacy`
-"""""""""""""""""""""""""""""
-.. automodule:: luma.led_matrix.legacy
-    :members:
-    :inherited-members:
-    :undoc-members:
-    :show-inheritance:
-
 
 :mod:`luma.led_matrix.segment_mapper`
 """""""""""""""""""""""""""""""""""""

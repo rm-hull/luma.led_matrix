@@ -10,9 +10,10 @@ import math
 import time
 import colorsys
 
-from luma.led_matrix import legacy
 from luma.led_matrix.device import neopixel
 from luma.core.render import canvas
+from luma.core.legacy import text, show_message
+from luma.core.legacy.font import proportional, TINY_FONT
 
 # create matrix device
 device = neopixel(width=8, height=4)
@@ -180,12 +181,12 @@ def gfx(device):
 
 def main():
     msg = "Neopixel WS2812 LED Matrix Demo"
-    legacy.show_message(device, msg, y_offset=-1, fill="green", font=legacy.proportional(legacy.TINY_FONT))
+    show_message(device, msg, y_offset=-1, fill="green", font=proportional(TINY_FONT))
     time.sleep(1)
 
     with canvas(device) as draw:
-        legacy.text(draw, (0, -1), text="A", fill="red", font=legacy.TINY_FONT)
-        legacy.text(draw, (4, -1), text="T", fill="green", font=legacy.TINY_FONT)
+        text(draw, (0, -1), text="A", fill="red", font=TINY_FONT)
+        text(draw, (4, -1), text="T", fill="green", font=TINY_FONT)
 
     time.sleep(1)
 

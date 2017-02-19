@@ -7,11 +7,12 @@ import re
 import time
 import argparse
 
-from luma.led_matrix import legacy
 from luma.led_matrix.device import max7219
 from luma.core.serial import spi, noop
 from luma.core.render import canvas
 from luma.core.virtual import viewport
+from luma.core.legacy import text, show_message
+from luma.core.legacy.font import proportional, CP437_FONT, TINY_FONT, SINCLAIR_FONT
 
 
 def demo(n, block_orientation):
@@ -23,19 +24,20 @@ def demo(n, block_orientation):
     # start demo
     msg = "MAX7219 LED Matrix Demo"
     print(msg)
-    legacy.show_message(device, msg, fill="white", font=legacy.proportional(legacy.CP437_FONT))
+    show_message(device, msg, fill="white", font=proportional(CP437_FONT))
     time.sleep(1)
 
     print("Vertical scrolling")
-    words = ["Victor", "Echo", "Romeo", "Tango", "India", "Charlie", "Alpha",
-             "Lima", " ", "Sierra", "Charlie", "Romeo", "Oscar", "Lima", "Lima",
-             "India", "November", "Golf", " "]
+    words = [
+        "Victor", "Echo", "Romeo", "Tango", "India", "Charlie", "Alpha",
+        "Lima", " ", "Sierra", "Charlie", "Romeo", "Oscar", "Lima", "Lima",
+        "India", "November", "Golf", " "
+    ]
 
     virtual = viewport(device, width=64, height=len(words) * 8)
     with canvas(virtual) as draw:
         for i, word in enumerate(words):
-            legacy.text(draw, (0, i * 8), text=word, fill="white",
-                        font=legacy.proportional(legacy.CP437_FONT))
+            text(draw, (0, i * 8), text=word, fill="white", font=proportional(CP437_FONT))
 
     for i in range(virtual.height - device.height):
         virtual.set_position((0, i))
@@ -43,11 +45,11 @@ def demo(n, block_orientation):
 
     msg = "Brightness"
     print(msg)
-    legacy.show_message(device, msg, fill="white")
+    show_message(device, msg, fill="white")
 
     time.sleep(1)
     with canvas(device) as draw:
-        legacy.text(draw, (0, 0), text="A", fill="white")
+        text(draw, (0, 0), text="A", fill="white")
 
     time.sleep(1)
     for _ in range(5):
@@ -60,12 +62,12 @@ def demo(n, block_orientation):
 
     msg = "Alternative font!"
     print(msg)
-    legacy.show_message(device, msg, fill="white", font=legacy.SINCLAIR_FONT)
+    show_message(device, msg, fill="white", font=SINCLAIR_FONT)
 
     time.sleep(1)
     msg = "Proportional font - characters are squeezed together!"
     print(msg)
-    legacy.show_message(device, msg, fill="white", font=legacy.proportional(legacy.SINCLAIR_FONT))
+    show_message(device, msg, fill="white", font=proportional(SINCLAIR_FONT))
 
     # http://www.squaregear.net/fonts/tiny.shtml
     time.sleep(1)
@@ -75,17 +77,17 @@ def demo(n, block_orientation):
     contains all the printable ASCII characters."
     msg = re.sub(" +", " ", msg)
     print(msg)
-    legacy.show_message(device, msg, fill="white", font=legacy.proportional(legacy.TINY_FONT))
+    show_message(device, msg, fill="white", font=proportional(TINY_FONT))
 
     time.sleep(1)
     msg = "CP437 Characters"
     print(msg)
-    legacy.show_message(device, msg)
+    show_message(device, msg)
 
     time.sleep(1)
     for x in range(256):
         with canvas(device) as draw:
-            legacy.text(draw, (0, 0), text=chr(x), fill="white")
+            text(draw, (0, 0), text=chr(x), fill="white")
             time.sleep(0.1)
 
 
