@@ -31,14 +31,6 @@ Breaking changes
     :undoc-members:
     :show-inheritance:
 
-:mod:`luma.core.emulator`
-"""""""""""""""""""""""""
-.. automodule:: luma.core.emulator
-    :members:
-    :inherited-members:
-    :undoc-members:
-    :show-inheritance:
-
 :mod:`luma.core.error`
 """"""""""""""""""""""
 .. automodule:: luma.core.error
