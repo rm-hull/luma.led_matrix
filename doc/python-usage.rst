@@ -43,17 +43,19 @@ garbage collected.
    http://www.dafont.com/) which just fits.
 
    Alternatively, a set of "legacy" fixed-width bitmap fonts are included in
-   the codebase and may be used as follows:
+   the `luma.core <https://github.com/rm-hull/luma.core>`__ codebase and may be
+   used as follows:
 
    .. code:: python
 
-     from luma.lcd_matrix import legacy
+     from luma.core.legacy import text
+     from luma.core.legacy.font import proportional, CP437_FONT, LCD_FONT
 
      with canvas(device) as draw:
-        legacy.text(draw, text="A", font=legacy.CP437_FONT)
+        text(draw, text="A", fill="white", font=proportional(CP437_FONT))
 
    The fixed-width fonts can be "converted" on-the-fly to proportionally
-   spaced by wrapping them with the :py:class:`luma.led_matrix.legacy.proportional` 
+   spaced by wrapping them with the :py:class:`luma.core.legacy.font.proportional` 
    class.
 
 Scrolling / Virtual viewports
