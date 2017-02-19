@@ -22,7 +22,7 @@ setup(
     download_url="https://github.com/rm-hull/luma.led_matrix/tarball/" + version,
     namespace_packages=["luma"],
     packages=["luma.led_matrix"],
-    install_requires=["luma.core>=0.3.0", "ws2812"],
+    install_requires=["luma.core>=0.3.1", "ws2812"],
     setup_requires=["pytest-runner"],
     tests_require=["mock", "pytest", "pytest-cov", "python-coveralls"],
     zip_safe=False,
