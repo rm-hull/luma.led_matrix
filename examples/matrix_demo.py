@@ -34,7 +34,7 @@ def demo(n, block_orientation):
         "India", "November", "Golf", " "
     ]
 
-    virtual = viewport(device, width=64, height=len(words) * 8)
+    virtual = viewport(device, width=device.width, height=len(words) * 8)
     with canvas(virtual) as draw:
         for i, word in enumerate(words):
             text(draw, (0, i * 8), text=word, fill="white", font=proportional(CP437_FONT))
