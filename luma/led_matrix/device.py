@@ -63,6 +63,8 @@ class max7219(device):
         self.cascaded = cascaded or width // 8
         assert(block_orientation in ["horizontal", "vertical"])
         self._block_orientation = block_orientation
+        self._offsets = list(range((self.cascaded - 1) * 8, -8, -8))
+        self._rows = list(range(self._h))
 
         self.data([self._const.SCANLIMIT, 7] * self.cascaded)
         self.data([self._const.DECODEMODE, 0] * self.cascaded)
@@ -100,18 +102,31 @@ class max7219(device):
 
         image = self.preprocess(image)
 
-        for digit in range(8):
-            buf = []
-            for daisychained_device in reversed(list(range(self.cascaded))):
-                byte = 0
-                x = (daisychained_device * 8) + digit
-                for y in range(self._h):
-                    pixel = image.getpixel((x, y))
-                    if pixel > 0:
-                        byte |= 1 << y
+        i = 0
+        d0 = self._const.DIGIT_0
+        step = 2 * self.cascaded
+        offsets = self._offsets
+        rows = self._rows
 
-                buf += [digit + self._const.DIGIT_0, byte]
-            self.data(buf)
+        buf = bytearray(8 * step)
+        pix = list(image.getdata())
+
+        for digit in range(8):
+            for daisychained_device in offsets:
+                byte = 0
+                idx = daisychained_device + digit
+                for y in rows:
+                    if pix[idx] > 0:
+                        byte |= 1 << y
+                    idx += self._w
+
+                buf[i] = digit + d0
+                buf[i + 1] = byte
+                i += 2
+
+        buf = list(buf)
+        for i in range(0, len(buf), step):
+            self.data(buf[i:i + step])
 
     def contrast(self, value):
         """
