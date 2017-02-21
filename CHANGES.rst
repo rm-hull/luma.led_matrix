@@ -4,7 +4,9 @@ ChangeLog
 +------------+------------------------------------------------------------------------+------------+
 | Version    | Description                                                            | Date       |
 +============+========================================================================+============+
-| *Upcoming* | * Huge performance improvements for cascaded MAX7219 devices           |            |
+| *Upcoming* | *TBC*                                                                  |            |
++------------+------------------------------------------------------------------------+------------+
+| **0.5.3**  | * Huge performance improvements for cascaded MAX7219 devices           | 2017/02/21 |
 +------------+------------------------------------------------------------------------+------------+
 | **0.5.2**  | * Add apostrophe representation to seven-segment display               | 2017/02/19 |
 |            | * Deprecate ``luma.led_matrix.legacy`` (moved to ``luma.core.legacy``) |            |
