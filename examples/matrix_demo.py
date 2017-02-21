@@ -12,7 +12,7 @@ from luma.core.serial import spi, noop
 from luma.core.render import canvas
 from luma.core.virtual import viewport
 from luma.core.legacy import text, show_message
-from luma.core.legacy.font import proportional, CP437_FONT, TINY_FONT, SINCLAIR_FONT
+from luma.core.legacy.font import proportional, CP437_FONT, TINY_FONT, SINCLAIR_FONT, LCD_FONT
 
 
 def demo(n, block_orientation):
@@ -26,6 +26,21 @@ def demo(n, block_orientation):
     print(msg)
     show_message(device, msg, fill="white", font=proportional(CP437_FONT))
     time.sleep(1)
+
+    msg = "Fast scrolling: Lorem ipsum dolor sit amet, consectetur adipiscing\
+    elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut\
+    enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut\
+    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in\
+    voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint\
+    occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit\
+    anim id est laborum."
+    msg = re.sub(" +", " ", msg)
+    print(msg)
+    show_message(device, msg, fill="white", font=proportional(LCD_FONT), scroll_delay=0)
+
+    msg = "Slow scrolling: The quick brown fox jumps over the lazy dog"
+    print(msg)
+    show_message(device, msg, fill="white", font=proportional(LCD_FONT), scroll_delay=0.1)
 
     print("Vertical scrolling")
     words = [
