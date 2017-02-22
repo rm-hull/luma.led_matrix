@@ -95,7 +95,7 @@ def test_contrast():
     serial.data.assert_called_once_with([10, 6] * 6)
 
 
-def test_display():
+def test_display_16x8():
     device = max7219(serial, cascaded=2)
     serial.reset_mock()
 
@@ -111,6 +111,25 @@ def test_display():
         call([6, 0x81, 6, 0x81]),
         call([7, 0x81, 7, 0x81]),
         call([8, 0xFF, 8, 0x81])
+    ])
+
+
+def test_display_16x16():
+    device = max7219(serial, width=16, height=16)
+    serial.reset_mock()
+
+    with canvas(device) as draw:
+        draw.rectangle(device.bounding_box, outline="white")
+
+    serial.data.assert_has_calls([
+        call([1, 0x80, 1, 0xFF, 1, 0x01, 1, 0xFF]),
+        call([2, 0x80, 2, 0x80, 2, 0x01, 2, 0x01]),
+        call([3, 0x80, 3, 0x80, 3, 0x01, 3, 0x01]),
+        call([4, 0x80, 4, 0x80, 4, 0x01, 4, 0x01]),
+        call([5, 0x80, 5, 0x80, 5, 0x01, 5, 0x01]),
+        call([6, 0x80, 6, 0x80, 6, 0x01, 6, 0x01]),
+        call([7, 0x80, 7, 0x80, 7, 0x01, 7, 0x01]),
+        call([8, 0xFF, 8, 0x80, 8, 0xFF, 8, 0x01])
     ])
 
 

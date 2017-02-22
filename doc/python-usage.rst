@@ -160,9 +160,9 @@ horizontally, running left to right.
 
 Alternatively, the device configuration may configured with ``width=W`` and
 ``height=H``. These dimensions denote the number of LEDs in the all the
-daisychained devices. The width *must* be a multiple of 8, and currently,
-height *must* only be 8. This has future scope for arranging in blocks in, say
-3x3 or 5x2 matrices.
+daisychained devices. The width and height *must* both be multiples of 8: this
+has scope for arranging in blocks in, say 3x3 or 5x2 matrices (24x24 or 40x16
+pixels, respectively).
 
 .. code:: python
 
