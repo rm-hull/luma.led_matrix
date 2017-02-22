@@ -54,17 +54,17 @@ class max7219(device):
 
         self.capabilities(width, height, rotate)
 
-        # Currently only allow a strip of matrices
-        # TODO: Future enhancement - allow blocks, e.g 40x16 (5x2 blocks)
-        if width % 8 != 0 or height != 8:
+        if width <= 0 or width % 8 != 0 or height <= 0 or height % 8 != 0:
             raise luma.core.error.DeviceDisplayModeError(
                 "Unsupported display mode: {0} x {1}".format(width, height))
 
-        self.cascaded = cascaded or width // 8
+        self.cascaded = cascaded or (width * height) // 64
         assert(block_orientation in ["horizontal", "vertical"])
         self._block_orientation = block_orientation
-        self._offsets = list(range((self.cascaded - 1) * 8, -8, -8))
-        self._rows = list(range(self._h))
+        self._offsets = [(y * self._w) + x
+                         for y in range(self._h - 8, -8, -8)
+                         for x in range(self._w - 8, -8, -8)]
+        self._rows = list(range(8))
 
         self.data([self._const.SCANLIMIT, 7] * self.cascaded)
         self.data([self._const.DECODEMODE, 0] * self.cascaded)
