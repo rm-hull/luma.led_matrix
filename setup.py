@@ -14,7 +14,7 @@ def read_file(fname):
     with open(os.path.join(os.path.dirname(__file__), fname)) as r:
         return r.read()
 
-    
+
 README = read_file("README.rst")
 CONTRIB = read_file("CONTRIBUTING.rst")
 CHANGES = read_file("CHANGES.rst")
