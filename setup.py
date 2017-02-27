@@ -35,7 +35,7 @@ setup(
     packages=["luma.led_matrix"],
     install_requires=["luma.core>=0.3.1", "ws2812"],
     setup_requires=pytest_runner,
-    tests_require=["mock", "pytest", "pytest-cov", "python-coveralls"],
+    tests_require=["mock", "pytest", "pytest-cov"],
     extras_require={
         'docs': [
             'sphinx >= 1.5.1'
