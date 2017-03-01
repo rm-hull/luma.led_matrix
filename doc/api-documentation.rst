@@ -5,7 +5,7 @@ API Documentation
     :undoc-members:
     :show-inheritance:
 
-.. inheritance-diagram:: luma.core.device luma.core.mixin luma.core.virtual luma.emulator.device luma.led_matrix.device
+.. inheritance-diagram:: luma.core.device luma.core.mixin luma.core.virtual luma.led_matrix.device
 
 Breaking changes
 """"""""""""""""
