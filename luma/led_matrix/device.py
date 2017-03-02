@@ -37,6 +37,9 @@ from luma.led_matrix.segment_mapper import dot_muncher
 from luma.led_matrix.helpers import mutable_string, observable
 
 
+__all__ = ["max7219", "neopixel"]
+
+
 class max7219(device):
     """
     Encapsulates the serial interface to a series of 8x8 LED matrixes
