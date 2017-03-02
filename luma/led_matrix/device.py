@@ -47,7 +47,8 @@ class max7219(device):
     sequence is pumped to the display to properly configure it. Further control
     commands can then be called to affect the brightness and other settings.
     """
-    def __init__(self, serial_interface=None, width=8, height=8, cascaded=None, rotate=0, block_orientation="horizontal"):
+    def __init__(self, serial_interface=None, width=8, height=8, cascaded=None, rotate=0,
+                 block_orientation="horizontal", **kwargs):
         super(max7219, self).__init__(luma.led_matrix.const.max7219, serial_interface)
 
         # Derive (override) the width and height if a cascaded param supplied
@@ -242,7 +243,7 @@ class neopixel(device):
     :type mapping: int[]
     """
     def __init__(self, dma_interface=None, width=8, height=4, cascaded=None,
-                 rotate=0, mapping=None):
+                 rotate=0, mapping=None, **kwargs):
         super(neopixel, self).__init__(const=None, serial_interface=noop)
 
         # Derive (override) the width and height if a cascaded param supplied
