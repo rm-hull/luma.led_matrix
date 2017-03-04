@@ -164,17 +164,29 @@ daisychained devices. The width and height *must* both be multiples of 8: this
 has scope for arranging in blocks in, say 3x3 or 5x2 matrices (24x24 or 40x16
 pixels, respectively).
 
+Given 12 daisychained MAX7219's arranged in a 4x3 layout, the simple example 
+below,
+
 .. code:: python
 
    from luma.core.serial import spi, noop
    from luma.core.render import canvas
    from luma.led_matrix.device import max7219
+   from luma.core.legacy.font import proportional, LCD_FONT
 
-   serial = spi(port=0, device=0, gpio=noop())
-   device = max7219(serial, width=24, height=8)
+   serial = spi(port=0, device=0, gpio=noop(), block_orientation="vertical")
+   device = max7219(serial, width=32, height=24)
 
    with canvas(device) as draw:
-      draw.rectangle(device.bounding_box, outline="white", fill="black")
+      draw.rectangle(device.bounding_box, outline="white")
+      text(draw, (2, 2), "Hello", fill="white", font=proportional(LCD_FONT))
+      text(draw, (2, 10), "World", fill="white", font=proportional(LCD_FONT))
+
+displays as:
+
+.. image:: images/box_helloworld.jpg
+   :alt: box helloworld
+
 
 Trouble-shooting / common problems
 """"""""""""""""""""""""""""""""""
