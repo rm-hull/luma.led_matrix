@@ -7,7 +7,7 @@ import pytest
 import os.path
 
 from PIL import Image, ImageChops
-from luma.led_matrix.device import sevensegment
+from luma.led_matrix.virtual import sevensegment
 from luma.core.device import dummy
 
 

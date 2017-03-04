@@ -11,7 +11,7 @@ A horizontal scrolling demo, only really suitable for 7-segment LED displays.
 import time
 from luma.core.emulator import pygame
 from luma.core.virtual import viewport
-from luma.led_matrix.device import sevensegment
+from luma.led_matrix.virtual import sevensegment
 
 
 blurb = """

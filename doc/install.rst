@@ -139,7 +139,7 @@ matrices::
                           (default: horizontal)
 
 Similarly, there is a basic demo of the capabilities of the
-:py:class:`luma.led_matrix.device.sevensegment` wrapper::
+:py:class:`luma.led_matrix.virtual.sevensegment` wrapper::
 
   $ python examples/sevensegment_demo.py
 

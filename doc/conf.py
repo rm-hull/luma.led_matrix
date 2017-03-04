@@ -272,5 +272,6 @@ texinfo_documents = [
 intersphinx_mapping = {
     'python': ('https://docs.python.org/2', None),
     'pillow': ('https://pillow.readthedocs.io/en/latest', None),
-    'luma.core': ('https://luma-core.readthedocs.io/en/latest', None)
+    'luma.core': ('https://luma-core.readthedocs.io/en/latest', None),
+    'luma.emulator': ('https://luma-emulator.readthedocs.io/en/latest', None)
 }

@@ -5,7 +5,7 @@ API Documentation
     :undoc-members:
     :show-inheritance:
 
-.. inheritance-diagram:: luma.core.device luma.core.mixin luma.core.virtual luma.led_matrix.device
+.. inheritance-diagram:: luma.core.device luma.core.mixin luma.core.virtual luma.led_matrix.device luma.led_matrix.virtual
 
 Breaking changes
 """"""""""""""""
@@ -31,17 +31,9 @@ Breaking changes
     :undoc-members:
     :show-inheritance:
 
-:mod:`luma.led_matrix.helpers`
+:mod:`luma.led_matrix.virtual`
 """"""""""""""""""""""""""""""
-.. automodule:: luma.led_matrix.helpers
-    :members:
-    :inherited-members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`luma.led_matrix.segment_mapper`
-"""""""""""""""""""""""""""""""""""""
-.. automodule:: luma.led_matrix.segment_mapper
+.. automodule:: luma.led_matrix.virtual
     :members:
     :inherited-members:
     :undoc-members:
