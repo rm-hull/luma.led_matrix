@@ -104,7 +104,7 @@ Color Model
 Any of the standard :mod:`PIL.ImageColor` color formats may be used, but since
 the 8x8 LED Matrices are monochrome, only the HTML color names :py:const:`"black"` and
 :py:const:`"white"` values should really be used; in fact, by default, any value
-*other* than black is treated as white. The :py:class:`luma.core.canvas`
+*other* than black is treated as white. The :py:class:`luma.core.render.canvas`
 constructor does have a :py:attr:`dither` flag which if set to
 :py:const:`True`, will convert color drawings to a dithered monochrome effect.
 
