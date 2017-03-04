@@ -1,9 +1,9 @@
 Introduction
 ------------
 Python library interfacing LED matrix displays with the MAX7219 driver (using
-SPI) and WS2812 NeoPixels (using DMA) on the Raspberry Pi and other linux-based
-single board computers - it provides a Pillow-compatible drawing canvas, and
-other functionality to support:
+SPI), WS2812 NeoPixels (using DMA) and TM1637 on the Raspberry Pi and other
+linux-based single board computers - it provides a Pillow-compatible drawing
+canvas, and other functionality to support:
 
 * multiple cascaded devices
 * LED matrix, seven-segment and NeoPixel variants
@@ -29,3 +29,4 @@ or `Ebay <http://www.ebay.com/itm/-/172317726225>`_.
    - :download:`MAX7219 <tech-spec/MAX7219.pdf>`
    - :download:`WS2812 <tech-spec/WS2812.pdf>`
    - :download:`WS2812B <tech-spec/WS2812B.pdf>`
+   - :download:`TM1637 <tech-spec/TM1637.pdf>`

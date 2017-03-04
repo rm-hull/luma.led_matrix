@@ -7,7 +7,7 @@ luma.led_matrix **|**
 
 Luma.LED_Matrix 
 ===============
-**Display drivers for MAX7219, WS2812**
+**Display drivers for MAX7219, WS2812, TM1637**
 
 .. image:: https://travis-ci.org/rm-hull/luma.led_matrix.svg?branch=master
    :target: https://travis-ci.org/rm-hull/luma.led_matrix
@@ -26,10 +26,11 @@ Luma.LED_Matrix
 
 .. image:: https://img.shields.io/maintenance/yes/2017.svg?maxAge=2592000
 
-Python library interfacing LED matrix displays with the MAX7219 driver (using
-SPI) and WS2812 NeoPixels (using DMA) on the Raspberry Pi and other linux-based
-single board computers - it provides a Pillow-compatible drawing canvas, and
-other functionality to support:
+Python library interfacing LED matrix and 8-character seven-segment displays
+with the MAX7219 driver, WS2812/WS2812B NeoPixels, 4-character seven-segment
+displays with TM1637 on the Raspberry Pi and other linux-based single board
+computers - it provides a Pillow-compatible drawing canvas, and other
+functionality to support:
 
 * multiple cascaded devices
 * LED matrix, seven-segment and NeoPixel variants

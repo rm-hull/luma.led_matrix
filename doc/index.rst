@@ -1,5 +1,5 @@
-Luma.LED_Matrix: Display drivers for MAX7219
-============================================
+Luma.LED_Matrix: Display drivers for MAX7219, NeoPixel and TM1637
+=================================================================
 .. image:: https://travis-ci.org/rm-hull/luma.led_matrix.svg?branch=master
    :target: https://travis-ci.org/rm-hull/luma.led_matrix
 

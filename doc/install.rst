@@ -45,10 +45,10 @@ taken from https://learn.sparkfun.com/tutorials/raspberry-pi-spi-and-i2c-tutoria
 .. image:: images/raspi-spi.png
 
 After rebooting re-check that the ``lsmod | grep -i spi`` command shows whether
-SPI driver is loaded before proceeding. If you are stil experiencing problems, refer to the official 
-Raspberry Pi `SPI troubleshooting guide <https://www.raspberrypi.org/documentation/hardware/raspberrypi/spi/README.md#troubleshooting>`_
-for further details, or ask a `new question <https://github.com/rm-hull/luma.led_matrix/issues/new>`_ - but
-please remember to add as much detail as possible.
+SPI driver is loaded before proceeding. If you are stil experiencing problems,
+refer to the official Raspberry Pi `SPI troubleshooting guide <https://www.raspberrypi.org/documentation/hardware/raspberrypi/spi/README.md#troubleshooting>`_
+for further details, or ask a `new question <https://github.com/rm-hull/luma.led_matrix/issues/new>`_ 
+- but please remember to add as much detail as possible.
 
 GPIO pin-outs
 ^^^^^^^^^^^^^
@@ -90,6 +90,11 @@ Board Pin    Name   Remarks       RPi Pin   RPi Function
 The DO pin should be connected to the DI pin on the next (daisy-chained)
 neopixel, while the VCC and VSS are supplied in-parallel to all LED's.
 WS2812b devices now are becoming more prevalent, and only have 4 pins.
+
+TM1637
+""""""
+> TODO
+
 
 Installing from PyPi
 ^^^^^^^^^^^^^^^^^^^^

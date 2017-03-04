@@ -54,7 +54,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Luma.LED_Matrix: Display driver for MAX7219, WS2812'
+project = u'Luma.LED_Matrix: Display driver for MAX7219, WS2812, TM1637'
 copyright = u'2015-{0}, Richard Hull'.format(datetime.now().year)
 
 # The version info for the project you're documenting, acts as replacement for
