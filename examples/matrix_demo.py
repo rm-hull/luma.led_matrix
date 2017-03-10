@@ -52,7 +52,7 @@ def demo(n, block_orientation):
     virtual = viewport(device, width=device.width, height=len(words) * 8)
     with canvas(virtual) as draw:
         for i, word in enumerate(words):
-            text(draw, (0, i * 8), text=word, fill="white", font=proportional(CP437_FONT))
+            text(draw, (0, i * 8), word, fill="white", font=proportional(CP437_FONT))
 
     for i in range(virtual.height - device.height):
         virtual.set_position((0, i))
@@ -64,7 +64,7 @@ def demo(n, block_orientation):
 
     time.sleep(1)
     with canvas(device) as draw:
-        text(draw, (0, 0), text="A", fill="white")
+        text(draw, (0, 0), "A", fill="white")
 
     time.sleep(1)
     for _ in range(5):
@@ -102,7 +102,7 @@ def demo(n, block_orientation):
     time.sleep(1)
     for x in range(256):
         with canvas(device) as draw:
-            text(draw, (0, 0), text=chr(x), fill="white")
+            text(draw, (0, 0), chr(x), fill="white")
             time.sleep(0.1)
 
 
