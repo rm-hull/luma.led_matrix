@@ -26,6 +26,7 @@ def demo(w, h, block_orientation, rotate):
 
     time.sleep(300)
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='matrix_demo arguments',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
