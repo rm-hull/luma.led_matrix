@@ -50,11 +50,11 @@ garbage collected.
 
    .. code:: python
 
-     from luma.core.legacy import text
+     from luma.core import legacy
      from luma.core.legacy.font import proportional, CP437_FONT, LCD_FONT
 
      with canvas(device) as draw:
-        text(draw, text="A", fill="white", font=proportional(CP437_FONT))
+        legacy.text(draw, (0, 0), "A", fill="white", font=proportional(CP437_FONT))
 
    The fixed-width fonts can be "converted" on-the-fly to proportionally
    spaced by wrapping them with the :py:class:`luma.core.legacy.font.proportional` 
@@ -85,7 +85,7 @@ scrolling support:
 
    with canvas(virtual) as draw:
        draw.rectangle(device.bounding_box, outline="white", fill="black")
-       draw.text((3, 3), text="Hello world", fill="white")
+       draw.text((3, 3), "Hello world", fill="white")
 
    for offset in range(8):
        virtual.set_position((offset, offset))
