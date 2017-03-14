@@ -3,14 +3,11 @@
 # Copyright (c) 2014-17 Richard Hull and contributors
 # See LICENSE.rst for details.
 
-
-try:
-    from unittest.mock import call, Mock
-except ImportError:
-    from mock import call, Mock
-
 from luma.led_matrix.device import neopixel
 from luma.core.render import canvas
+
+from helpers import Mock, call
+
 
 ws2812 = Mock(unsafe=True)
 

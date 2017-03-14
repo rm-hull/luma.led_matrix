@@ -4,11 +4,12 @@
 # See LICENSE.rst for details.
 
 import pytest
-import os.path
 
 from PIL import Image, ImageChops
 from luma.led_matrix.virtual import sevensegment
 from luma.core.device import dummy
+
+from helpers import get_reference_image
 
 
 def test_init():
@@ -18,7 +19,6 @@ def test_init():
 
 
 def test_overflow():
-
     device = dummy(width=24, height=8, mode="1")
     seg = sevensegment(device)
     with pytest.raises(OverflowError) as ex:
@@ -27,16 +27,14 @@ def test_overflow():
 
 
 def test_setter_getter():
-    reference = Image.open(
-        os.path.abspath(os.path.join(
-            os.path.dirname(__file__),
-            'reference',
-            'golden_ratio.png')))
+    img_path = get_reference_image('golden_ratio.png')
 
-    device = dummy(width=24, height=8)
-    seg = sevensegment(device)
-    seg.text = "1.61803398875"
-    assert str(seg.text) == "1.61803398875"
+    with open(img_path, 'rb') as img:
+        reference = Image.open(img)
+        device = dummy(width=24, height=8)
+        seg = sevensegment(device)
+        seg.text = "1.61803398875"
+        assert str(seg.text) == "1.61803398875"
 
-    bbox = ImageChops.difference(reference, device.image).getbbox()
-    assert bbox is None
+        bbox = ImageChops.difference(reference, device.image).getbbox()
+        assert bbox is None

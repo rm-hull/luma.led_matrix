@@ -3,23 +3,12 @@
 # Copyright (c) 2014-17 Richard Hull and contributors
 # See LICENSE.rst for details.
 
-
-try:
-    from unittest.mock import call, Mock
-except ImportError:
-    from mock import call, Mock
-
 import pytest
-import luma.core.error
+
 from luma.led_matrix.device import max7219
 from luma.core.render import canvas
 
-serial = Mock(unsafe=True)
-
-
-def setup_function(function):
-    serial.reset_mock()
-    serial.command.side_effect = None
+from helpers import setup_function, serial, call, assert_invalid_dimensions  # noqa: F401
 
 
 def test_init_cascaded():
@@ -69,9 +58,7 @@ def test_init_16x8():
 
 
 def test_init_invalid_dimensions():
-    with pytest.raises(luma.core.error.DeviceDisplayModeError) as ex:
-        max7219(serial, width=59, height=22)
-    assert "Unsupported display mode: 59 x 22" in str(ex.value)
+    assert_invalid_dimensions(max7219, serial, 59, 22)
 
 
 def test_hide():
