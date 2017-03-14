@@ -12,5 +12,3 @@ deprecation_msg = ("WARNING! 'luma.led_matrix.legacy' is now deprecated and will
       "v1.0.0. Please use the equivalent functionality from "
       "'luma.core.legacy' and 'luma.core.legacy.font'.")
 deprecation(deprecation_msg)
-
-pass
