@@ -4,6 +4,7 @@
 # See LICENSE.rst for details.
 
 import pytest
+import warnings
 
 from luma.led_matrix.device import max7219
 from luma.core.render import canvas
@@ -121,7 +122,7 @@ def test_display_16x16():
 
 
 def test_normal_alignment():
-    device = max7219(serial, cascaded=2, block_orientation="horizontal")
+    device = max7219(serial, cascaded=2, block_orientation=0)
     serial.reset_mock()
 
     with canvas(device) as draw:
@@ -139,8 +140,8 @@ def test_normal_alignment():
     ])
 
 
-def test_block_realignment():
-    device = max7219(serial, cascaded=2, block_orientation="vertical")
+def test_block_realignment_minus90():
+    device = max7219(serial, cascaded=2, block_orientation=-90)
     serial.reset_mock()
 
     with canvas(device) as draw:
@@ -158,6 +159,32 @@ def test_block_realignment():
     ])
 
 
+def test_block_realignment_plus90():
+    device = max7219(serial, cascaded=2, block_orientation=90)
+    serial.reset_mock()
+
+    with canvas(device) as draw:
+        draw.rectangle((0, 0, 15, 3), outline="white")
+
+    serial.data.assert_has_calls([
+        call([1, 0xFF, 1, 0xFF]),
+        call([2, 0x01, 2, 0x80]),
+        call([3, 0x01, 3, 0x80]),
+        call([4, 0xFF, 4, 0xFF]),
+        call([5, 0x00, 5, 0x00]),
+        call([6, 0x00, 6, 0x00]),
+        call([7, 0x00, 7, 0x00]),
+        call([8, 0x00, 8, 0x00])
+    ])
+
+
 def test_unknown_block_orientation():
     with pytest.raises(AssertionError):
         max7219(serial, cascaded=2, block_orientation="sausages")
+
+
+def test_deprecated_block_orientation(recwarn):
+    warnings.simplefilter('always')
+    max7219(serial, cascaded=2, block_orientation="vertical")
+    max7219(serial, cascaded=2, block_orientation="horizontal")
+    assert len(recwarn) == 2

@@ -179,7 +179,7 @@ below,
    from luma.led_matrix.device import max7219
    from luma.core.legacy.font import proportional, LCD_FONT
 
-   serial = spi(port=0, device=0, gpio=noop(), block_orientation="vertical")
+   serial = spi(port=0, device=0, gpio=noop(), block_orientation=-90)
    device = max7219(serial, width=32, height=24)
 
    with canvas(device) as draw:
@@ -202,8 +202,9 @@ out-of-phase such that horizontal scrolling appears as below:
 .. image:: images/block_reorientation.gif
    :alt: block alignment
 
-This can be rectified by initializing the :py:class:`~luma.led_matrix.device.max7219` 
-device with a parameter of :py:attr:`block_orientation="vertical"`:
+This can be rectified by initializing the :py:class:`~luma.led_matrix.device.max7219`
+device with a parameter of :py:attr:`block_orientation=-90` (or +90, if your device is
+aligned the other way):
 
 .. code:: python
 
@@ -212,7 +213,7 @@ device with a parameter of :py:attr:`block_orientation="vertical"`:
    from luma.led_matrix.device import max7219
 
    serial = spi(port=0, device=0, gpio=noop())
-   device = max7219(serial, cascaded=4, block_orientation="vertical")
+   device = max7219(serial, cascaded=4, block_orientation=-90)
 
 Every time a display render is subsequenly requested, the underlying image
 representation is corrected to reverse the 90° phase shift.
