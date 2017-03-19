@@ -8,7 +8,8 @@ from luma.core.legacy.font import proportional, CP437_FONT, SINCLAIR_FONT, LCD_F
 
 
 # trigger DeprecationWarning
-deprecation_msg = ("WARNING! 'luma.led_matrix.legacy' is now deprecated and will be removed in "
-      "v1.0.0. Please use the equivalent functionality from "
-      "'luma.core.legacy' and 'luma.core.legacy.font'.")
+deprecation_msg = (
+    "WARNING! 'luma.led_matrix.legacy' is now deprecated and will be removed in "
+    "v1.0.0. Please use the equivalent functionality from "
+    "'luma.core.legacy' and 'luma.core.legacy.font'.")
 deprecation(deprecation_msg)

@@ -111,7 +111,7 @@ if __name__ == "__main__":
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     parser.add_argument('--cascaded', '-n', type=int, default=1, help='Number of cascaded MAX7219 LED matrices')
-    parser.add_argument('--block-orientation', type=str, default='horizontal', choices=['horizontal', 'vertical'], help='Corrects block orientation when wired vertically')
+    parser.add_argument('--block-orientation', type=str, default=0, choices=[0, 90, -90], help='Corrects block orientation when wired vertically')
 
     args = parser.parse_args()
 

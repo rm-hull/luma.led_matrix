@@ -4,6 +4,9 @@ ChangeLog
 +------------+------------------------------------------------------------------------+------------+
 | Version    | Description                                                            | Date       |
 +============+========================================================================+============+
+| *Upcoming* | * Change MAX7219's block_orientation to support ±90° angle correction  |            |
+|            | * Deprecate "vertical" and "horizontal" block_orientation              |            |
++------------+------------------------------------------------------------------------+------------+
 | **0.7.0**  | * **BREAKING CHANGE:** Move sevensegment class to                      | 2017/03/04 |
 |            |   ``luma.led_matrix.virtual`` package                                  |            |
 |            | * Documentation updates & corrections                                  |            |

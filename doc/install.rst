@@ -126,7 +126,7 @@ matrices::
 
     $ python examples/matrix_demo.py -h
     usage: matrix_demo.py [-h] [--cascaded CASCADED]
-                          [--block-orientation {horizontal,vertical}]
+                          [--block-orientation {0, 90, -90}]
 
     matrix_demo arguments
 
@@ -134,9 +134,9 @@ matrices::
     -h, --help            show this help message and exit
     --cascaded CASCADED, -n CASCADED
                           Number of cascaded MAX7219 LED matrices (default: 1)
-    --block-orientation {horizontal,vertical}
+    --block-orientation {0, 90, -90}
                           Corrects block orientation when wired vertically
-                          (default: horizontal)
+                          (default: 0)
 
 Similarly, there is a basic demo of the capabilities of the
 :py:class:`luma.led_matrix.virtual.sevensegment` wrapper::
