@@ -4,7 +4,7 @@ ChangeLog
 +------------+------------------------------------------------------------------------+------------+
 | Version    | Description                                                            | Date       |
 +============+========================================================================+============+
-| *Upcoming* | * Change MAX7219's block_orientation to support ±90° angle correction  |            |
+| **0.8.0**  | * Change MAX7219's block_orientation to support ±90° angle correction  | 2017/03/19 |
 |            | * Deprecate "vertical" and "horizontal" block_orientation              |            |
 +------------+------------------------------------------------------------------------+------------+
 | **0.7.0**  | * **BREAKING CHANGE:** Move sevensegment class to                      | 2017/03/04 |
@@ -43,7 +43,7 @@ ChangeLog
 | **0.3.1**  | * Python 3 compatibility (fix exception in bytearray creation)         | 2017/01/20 |
 |            | * Begin to add tests & test infrastructure                             |            |
 +------------+------------------------------------------------------------------------+------------+
-| **0.3.0**  | * Package rename to ``luma.led_matrix`` (**Note:** Breaking changes)   | 2017/01/19 |
+| **0.3.0**  | * **BREKING CHANGE:** Package rename to ``luma.led_matrix``            | 2017/01/19 |
 +------------+------------------------------------------------------------------------+------------+
 | **0.2.3**  | * Bit-bang version using wiringPi                                      | 2013/01/28 |
 +------------+------------------------------------------------------------------------+------------+
