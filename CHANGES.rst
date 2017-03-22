@@ -15,7 +15,7 @@ ChangeLog
 +------------+------------------------------------------------------------------------+------------+
 | **0.6.1**  | * Restrict exported Python symbols from ``luma.led_matrix.device``     | 2017/03/02 |
 +------------+------------------------------------------------------------------------+------------+
-| **0.6.0**  | * Add support for arbitrary MxN matrices rathern than a single chain   | 2017/02/22 |
+| **0.6.0**  | * Add support for arbitrary MxN matrices rather than a single chain    | 2017/02/22 |
 +------------+------------------------------------------------------------------------+------------+
 | **0.5.3**  | * Huge performance improvements for cascaded MAX7219 devices           | 2017/02/21 |
 |            | * Documentation updates                                                |            |
@@ -37,7 +37,7 @@ ChangeLog
 | **0.3.3**  | * Fix for dot muncher: not handling full-stop at line end              | 2017/01/21 |
 |            | * Documentation updates                                                |            |
 +------------+------------------------------------------------------------------------+------------+
-| **0.3.2**  | * Replace bytearray with mutable_string implementation                 | 2017/01/20 |
+| **0.3.2**  | * Replace bytearray with ``mutable_string`` implementation             | 2017/01/20 |
 |            | * More tests                                                           |            |
 +------------+------------------------------------------------------------------------+------------+
 | **0.3.1**  | * Python 3 compatibility (fix exception in bytearray creation)         | 2017/01/20 |
