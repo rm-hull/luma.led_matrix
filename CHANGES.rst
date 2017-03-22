@@ -43,7 +43,7 @@ ChangeLog
 | **0.3.1**  | * Python 3 compatibility (fix exception in bytearray creation)         | 2017/01/20 |
 |            | * Begin to add tests & test infrastructure                             |            |
 +------------+------------------------------------------------------------------------+------------+
-| **0.3.0**  | * **BREAKING CHANGE:** Package rename to ``luma.led_matrix``            | 2017/01/19 |
+| **0.3.0**  | * **BREAKING CHANGE:** Package rename to ``luma.led_matrix``           | 2017/01/19 |
 +------------+------------------------------------------------------------------------+------------+
 | **0.2.3**  | * Bit-bang version using wiringPi                                      | 2013/01/28 |
 +------------+------------------------------------------------------------------------+------------+
