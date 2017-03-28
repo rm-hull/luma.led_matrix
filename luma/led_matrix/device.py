@@ -300,7 +300,7 @@ class apa102(device):
             height = 1
 
         self.cascaded = width * height
-        self.capabilities(width, height, rotate, mode="RGB")
+        self.capabilities(width, height, rotate, mode="RGBA")
         self._mapping = list(mapping or range(self.cascaded))
         assert(self.cascaded == len(self._mapping))
         self._last_image = None
@@ -327,9 +327,10 @@ class apa102(device):
         buf = bytearray(sz * 3)
 
         m = self._mapping
-        for idx, (r, g, b) in enumerate(image.getdata()):
+        for idx, (r, g, b, a) in enumerate(image.getdata()):
             offset = sz + m[idx] * 4
-            buf[offset] = 0xE0 | self._brightness
+            brightness = (a >> 4) if a != 255 else self._brightness
+            buf[offset] = (0xE0 | brightness)
             buf[offset + 1] = b
             buf[offset + 2] = g
             buf[offset + 3] = r
