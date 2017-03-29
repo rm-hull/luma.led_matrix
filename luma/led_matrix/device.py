@@ -315,8 +315,9 @@ class apa102(device):
 
     def display(self, image):
         """
-        Takes a 24-bit RGB :py:mod:`PIL.Image` and dumps it to the daisy-chained
-        WS2812 neopixels.
+        Takes a 32-bit RGBA :py:mod:`PIL.Image` and dumps it to the daisy-chained
+        APA102 neopixels. If a pixel is not fully opaque, the alpha channel
+        value is used to set the brightness of the respective RGB LED.
         """
         assert(image.mode == self.mode)
         assert(image.size == self.size)
@@ -329,7 +330,7 @@ class apa102(device):
         m = self._mapping
         for idx, (r, g, b, a) in enumerate(image.getdata()):
             offset = sz + m[idx] * 4
-            brightness = (a >> 4) if a != 255 else self._brightness
+            brightness = (a >> 4) if a != 0xFF else self._brightness
             buf[offset] = (0xE0 | brightness)
             buf[offset + 1] = b
             buf[offset + 2] = g
@@ -360,11 +361,3 @@ class apa102(device):
         self._brightness = value >> 4
         if self._last_image is not None:
             self.display(self._last_image)
-
-    def cleanup(self):
-        """
-        Attempt to reset the device & switching it off prior to exiting the
-        python process.
-        """
-        self.clear()
-        super(apa102, self).cleanup()
