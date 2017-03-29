@@ -259,25 +259,26 @@ used here, but note if inserted text exceeds the underlying buffer size, a
 
 Floating point numbers (or text with '.') are handled slightly differently - the
 decimal-place is fused in place on the character immediately preceding it. This
-means that it is technically possible to get more characters displayed than the 
-buffer allows, but only because dots are folded into their host character.
+means that it is technically possible to get more characters displayed than the
+buffer allows, but only because dots are folded into their host character
 
 .. image:: images/IMG_2810.JPG
    :alt: max7219 sevensegment
 
 WS2812 NeoPixels
 ^^^^^^^^^^^^^^^^
-For a strip of neopixels, initialize the :py:class:`luma.led_matrix.device.neopixel`
-class, supplying a parameter :py:attr:`cascaded=N` where *N* is the number of 
-daisy-chained LEDs. This creates a drawing surface 100 pixels long, and lights 
-up three specific pixels, and a contiguous block:
+For a strip of neopixels, initialize the :py:class:`luma.led_matrix.device.ws2812`
+class (also aliased to  :py:class:`luma.led_matrix.device.neopixel`), supplying a
+parameter :py:attr:`cascaded=N` where *N* is the number of daisy-chained LEDs.
+This creates a drawing surface 100 pixels long, and lights up three specific pixels,
+and a contiguous block:
 
 .. code:: python
 
    from luma.core.render import canvas
-   from luma.led_matrix.device import neopixel
+   from luma.led_matrix.device import ws2812
    
-   device = neopixel(cascaded=100)
+   device = ws2812(cascaded=100)
 
    with canvas(device) as draw:
        draw.point((0,0), fill="white")
@@ -291,10 +292,10 @@ initialize the device with :py:attr:`width=N` and :py:attr:`height=N` attributes
 .. code:: python
 
    from luma.core.render import canvas
-   from luma.led_matrix.device import neopixel
+   from luma.led_matrix.device import ws2812
    
    # Pimoroni's Unicorn pHat is 8x4 neopixels
-   device = neopixel(width=8, height=4)
+   device = ws2812(width=8, height=4)
 
    with canvas(device) as draw:
        draw.line((0, 0, 0, device.height), fill="red")
@@ -307,13 +308,13 @@ initialize the device with :py:attr:`width=N` and :py:attr:`height=N` attributes
        draw.line((7, 0, 7, device.height), fill="white")
 
 .. note::
-   The neopixel driver uses the `ws2812 <https://pypi.python.org/pypi/ws2812>`_
+   The ws2812 driver uses the `ws2812 <https://pypi.python.org/pypi/ws2812>`_
    PyPi package to interface to the daisychained LEDs. It uses DMA (direct memory
    access) via ``/dev/mem`` which means that it has to run in privileged mode
    (via ``sudo`` root access).
 
 The same viewport, scroll support, portrait/landscape orientation and color model
-idioms provided in luma.core are equally applicable to the neopixel implementation.
+idioms provided in luma.core are equally applicable to the ws2812 implementation.
 
 Pimoroni Unicorn HAT
 """"""""""""""""""""
@@ -326,10 +327,10 @@ a translation mapping is required, as follows:
 
     import time
 
-    from luma.led_matrix.device import neopixel, UNICORN_HAT
+    from luma.led_matrix.device import ws2812, UNICORN_HAT
     from luma.core.render import canvas
 
-    device = neopixel(width=8, height=8, mapping=UNICORN_HAT)
+    device = ws2812(width=8, height=8, mapping=UNICORN_HAT)
 
     for y in range(device.height):
         for x in range(device.width):
@@ -338,6 +339,31 @@ a translation mapping is required, as follows:
             time.sleep(0.5)
 
 This should animate a green dot moving left-to-right down each line.
+
+Next-generation APA102 NeoPixels
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+APA102 RGB neopixels are easier to control that WS2812 devices - they are driven
+using SPI rather than precise timings that the WS2812 devices need. Initialize the
+:py:class:`luma.led_matrix.device.apa102` class, supplying a parameter
+:py:attr:`cascaded=N` where *N* is the number of daisy-chained LEDs. This creates
+a drawing surface 100 pixels long, and lights up three specific pixels, and a
+contiguous block:
+
+.. code:: python
+
+   from luma.core.render import canvas
+   from luma.led_matrix.device import apa102
+   
+   device = apa102(cascaded=8)
+
+   with canvas(device) as draw:
+       draw.point((0,0), fill="white")
+       draw.point((0,1), fill="blue")
+       draw.point((0,2), fill=(0xFF, 0x00, 0x00, 0x80))  # RGBA tuple, alpha controls brightness
+
+APA102 RGB pixels can have their brightness individually controlled: by setting
+the alpha chanel to a translucency (as per the above example) will set the 
+brightness accordingly
 
 Emulators
 ^^^^^^^^^
