@@ -4,7 +4,7 @@ ChangeLog
 +------------+------------------------------------------------------------------------+------------+
 | Version    | Description                                                            | Date       |
 +============+========================================================================+============+
-| *Upcoming* | * Add support for APA102 RGB neopixels                                 |            |
+| **0.9.0**  | * Add support for APA102 RGB neopixels                                 |            |
 +------------+------------------------------------------------------------------------+------------+
 | **0.8.0**  | * Change MAX7219's block_orientation to support ±90° angle correction  | 2017/03/19 |
 |            | * Deprecate "vertical" and "horizontal" block_orientation              |            |
