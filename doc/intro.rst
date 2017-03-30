@@ -29,3 +29,4 @@ or `Ebay <http://www.ebay.com/itm/-/172317726225>`_.
    - :download:`MAX7219 <tech-spec/MAX7219.pdf>`
    - :download:`WS2812 <tech-spec/WS2812.pdf>`
    - :download:`WS2812B <tech-spec/WS2812B.pdf>`
+   - :download:`APA102 <tech-spec/APA102.pdf>`
