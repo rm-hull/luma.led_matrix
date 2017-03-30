@@ -35,7 +35,7 @@ import luma.core.error
 import luma.led_matrix.const
 
 
-__all__ = ["max7219", "neopixel"]
+__all__ = ["max7219", "ws2812", "neopixel", "apa102"]
 
 
 class max7219(device):
@@ -173,7 +173,7 @@ class max7219(device):
         self.data([self._const.SHUTDOWN, 0] * self.cascaded)
 
 
-class neopixel(device):
+class ws2812(device):
     """
     Encapsulates the serial interface to a series of RGB neopixels
     daisy-chained together with WS281x chips. On creation, the array is
@@ -198,10 +198,12 @@ class neopixel(device):
         pixel to physical offsets. If supplied, should be the same size as
         ``width * height``
     :type mapping: int[]
+
+    .. versionadded:: 0.4.0
     """
     def __init__(self, dma_interface=None, width=8, height=4, cascaded=None,
                  rotate=0, mapping=None, **kwargs):
-        super(neopixel, self).__init__(const=None, serial_interface=noop)
+        super(ws2812, self).__init__(const=None, serial_interface=noop)
 
         # Derive (override) the width and height if a cascaded param supplied
         if cascaded is not None:
@@ -267,9 +269,12 @@ class neopixel(device):
         Attempt to reset the device & switching it off prior to exiting the
         python process.
         """
-        super(neopixel, self).cleanup()
+        super(ws2812, self).cleanup()
         self._ws2812.terminate()
 
+
+# Alias for ws2812
+neopixel = ws2812
 
 # 8x8 Unicorn HAT has a 'snake-like' layout, so this translation
 # mapper linearizes that arrangement into a 'scan-like' layout.
@@ -283,3 +288,107 @@ UNICORN_HAT = [
     55, 54, 53, 52, 51, 50, 49, 48,
     56, 57, 58, 59, 60, 61, 62, 63
 ]
+
+
+class apa102(device):
+    """
+    Encapsulates the serial interface to a series of 'next-gen' RGB neopixels
+    daisy-chained together with APA102 chips. On creation, the array is
+    initialized with the correct number of cascaded devices. Further control
+    commands can then be called to affect the brightness and other settings.
+
+    Note that the brightness of individual pixels can be set by altering the
+    alpha channel of the RGBA image that is being displayed.
+
+    :param serial_interface: The serial interface to write to (usually omit this
+        parameter and it will default to the correct value - it is only needed
+        for testing whereby a mock implementation is supplied)
+    :param width: The number of pixels laid out horizontally
+    :type width: int
+    :param height: The number of pixels laid out vertically
+    :type width: int
+    :param cascaded: The number of pixels in a single strip - if supplied, this
+        will override ``width`` and ``height``.
+    :type width: int
+    :param rotate: Whether the device dimenstions should be rotated in-situ:
+        A value of: 0=0°, 1=90°, 2=180°, 3=270°. If not supplied, zero is
+        assumed.
+    :type rotate: int
+    :param mapping: An (optional) array of integer values that translate the
+        pixel to physical offsets. If supplied, should be the same size as
+        ``width * height``
+    :type mapping: int[]
+
+    .. versionadded:: 0.9.0
+    """
+    def __init__(self, serial_interface=None, width=8, height=1, cascaded=None,
+                 rotate=0, mapping=None, **kwargs):
+        super(apa102, self).__init__(luma.core.const.common, serial_interface or self.__bitbang__())
+
+        # Derive (override) the width and height if a cascaded param supplied
+        if cascaded is not None:
+            width = cascaded
+            height = 1
+
+        self.cascaded = width * height
+        self.capabilities(width, height, rotate, mode="RGBA")
+        self._mapping = list(mapping or range(self.cascaded))
+        assert(self.cascaded == len(self._mapping))
+        self._last_image = None
+
+        self.contrast(0x70)
+        self.clear()
+        self.show()
+
+    def __bitbang__(self):
+        from luma.core.serial import bitbang
+        return bitbang(SCLK=24, SDA=23)
+
+    def display(self, image):
+        """
+        Takes a 32-bit RGBA :py:mod:`PIL.Image` and dumps it to the daisy-chained
+        APA102 neopixels. If a pixel is not fully opaque, the alpha channel
+        value is used to set the brightness of the respective RGB LED.
+        """
+        assert(image.mode == self.mode)
+        assert(image.size == self.size)
+        self._last_image = image.copy()
+
+        # Send zeros to reset, then pixel values then zeros at end
+        sz = image.width * image.height * 4
+        buf = bytearray(sz * 3)
+
+        m = self._mapping
+        for idx, (r, g, b, a) in enumerate(image.getdata()):
+            offset = sz + m[idx] * 4
+            brightness = (a >> 4) if a != 0xFF else self._brightness
+            buf[offset] = (0xE0 | brightness)
+            buf[offset + 1] = b
+            buf[offset + 2] = g
+            buf[offset + 3] = r
+
+        self._serial_interface.data(list(buf))
+
+    def show(self):
+        """
+        Not supported
+        """
+        pass
+
+    def hide(self):
+        """
+        Not supported
+        """
+        pass
+
+    def contrast(self, value):
+        """
+        Sets the LED intensity to the desired level, in the range 0-255.
+
+        :param level: Desired contrast level in the range of 0-255.
+        :type level: int
+        """
+        assert(0 <= value <= 255)
+        self._brightness = value >> 4
+        if self._last_image is not None:
+            self.display(self._last_image)
