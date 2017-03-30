@@ -270,8 +270,9 @@ WS2812 NeoPixels
 For a strip of neopixels, initialize the :py:class:`luma.led_matrix.device.ws2812`
 class (also aliased to  :py:class:`luma.led_matrix.device.neopixel`), supplying a
 parameter :py:attr:`cascaded=N` where *N* is the number of daisy-chained LEDs.
-This creates a drawing surface 100 pixels long, and lights up three specific pixels,
-and a contiguous block:
+
+This script creates a drawing surface 100 pixels long, and lights up three specific 
+pixels, and a contiguous block:
 
 .. code:: python
 
@@ -345,9 +346,10 @@ Next-generation APA102 NeoPixels
 APA102 RGB neopixels are easier to control that WS2812 devices - they are driven
 using SPI rather than precise timings that the WS2812 devices need. Initialize the
 :py:class:`luma.led_matrix.device.apa102` class, supplying a parameter
-:py:attr:`cascaded=N` where *N* is the number of daisy-chained LEDs. This creates
-a drawing surface 100 pixels long, and lights up three specific pixels, and a
-contiguous block:
+:py:attr:`cascaded=N` where *N* is the number of daisy-chained LEDs. 
+
+The following script creates a drawing surface 8 pixels long, and lights up three 
+specific pixels:
 
 .. code:: python
 
@@ -362,8 +364,8 @@ contiguous block:
        draw.point((0,2), fill=(0xFF, 0x00, 0x00, 0x80))  # RGBA tuple, alpha controls brightness
 
 APA102 RGB pixels can have their brightness individually controlled: by setting
-the alpha chanel to a translucency (as per the above example) will set the 
-brightness accordingly
+the alpha chanel to a translucent value (as per the above example) will set the 
+brightness accordingly.
 
 Emulators
 ^^^^^^^^^
