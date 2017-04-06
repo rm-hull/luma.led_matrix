@@ -55,7 +55,10 @@ or `Ebay <http://www.ebay.com/itm/-/172317726225>`_.
 
 .. image:: https://raw.githubusercontent.com/rm-hull/luma.led_matrix/master/doc/images/matrix_cascaded.jpg
    :alt: max7219 cascaded
-   
+ 
+.. image:: https://raw.githubusercontent.com/rm-hull/luma.led_matrix/master/doc/images/box_helloworld.jpg
+   :alt: max7219 box
+     
 .. image:: https://raw.githubusercontent.com/rm-hull/luma.led_matrix/master/doc/images/emulator.gif
    :alt: max7219 emulator
 
