@@ -41,6 +41,10 @@ other functionality to support:
 * pygame emulator,
 * Python 2.7 and 3.4+ are both supported
 
+Documentation
+-------------
+Full documentation with installation instructions and examples can be found on https://luma-led-matrix.readthedocs.io.
+
 .. image:: https://raw.githubusercontent.com/rm-hull/luma.led_matrix/master/doc/images/devices.jpg
    :alt: max7219 matrix
 
@@ -75,10 +79,6 @@ updates or fixes.
 
 The consequence is that any existing code that uses the old **max7219** package
 should probably be updated. 
-
-Documentation
--------------
-Full documentation with installation instructions and examples can be found on https://luma-led-matrix.readthedocs.io.
 
 License
 -------
