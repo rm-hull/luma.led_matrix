@@ -9,10 +9,9 @@ A horizontal scrolling demo, only really suitable for 7-segment LED displays.
 """
 
 import time
-from luma.core.emulator import pygame
-from luma.core.virtual import viewport
-from luma.led_matrix.virtual import sevensegment
-
+from luma.emulator.device import pygame
+from luma.core.virtual import viewport, sevensegment
+from luma.led_matrix.segment_mapper import dot_muncher
 
 blurb = """
 Have you ever been to American wedding?
@@ -59,7 +58,7 @@ Just doesn't come to mind
 def main():
     device = pygame(width=24, height=8, transform="sevensegment", scale=1)
     virtual = viewport(device, width=1024, height=8)
-    seg = sevensegment(virtual)
+    seg = sevensegment(virtual, segment_mapper=dot_muncher)
 
     for line in blurb.split("\n"):
         seg.text = (" " * device.width) + line

@@ -33,6 +33,7 @@ from luma.core.device import device
 from luma.core.util import deprecation
 import luma.core.error
 import luma.led_matrix.const
+from luma.led_matrix.segment_mapper import dot_muncher
 
 
 __all__ = ["max7219", "ws2812", "neopixel", "apa102"]
@@ -55,6 +56,7 @@ class max7219(device):
             height = 8
 
         self.capabilities(width, height, rotate)
+        self.segment_mapper = dot_muncher
 
         if width <= 0 or width % 8 != 0 or height <= 0 or height % 8 != 0:
             raise luma.core.error.DeviceDisplayModeError(

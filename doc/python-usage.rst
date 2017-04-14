@@ -220,7 +220,7 @@ representation is corrected to reverse the 90° phase shift.
 
 7-Segment LED Displays
 ^^^^^^^^^^^^^^^^^^^^^^
-For the 7-segment device, initialize the :py:class:`luma.led_matrix.virtual.sevensegment` 
+For the 7-segment device, initialize the :py:class:`luma.core.virtual.sevensegment` 
 class, and wrap it around a previously created :py:class:`~luma.led_matrix.device.max7219`
 device:
 
@@ -228,14 +228,14 @@ device:
     
    from luma.core.serial import spi, noop
    from luma.core.render import canvas
+   from luma.core.virtual import sevensegment
    from luma.led_matrix.device import max7219
-   from luma.led_matrix.virtual import sevensegment
 
    serial = spi(port=0, device=0, gpio=noop())
    device = max7219(serial, cascaded=2)
    seg = sevensegment(device)
 
-The **seg** instance now has a :py:attr:`~luma.led_matrix.virtual.sevensegment.text` 
+The **seg** instance now has a :py:attr:`~luma.core.virtual.sevensegment.text` 
 property which may be assigned, and when it does will update all digits
 according to the limited alphabet the 7-segment displays support. For example,
 assuming there are 2 cascaded modules, we have 16 character available, and so

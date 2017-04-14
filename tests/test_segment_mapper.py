@@ -4,7 +4,7 @@
 # See LICENSE.rst for details.
 
 
-from luma.led_matrix.helpers import mutable_string
+from luma.core.util import mutable_string
 from luma.led_matrix.segment_mapper import dot_muncher, regular
 
 
