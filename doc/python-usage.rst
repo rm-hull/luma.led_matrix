@@ -8,7 +8,7 @@ class, as follows:
 
 .. code:: python
 
-   from luma.core.serial import spi, noop
+   from luma.core.interface.serial import spi, noop
    from luma.core.render import canvas
    from luma.led_matrix.device import max7219
    
@@ -73,7 +73,7 @@ scrolling support:
 
    import time
 
-   from luma.core.serial import spi, noop
+   from luma.core.interface.serial import spi, noop
    from luma.core.render import canvas
    from luma.core.virtual import viewport
    from luma.led_matrix.device import max7219
@@ -121,7 +121,7 @@ aspect, then add a :py:attr:`rotate=N` parameter when creating the device:
 
 .. code:: python
 
-  from luma.core.serial import i2c
+  from luma.core.interface.serial import i2c
   from luma.core.render import canvas
   from luma.oled.device import ssd1306, ssd1325, ssd1331, sh1106
 
@@ -150,7 +150,7 @@ to indicate the number of daisychained devices:
 
 .. code:: python
 
-   from luma.core.serial import spi, noop
+   from luma.core.interface.serial import spi, noop
    from luma.core.render import canvas
    from luma.led_matrix.device import max7219
 
@@ -174,7 +174,7 @@ below,
 
 .. code:: python
 
-   from luma.core.serial import spi, noop
+   from luma.core.interface.serial import spi, noop
    from luma.core.render import canvas
    from luma.led_matrix.device import max7219
    from luma.core.legacy.font import proportional, LCD_FONT
@@ -208,7 +208,7 @@ aligned the other way):
 
 .. code:: python
 
-   from luma.core.serial import spi, noop
+   from luma.core.interface.serial import spi, noop
    from luma.core.render import canvas
    from luma.led_matrix.device import max7219
 
@@ -226,7 +226,7 @@ device:
 
 .. code:: python
     
-   from luma.core.serial import spi, noop
+   from luma.core.interface.serial import spi, noop
    from luma.core.render import canvas
    from luma.core.virtual import sevensegment
    from luma.led_matrix.device import max7219

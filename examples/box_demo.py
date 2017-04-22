@@ -7,7 +7,7 @@ import time
 import argparse
 
 from luma.led_matrix.device import max7219
-from luma.core.serial import spi, noop
+from luma.core.interface.serial import spi, noop
 from luma.core.render import canvas
 from luma.core.legacy import text
 from luma.core.legacy.font import proportional, LCD_FONT

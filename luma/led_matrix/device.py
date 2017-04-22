@@ -4,7 +4,7 @@
 
 # Example usage:
 #
-#   from luma.core.serial import spi, noop
+#   from luma.core.interface.serial import spi, noop
 #   from luma.core.render import canvas
 #   from luma.led_matrix.device import max7219
 #
@@ -28,7 +28,7 @@
 # As before, as soon as the with block completes, the canvas buffer is flushed
 # to the device
 
-from luma.core.serial import noop
+from luma.core.interface.serial import noop
 from luma.core.device import device
 from luma.core.util import deprecation
 import luma.core.error
@@ -343,7 +343,7 @@ class apa102(device):
         self.show()
 
     def __bitbang__(self):
-        from luma.core.serial import bitbang
+        from luma.core.interface.serial import bitbang
         return bitbang(SCLK=24, SDA=23)
 
     def display(self, image):
