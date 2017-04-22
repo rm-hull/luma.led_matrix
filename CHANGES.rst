@@ -4,7 +4,10 @@ ChangeLog
 +------------+------------------------------------------------------------------------+------------+
 | Version    | Description                                                            | Date       |
 +============+========================================================================+============+
-| **0.9.0**  | * Add support for APA102 RGB neopixels                                 |            |
+| **0.10.0** | * **BREAKING CHANGE:** Move sevensegment class to                      | 2017/04/14 |
+|            |   ``luma.core.virtual`` package                                        |            |
++------------+------------------------------------------------------------------------+------------+
+| **0.9.0**  | * Add support for APA102 RGB neopixels                                 | 2017/03/30 |
 +------------+------------------------------------------------------------------------+------------+
 | **0.8.0**  | * Change MAX7219's block_orientation to support ±90° angle correction  | 2017/03/19 |
 |            | * Deprecate "vertical" and "horizontal" block_orientation              |            |

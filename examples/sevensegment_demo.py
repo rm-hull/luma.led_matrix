@@ -11,9 +11,8 @@ import time
 from datetime import datetime
 
 from luma.led_matrix.device import max7219
-from luma.led_matrix.virtual import sevensegment
 from luma.core.serial import spi, noop
-from luma.core.virtual import viewport
+from luma.core.virtual import viewport, sevensegment
 
 
 def date(seg):
