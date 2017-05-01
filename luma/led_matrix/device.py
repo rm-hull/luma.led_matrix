@@ -62,7 +62,7 @@ class max7219(device):
             raise luma.core.error.DeviceDisplayModeError(
                 "Unsupported display mode: {0} x {1}".format(width, height))
 
-        assert block_orientation in [0, 90, -90, "horizontal", "vertical"]
+        assert block_orientation in [0, 90, -90, 180, "horizontal", "vertical"]
         if block_orientation == "vertical":
             msg = (
                 "WARNING! block_orientation=\"vertical\" is now deprecated and "
