@@ -8,7 +8,7 @@ luma.led_matrix **|**
 
 Luma.LED_Matrix 
 ===============
-**Display drivers for MAX7219, WS2812**
+**Display drivers for MAX7219, WS2812, APA102**
 
 .. image:: https://travis-ci.org/rm-hull/luma.led_matrix.svg?branch=master
    :target: https://travis-ci.org/rm-hull/luma.led_matrix
