@@ -19,7 +19,11 @@ README = read_file("README.rst")
 CONTRIB = read_file("CONTRIBUTING.rst")
 CHANGES = read_file("CHANGES.rst")
 version = read_file("VERSION.txt").strip()
-test_deps = ["mock", "pytest", "pytest-cov", "pytest-warnings"]
+test_deps = [
+    "mock",
+    "pytest>=3.1",
+    "pytest-cov"
+]
 
 setup(
     name="luma.led_matrix",
