@@ -18,3 +18,4 @@ Contributors
 * Taras (@tarasius)
 * Brice Parent (@agripo)
 * Thomas De Keulenaer (@twdkeule)
+* Tero Korpela (@terokorp)
