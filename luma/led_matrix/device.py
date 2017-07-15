@@ -28,12 +28,14 @@
 # As before, as soon as the with block completes, the canvas buffer is flushed
 # to the device
 
-from luma.core.interface.serial import noop
-from luma.core.device import device
-from luma.core.util import deprecation
 import luma.core.error
 import luma.led_matrix.const
-from luma.led_matrix.segment_mapper import dot_muncher
+from luma.core.interface.serial import noop
+from luma.core.device import device
+from luma.core.render import canvas
+from luma.core.util import deprecation
+from luma.core.virtual import sevensegment
+from luma.led_matrix.segment_mapper import dot_muncher, regular
 
 
 __all__ = ["max7219", "ws2812", "neopixel", "apa102"]
@@ -204,7 +206,7 @@ class ws2812(device):
     .. versionadded:: 0.4.0
     """
     def __init__(self, dma_interface=None, width=8, height=4, cascaded=None,
-                 rotate=0, mapping=None, **kwargs):
+                 rotate=0, mapping=None, segment_mapper=None, **kwargs):
         super(ws2812, self).__init__(const=None, serial_interface=noop)
 
         # Derive (override) the width and height if a cascaded param supplied
@@ -214,6 +216,7 @@ class ws2812(device):
 
         self.cascaded = width * height
         self.capabilities(width, height, rotate, mode="RGB")
+        self.segment_mapper = segment_mapper
         self._mapping = list(mapping or range(self.cascaded))
         assert(self.cascaded == len(self._mapping))
         self._ws2812 = dma_interface or self.__ws2812__()
@@ -394,3 +397,64 @@ class apa102(device):
         self._brightness = value >> 4
         if self._last_image is not None:
             self.display(self._last_image)
+
+
+class neosegment(sevensegment):
+
+    def __init__(self, width, **kw):
+        height = 7
+        mapping = [(i % width) * height + (i // width) for i in range(width * height)]
+        device = ws2812(width=width, height=height, mapping=mapping)
+        super(neosegment, self).__init__(device, segment_mapper=self._translate)
+        self._colors = ["white"] * self.device.width
+
+    def set_color(self, color):
+        self._colors = [color] * self.device.width
+        self._flush(self._text_buffer)
+
+    def set_char_color(self, posn, color):
+        assert(0 <= posn < self.device.width)
+        self._colors[posn] = color
+        self._flush(self._text_buffer)
+
+    def _flush(self, buf):
+        data = bytearray(self.segment_mapper(buf, notfound=self.undefined)).ljust(self._bufsize, b'\0')
+
+        if len(data) > self._bufsize:
+            raise OverflowError(
+                "Device's capabilities insufficient for value '{0}'".format(buf))
+
+        with canvas(self.device) as draw:
+            for x, byte in enumerate(data):
+                for y in range(7):
+                    if byte & 0x01:
+                        draw.point((x, y), fill=self._colors[x])
+                    byte >>= 1
+
+    def _translate(self, text, notfound="_"):
+        try:
+            iterator = regular(text, notfound)
+            while True:
+                char = next(iterator)
+
+                # Convert from std MAX7219 segment mappings
+                a = (char >> 6) & 0x01
+                b = (char >> 5) & 0x01
+                c = (char >> 4) & 0x01
+                d = (char >> 3) & 0x01
+                e = (char >> 2) & 0x01
+                f = (char >> 1) & 0x01
+                g = (char >> 0) & 0x01
+
+                # To NeoSegment positions
+                yield \
+                    b << 6 | \
+                    a << 5 | \
+                    f << 4 | \
+                    g << 3 | \
+                    c << 2 | \
+                    d << 1 | \
+                    e << 0
+
+        except StopIteration:
+            pass
