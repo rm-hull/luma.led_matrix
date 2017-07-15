@@ -401,7 +401,11 @@ class apa102(device):
 
 class neosegment(sevensegment):
 
-    def __init__(self, width, **kw):
+    def __init__(self, width, **kwargs):
+        if width <= 0 or width % 2 == 1:
+            raise luma.core.error.DeviceDisplayModeError(
+                "Unsupported display mode: width={0}".format(width))
+
         height = 7
         mapping = [(i % width) * height + (i // width) for i in range(width * height)]
         device = ws2812(width=width, height=height, mapping=mapping)
