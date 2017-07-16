@@ -91,6 +91,19 @@ The DO pin should be connected to the DI pin on the next (daisy-chained)
 neopixel, while the VCC and VSS are supplied in-parallel to all LED's.
 WS2812b devices now are becoming more prevalent, and only have 4 pins.
 
+NeoSegments
+"""""""""""
+@msurguy's NeoSegments should be connected as follows:
+
+============ ====== ============= ========= ====================
+Board Pin    Name   Remarks       RPi Pin   RPi Function
+------------ ------ ------------- --------- --------------------
+1            GND    Ground        6         GND
+2            DI     Data In       12        GPIO 18 (PWM0)
+3            VCC    +5V Power     2         5V0
+============ ====== ============= ========= ====================
+
+
 Installing from PyPi
 ^^^^^^^^^^^^^^^^^^^^
 Install the dependencies for library first with::

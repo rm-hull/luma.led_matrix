@@ -341,6 +341,38 @@ a translation mapping is required, as follows:
 
 This should animate a green dot moving left-to-right down each line.
 
+NeoSegments
+"""""""""""
+`@msurguy <https://twitter.com/msurguy?lang=en>`_ has `crowdsourced some WS2812 neopixels <https://www.crowdsupply.com/maksmakes/neosegment>`_ 
+into a modular 3D-printed seven-segment module: To program these devices:
+
+.. code:: python
+
+    import time
+
+    from luma.led_matrix_device import neosegment
+
+    neoseg = neosegment(width=6)
+    
+    # Defaults to "white" color initially
+    neoseg.text = "NEOSEG"
+    time.sleep(1)
+
+    # Set the first char ('N') to red
+    neoseg.color[0] = "red"
+    time.sleep(1)
+
+    # Set fourth and fifth chars ('S','E') accordingly
+    neoseg.color[3:5] = ["cyan", "blue"]
+    time.sleep(1)
+
+    # Set the entire string to green
+    neoseg.color = "green"
+
+The :py:class:`~luma.led_matrix.device.neosegment` class extends :py:class:`~luma.core.virtual.sevensegment`,
+so the same text assignment (python slicing paradigms) can be use here as well - 
+see the earlier section for further details.
+
 Next-generation APA102 NeoPixels
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 APA102 RGB neopixels are easier to control that WS2812 devices - they are driven
