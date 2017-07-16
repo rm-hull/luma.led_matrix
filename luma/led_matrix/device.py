@@ -206,7 +206,7 @@ class ws2812(device):
     .. versionadded:: 0.4.0
     """
     def __init__(self, dma_interface=None, width=8, height=4, cascaded=None,
-                 rotate=0, mapping=None, segment_mapper=None, **kwargs):
+                 rotate=0, mapping=None, **kwargs):
         super(ws2812, self).__init__(const=None, serial_interface=noop)
 
         # Derive (override) the width and height if a cascaded param supplied
@@ -216,7 +216,6 @@ class ws2812(device):
 
         self.cascaded = width * height
         self.capabilities(width, height, rotate, mode="RGB")
-        self.segment_mapper = segment_mapper
         self._mapping = list(mapping or range(self.cascaded))
         assert(self.cascaded == len(self._mapping))
         self._ws2812 = dma_interface or self.__ws2812__()
