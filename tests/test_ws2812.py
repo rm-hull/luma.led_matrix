@@ -39,15 +39,16 @@ def test_hide():
     ws2812.reset_mock()
     device.hide()
     ws2812.setPixelColor.assert_not_called()
-    ws2812.show.assert_not_called()
+    ws2812.show.assert_called()
 
 
 def test_show():
     device = neopixel(ws2812, cascaded=5)
     ws2812.reset_mock()
+    device.hide()
     device.show()
     ws2812.setPixelColor.assert_not_called()
-    ws2812.show.assert_not_called()
+    ws2812.show.assert_called()
 
 
 def test_contrast():

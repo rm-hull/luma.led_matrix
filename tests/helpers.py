@@ -10,6 +10,7 @@ except ImportError:
     from mock import call, Mock  # noqa: F401
 
 import pytest
+from PIL import ImageChops
 
 import luma.core.error
 
@@ -34,8 +35,17 @@ def assert_invalid_dimensions(deviceType, serial_interface, width, height):
     assert "Unsupported display mode: {} x {}".format(width, height) in str(ex.value)
 
 
-def get_reference_image(fname):
+def get_reference_file(fname):
     return os.path.abspath(os.path.join(
         os.path.dirname(__file__),
         'reference',
         fname))
+
+
+def get_reference_image(fname):
+    return get_reference_file(os.path.join('images', fname))
+
+
+def assert_identical_image(reference, target):
+    bbox = ImageChops.difference(reference, target).getbbox()
+    assert bbox is None
