@@ -4,6 +4,7 @@
 # See LICENSE.rst for details.
 
 import time
+import random
 import colorsys
 from luma.led_matrix.device import neosegment
 from neopixel_demo import gfx
@@ -17,49 +18,69 @@ def rainbow(n=1000, saturation=1, value=1):
 
 
 def main():
-    sevenseg = neosegment(width=6)
-    sevenseg.text = "NEOSEG"
+    neoseg = neosegment(width=6)
+    neoseg.text = "NEOSEG"
+    time.sleep(1)
+    neoseg.color[0] = "yellow"
+    time.sleep(1)
+    neoseg.color[3:5] = ["blue", "orange"]
+    time.sleep(1)
+    neoseg.color = "white"
+    time.sleep(1)
+
+    for _ in range(10):
+        neoseg.device.hide()
+        time.sleep(0.1)
+        neoseg.device.show()
+        time.sleep(0.1)
+
     time.sleep(1)
 
     for color in rainbow(200):
-        sevenseg.set_color(color)
+        neoseg.color = color
         time.sleep(0.01)
 
-    sevenseg.set_color("white")
+    colors = list(rainbow(neoseg.device.width))
+    for _ in range(50):
+        random.shuffle(colors)
+        neoseg.color = colors
+        time.sleep(0.1)
+
+    neoseg.color = "white"
     time.sleep(3)
 
     for _ in range(3):
         for intensity in range(16):
-            sevenseg.device.contrast((15 - intensity) * 16)
+            neoseg.device.contrast((15 - intensity) * 16)
             time.sleep(0.1)
 
         for intensity in range(16):
-            sevenseg.device.contrast(intensity * 16)
+            neoseg.device.contrast(intensity * 16)
             time.sleep(0.1)
 
-    sevenseg.text = ""
-    sevenseg.device.contrast(0x80)
+    neoseg.text = ""
+    neoseg.device.contrast(0x80)
     time.sleep(1)
 
-    sevenseg.text = "rgb"
+    neoseg.text = "rgb"
     time.sleep(1)
-    sevenseg.set_char_color(0, "red")
+    neoseg.color[0] = "red"
     time.sleep(1)
-    sevenseg.set_char_color(1, "green")
+    neoseg.color[1] = "green"
     time.sleep(1)
-    sevenseg.set_char_color(2, "blue")
+    neoseg.color[2] = "blue"
     time.sleep(5)
 
     for _ in range(3):
         for intensity in range(16):
-            sevenseg.device.contrast(intensity * 16)
+            neoseg.device.contrast(intensity * 16)
             time.sleep(0.1)
 
-    sevenseg.text = ""
-    sevenseg.device.contrast(0x80)
+    neoseg.text = ""
+    neoseg.device.contrast(0x80)
     time.sleep(1)
 
-    gfx(sevenseg.device)
+    gfx(neoseg.device)
 
 
 if __name__ == "__main__":
