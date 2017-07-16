@@ -400,7 +400,17 @@ class apa102(device):
 
 
 class neosegment(sevensegment):
+    """
+    Extends the :py:class:`luma.core.virtual.sevensegment` class specifically
+    for @msurguy's pluggable NeoSegments. It uses the same underlying render
+    techniques as the base class, but provides additional functionality to be
+    able to adddress individual characters colors.
 
+    :param width: the number of 7-segment elements that are cascaded.
+    :type width: int
+
+    .. versionadded:: 0.11.0
+    """
     def __init__(self, width, **kwargs):
         if width <= 0 or width % 2 == 1:
             raise luma.core.error.DeviceDisplayModeError(
@@ -408,8 +418,8 @@ class neosegment(sevensegment):
 
         height = 7
         mapping = [(i % width) * height + (i // width) for i in range(width * height)]
-        device = ws2812(width=width, height=height, mapping=mapping)
-        super(neosegment, self).__init__(device, segment_mapper=self._translate)
+        device = kwargs.get("device", ws2812(width=width, height=height, mapping=mapping))
+        super(neosegment, self).__init__(device, segment_mapper=self._segment_mapper)
         self._colors = ["white"] * self.device.width
 
     def set_color(self, color):
@@ -435,20 +445,20 @@ class neosegment(sevensegment):
                         draw.point((x, y), fill=self._colors[x])
                     byte >>= 1
 
-    def _translate(self, text, notfound="_"):
+    def _segment_mapper(self, text, notfound="_"):
         try:
             iterator = regular(text, notfound)
             while True:
                 char = next(iterator)
 
                 # Convert from std MAX7219 segment mappings
-                a = (char >> 6) & 0x01
-                b = (char >> 5) & 0x01
-                c = (char >> 4) & 0x01
-                d = (char >> 3) & 0x01
-                e = (char >> 2) & 0x01
-                f = (char >> 1) & 0x01
-                g = (char >> 0) & 0x01
+                a = char >> 6 & 0x01
+                b = char >> 5 & 0x01
+                c = char >> 4 & 0x01
+                d = char >> 3 & 0x01
+                e = char >> 2 & 0x01
+                f = char >> 1 & 0x01
+                g = char >> 0 & 0x01
 
                 # To NeoSegment positions
                 yield \
