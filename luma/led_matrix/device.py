@@ -33,7 +33,7 @@ import luma.led_matrix.const
 from luma.core.interface.serial import noop
 from luma.core.device import device
 from luma.core.render import canvas
-from luma.core.util import deprecation
+from luma.core.util import deprecation, observable
 from luma.core.virtual import sevensegment
 from luma.led_matrix.segment_mapper import dot_muncher, regular
 
@@ -222,7 +222,7 @@ class ws2812(device):
         self._ws2812 = dma_interface or self.__ws2812__()
         self._ws2812.init(width * height)
 
-        self.contrast(0x70)
+        self._prev_contrast = 0x70
         self.clear()
         self.show()
 
@@ -247,15 +247,21 @@ class ws2812(device):
 
     def show(self):
         """
-        Not supported
+        Simulates switching the display mode ON; this is acheived by restoring
+        the contrast to the level prior to the last time hide() was called.
         """
-        pass
+        if self._prev_contrast is not None:
+            self.contrast(self._prev_contrast)
+            self._prev_contrast = None
 
     def hide(self):
         """
-        Not supported
+        Simulates switching the display mode OFF; this is acheived by setting
+        the contrast level to zero.
         """
-        pass
+        if self._prev_contrast is None:
+            self._prev_contrast = self._contrast
+            self.contrast(0x00)
 
     def contrast(self, value):
         """
@@ -264,7 +270,8 @@ class ws2812(device):
         :param level: Desired contrast level in the range of 0-255.
         :type level: int
         """
-        assert(0 <= value <= 255)
+        assert(0x00 <= value <= 0xFF)
+        self._contrast = value
         ws = self._ws2812
         ws.setBrightness(value / 255.0)
         ws.show()
@@ -401,51 +408,62 @@ class apa102(device):
 
 class neosegment(sevensegment):
     """
-    Extends the :py:class:`luma.core.virtual.sevensegment` class specifically
+    Extends the :py:class:`~luma.core.virtual.sevensegment` class specifically
     for @msurguy's pluggable NeoSegments. It uses the same underlying render
     techniques as the base class, but provides additional functionality to be
     able to adddress individual characters colors.
 
     :param width: the number of 7-segment elements that are cascaded.
     :type width: int
+    :param undefined: The default character to substitute when an unrenderable
+        character is supplied to the text property.
+    :type undefined: char
 
     .. versionadded:: 0.11.0
     """
-    def __init__(self, width, **kwargs):
+    def __init__(self, width, undefined="_", **kwargs):
         if width <= 0 or width % 2 == 1:
             raise luma.core.error.DeviceDisplayModeError(
                 "Unsupported display mode: width={0}".format(width))
 
         height = 7
         mapping = [(i % width) * height + (i // width) for i in range(width * height)]
-        device = kwargs.get("device", ws2812(width=width, height=height, mapping=mapping))
-        super(neosegment, self).__init__(device, segment_mapper=self._segment_mapper)
-        self._colors = ["white"] * self.device.width
+        self.device = kwargs.get("device") or ws2812(width=width, height=height, mapping=mapping)
+        self.undefined = undefined
+        self._text_buffer = ""
+        self.color = "white"
 
-    def set_color(self, color):
-        self._colors = [color] * self.device.width
-        self._flush(self._text_buffer)
+    @property
+    def color(self):
+        return self._colors
 
-    def set_char_color(self, posn, color):
-        assert(0 <= posn < self.device.width)
-        self._colors[posn] = color
-        self._flush(self._text_buffer)
+    @color.setter
+    def color(self, value):
+        if not isinstance(value, list):
+            value = [value] * self.device.width
 
-    def _flush(self, buf):
-        data = bytearray(self.segment_mapper(buf, notfound=self.undefined)).ljust(self._bufsize, b'\0')
+        assert(len(value) == self.device.width)
+        self._colors = observable(value, observer=self._color_chg)
 
-        if len(data) > self._bufsize:
+    def _color_chg(self, color):
+        self._flush(self.text or "", color)
+
+    def _flush(self, text, color=None):
+        data = bytearray(self.segment_mapper(text, notfound=self.undefined)).ljust(self.device.width, b'\0')
+        color = color or self.color
+
+        if len(data) > self.device.width:
             raise OverflowError(
-                "Device's capabilities insufficient for value '{0}'".format(buf))
+                "Device's capabilities insufficient for value '{0}'".format(text))
 
         with canvas(self.device) as draw:
             for x, byte in enumerate(data):
                 for y in range(self.device.height):
                     if byte & 0x01:
-                        draw.point((x, y), fill=self._colors[x])
+                        draw.point((x, y), fill=color[x])
                     byte >>= 1
 
-    def _segment_mapper(self, text, notfound="_"):
+    def segment_mapper(self, text, notfound="_"):
         try:
             iterator = regular(text, notfound)
             while True:
