@@ -430,7 +430,7 @@ class neosegment(sevensegment):
 
         with canvas(self.device) as draw:
             for x, byte in enumerate(data):
-                for y in range(7):
+                for y in range(self.device.height):
                     if byte & 0x01:
                         draw.point((x, y), fill=self._colors[x])
                     byte >>= 1
