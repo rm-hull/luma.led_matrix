@@ -373,6 +373,9 @@ The :py:class:`~luma.led_matrix.device.neosegment` class extends :py:class:`~lum
 so the same text assignment (python slicing paradigms) can be use here as well - 
 see the earlier section for further details.
 
+The underlying device is exposed as attribute :py:attr:`device`, so methods
+such as :py:attr:`show`, :py:attr:`hide` and :py:attr:`contrast` are available.
+
 Next-generation APA102 NeoPixels
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 APA102 RGB neopixels are easier to control that WS2812 devices - they are driven
