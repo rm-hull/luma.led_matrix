@@ -39,7 +39,7 @@ def test_hide():
     ws2812.reset_mock()
     device.hide()
     ws2812.setPixelColor.assert_not_called()
-    ws2812.show.assert_called()
+    ws2812.show.assert_called_once_with()
 
 
 def test_show():
@@ -48,7 +48,7 @@ def test_show():
     device.hide()
     device.show()
     ws2812.setPixelColor.assert_not_called()
-    ws2812.show.assert_called()
+    ws2812.show.assert_called_with()
 
 
 def test_contrast():
