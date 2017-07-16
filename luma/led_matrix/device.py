@@ -445,7 +445,7 @@ class neosegment(sevensegment):
         self._colors = observable(value, observer=self._color_chg)
 
     def _color_chg(self, color):
-        self._flush(self.text or "", color)
+        self._flush(self.text, color)
 
     def _flush(self, text, color=None):
         data = bytearray(self.segment_mapper(text, notfound=self.undefined)).ljust(self.device.width, b'\0')
