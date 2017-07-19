@@ -185,8 +185,8 @@ def main():
     time.sleep(1)
 
     with canvas(device) as draw:
-        text(draw, (0, -1), text="A", fill="red", font=TINY_FONT)
-        text(draw, (4, -1), text="T", fill="green", font=TINY_FONT)
+        text(draw, (0, -1), txt="A", fill="red", font=TINY_FONT)
+        text(draw, (4, -1), txt="T", fill="green", font=TINY_FONT)
 
     time.sleep(1)
 
