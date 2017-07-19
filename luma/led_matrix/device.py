@@ -157,7 +157,7 @@ class max7219(device):
         :param level: Desired contrast level in the range of 0-255.
         :type level: int
         """
-        assert(0 <= value <= 255)
+        assert(0x00 <= value <= 0xFF)
         self.data([self._const.INTENSITY, value >> 4] * self.cascaded)
 
     def show(self):
@@ -219,7 +219,7 @@ class ws2812(device):
         self._ws = dma_interface or self.__ws281x__()(num=width * height, pin=18)
         self._ws.begin()
 
-        self.contrast(0x70)
+        self._prev_contrast = 0x70
         self.clear()
         self.show()
 
@@ -244,15 +244,21 @@ class ws2812(device):
 
     def show(self):
         """
-        Not supported
+        Simulates switching the display mode ON; this is acheived by restoring
+        the contrast to the level prior to the last time hide() was called.
         """
-        pass
+        if self._prev_contrast is not None:
+            self.contrast(self._prev_contrast)
+            self._prev_contrast = None
 
     def hide(self):
         """
-        Not supported
+        Simulates switching the display mode OFF; this is acheived by setting
+        the contrast level to zero.
         """
-        pass
+        if self._prev_contrast is None:
+            self._prev_contrast = self._contrast
+            self.contrast(0x00)
 
     def contrast(self, value):
         """
@@ -261,18 +267,11 @@ class ws2812(device):
         :param level: Desired contrast level in the range of 0-255.
         :type level: int
         """
-        assert(0 <= value <= 255)
+        assert(0x00 <= value <= 0xFF)
+        self._contrast = value
         ws = self._ws
         ws.setBrightness(value)
         ws.show()
-
-    def cleanup(self):
-        """
-        Attempt to reset the device & switching it off prior to exiting the
-        python process.
-        """
-        super(ws2812, self).cleanup()
-        self._ws2812.terminate()
 
 
 # Alias for ws2812
@@ -390,7 +389,7 @@ class apa102(device):
         :param level: Desired contrast level in the range of 0-255.
         :type level: int
         """
-        assert(0 <= value <= 255)
+        assert(0x00 <= value <= 0xFF)
         self._brightness = value >> 4
         if self._last_image is not None:
             self.display(self._last_image)
