@@ -38,7 +38,7 @@ from luma.core.virtual import sevensegment
 from luma.led_matrix.segment_mapper import dot_muncher, regular
 
 
-__all__ = ["max7219", "ws2812", "neopixel", "apa102"]
+__all__ = ["max7219", "ws2812", "neopixel", "neosegment", "apa102"]
 
 
 class max7219(device):
