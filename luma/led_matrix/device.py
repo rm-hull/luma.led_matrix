@@ -159,7 +159,7 @@ class max7219(device):
         :param level: Desired contrast level in the range of 0-255.
         :type level: int
         """
-        assert(0 <= value <= 255)
+        assert(0x00 <= value <= 0xFF)
         self.data([self._const.INTENSITY, value >> 4] * self.cascaded)
 
     def show(self):
@@ -218,16 +218,16 @@ class ws2812(device):
         self.capabilities(width, height, rotate, mode="RGB")
         self._mapping = list(mapping or range(self.cascaded))
         assert(self.cascaded == len(self._mapping))
-        self._ws2812 = dma_interface or self.__ws2812__()
-        self._ws2812.init(width * height)
+        self._ws = dma_interface or self.__ws281x__()(num=width * height, pin=18)
+        self._ws.begin()
 
         self._prev_contrast = 0x70
         self.clear()
         self.show()
 
-    def __ws2812__(self):
-        import ws2812
-        return ws2812
+    def __ws281x__(self):
+        from neopixel import Adafruit_NeoPixel
+        return Adafruit_NeoPixel
 
     def display(self, image):
         """
@@ -237,10 +237,10 @@ class ws2812(device):
         assert(image.mode == self.mode)
         assert(image.size == self.size)
 
-        ws = self._ws2812
+        ws = self._ws
         m = self._mapping
         for idx, (r, g, b) in enumerate(image.getdata()):
-            ws.setPixelColor(m[idx], r, g, b)
+            ws.setPixelColorRGB(m[idx], r, g, b)
 
         ws.show()
 
@@ -271,17 +271,9 @@ class ws2812(device):
         """
         assert(0x00 <= value <= 0xFF)
         self._contrast = value
-        ws = self._ws2812
-        ws.setBrightness(value / 255.0)
+        ws = self._ws
+        ws.setBrightness(value)
         ws.show()
-
-    def cleanup(self):
-        """
-        Attempt to reset the device & switching it off prior to exiting the
-        python process.
-        """
-        super(ws2812, self).cleanup()
-        self._ws2812.terminate()
 
 
 # Alias for ws2812
@@ -399,7 +391,7 @@ class apa102(device):
         :param level: Desired contrast level in the range of 0-255.
         :type level: int
         """
-        assert(0 <= value <= 255)
+        assert(0x00 <= value <= 0xFF)
         self._brightness = value >> 4
         if self._last_image is not None:
             self.display(self._last_image)
