@@ -21,7 +21,7 @@ def test_init_cascaded():
     device = neopixel(ws2812, cascaded=7)
     assert device.width == 7
     assert device.height == 1
-    ws2812.init.assert_called_once_with(7)
+    ws2812.begin.assert_called_once_with()
     ws2812.setPixelColorRGB.assert_has_calls([
         call(i, 0, 0, 0) for i in range(7)])
 
@@ -29,7 +29,7 @@ def test_init_cascaded():
 def test_init_4x8():
     device = neopixel(ws2812)
     assert device.cascaded == 32
-    ws2812.init.assert_called_once_with(32)
+    ws2812.begin.assert_called_once_with()
     ws2812.setPixelColorRGB.assert_has_calls([
         call(i, 0, 0, 0) for i in range(32)])
 
@@ -54,7 +54,7 @@ def test_contrast():
     device = neopixel(ws2812, cascaded=6)
     ws2812.reset_mock()
     device.contrast(0x6B)
-    ws2812.setBrightness.assert_called_once_with(0.4196078431372549)
+    ws2812.setBrightness.assert_called_once_with(0x6B)
 
 
 def test_display():
