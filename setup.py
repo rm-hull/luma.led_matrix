@@ -19,7 +19,11 @@ README = read_file("README.rst")
 CONTRIB = read_file("CONTRIBUTING.rst")
 CHANGES = read_file("CHANGES.rst")
 version = read_file("VERSION.txt").strip()
-test_deps = ["mock", "pytest", "pytest-cov", "pytest-warnings"]
+test_deps = [
+    "mock",
+    "pytest>=3.1",
+    "pytest-cov"
+]
 
 setup(
     name="luma.led_matrix",
@@ -34,7 +38,7 @@ setup(
     download_url="https://github.com/rm-hull/luma.led_matrix/tarball/" + version,
     namespace_packages=["luma"],
     packages=["luma.led_matrix"],
-    install_requires=["luma.core>=0.6.1", "rpi-ws281x"],
+    install_requires=["luma.core>=0.9.1", "rpi-ws281x"],
     setup_requires=pytest_runner,
     tests_require=["mock", "pytest", "pytest-cov"],
     extras_require={

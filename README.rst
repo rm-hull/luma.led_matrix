@@ -8,7 +8,7 @@ luma.led_matrix **|**
 
 Luma.LED_Matrix 
 ===============
-**Display drivers for MAX7219, WS2812**
+**Display drivers for MAX7219, WS2812, APA102**
 
 .. image:: https://travis-ci.org/rm-hull/luma.led_matrix.svg?branch=master
    :target: https://travis-ci.org/rm-hull/luma.led_matrix
@@ -28,7 +28,7 @@ Luma.LED_Matrix
 .. image:: https://img.shields.io/maintenance/yes/2017.svg?maxAge=2592000
 
 Python library interfacing LED matrix displays with the MAX7219 driver (using
-SPI) and WS2812 NeoPixels (using DMA) on the Raspberry Pi and other linux-based
+SPI) and WS2812 & APA102 NeoPixels on the Raspberry Pi and other linux-based
 single board computers - it provides a Pillow-compatible drawing canvas, and
 other functionality to support:
 
@@ -40,6 +40,10 @@ other functionality to support:
 * dithering to monochrome,
 * pygame emulator,
 * Python 2.7 and 3.4+ are both supported
+
+Documentation
+-------------
+Full documentation with installation instructions and examples can be found on https://luma-led-matrix.readthedocs.io.
 
 .. image:: https://raw.githubusercontent.com/rm-hull/luma.led_matrix/master/doc/images/devices.jpg
    :alt: max7219 matrix
@@ -55,7 +59,10 @@ or `Ebay <http://www.ebay.com/itm/-/172317726225>`_.
 
 .. image:: https://raw.githubusercontent.com/rm-hull/luma.led_matrix/master/doc/images/matrix_cascaded.jpg
    :alt: max7219 cascaded
-   
+ 
+.. image:: https://raw.githubusercontent.com/rm-hull/luma.led_matrix/master/doc/images/box_helloworld.jpg
+   :alt: max7219 box
+     
 .. image:: https://raw.githubusercontent.com/rm-hull/luma.led_matrix/master/doc/images/emulator.gif
    :alt: max7219 emulator
 
@@ -72,10 +79,6 @@ updates or fixes.
 
 The consequence is that any existing code that uses the old **max7219** package
 should probably be updated. 
-
-Documentation
--------------
-Full documentation with installation instructions and examples can be found on https://luma-led-matrix.readthedocs.io.
 
 License
 -------
