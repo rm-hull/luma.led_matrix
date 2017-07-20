@@ -11,6 +11,10 @@ from neopixel_demo import gfx
 
 
 def rainbow(n=1000, saturation=1, value=1):
+    """
+    A generator that yields 'n' hues from the rainbow in the hex format #RRGGBB.
+    By default the saturation and value (from HSV) are both set to 1.
+    """
     for i in range(n):
         hue = i / float(n)
         color = [int(x * 255) for x in colorsys.hsv_to_rgb(hue, saturation, value)]

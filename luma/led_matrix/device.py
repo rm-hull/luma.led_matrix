@@ -400,11 +400,11 @@ class apa102(device):
 class neosegment(sevensegment):
     """
     Extends the :py:class:`~luma.core.virtual.sevensegment` class specifically
-    for @msurguy's pluggable NeoSegments. It uses the same underlying render
+    for @msurguy's modular NeoSegments. It uses the same underlying render
     techniques as the base class, but provides additional functionality to be
     able to adddress individual characters colors.
 
-    :param width: the number of 7-segment elements that are cascaded.
+    :param width: The number of 7-segment elements that are cascaded.
     :type width: int
     :param undefined: The default character to substitute when an unrenderable
         character is supplied to the text property.

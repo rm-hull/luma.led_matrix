@@ -38,7 +38,7 @@ As soon as the with scope is ended, the resultant image is automatically
 flushed to the device's display memory and the :mod:`PIL.ImageDraw` object is
 garbage collected.
 
-.. note:: 
+.. note::
    The default Pillow font is too big for 8px high devices like the LED matrices
    here, so the `luma.examples <https://github.com/rm-hull/luma.examples>`_ repo
    inclues a small TTF pixel font called **pixelmix.ttf** (attribution: 
@@ -62,7 +62,6 @@ garbage collected.
 
 Scrolling / Virtual viewports
 """""""""""""""""""""""""""""
-
 A single 8x8 LED matrix clearly hasn't got a lot of area for displaying useful
 information. Obviously they can be daisy-chained together to provide a longer
 line of text, but as this library extends `luma.core <https://github.com/rm-hull/luma.core>`_,
@@ -344,7 +343,7 @@ This should animate a green dot moving left-to-right down each line.
 NeoSegments
 """""""""""
 `@msurguy <https://twitter.com/msurguy?lang=en>`_ has `crowdsourced some WS2812 neopixels <https://www.crowdsupply.com/maksmakes/neosegment>`_ 
-into a modular 3D-printed seven-segment module: To program these devices:
+into a modular 3D-printed seven-segment unit. To program these devices:
 
 .. code:: python
 
@@ -370,7 +369,7 @@ into a modular 3D-printed seven-segment module: To program these devices:
     neoseg.color = "green"
 
 The :py:class:`~luma.led_matrix.device.neosegment` class extends :py:class:`~luma.core.virtual.sevensegment`,
-so the same text assignment (python slicing paradigms) can be use here as well - 
+so the same text assignment (Python slicing paradigms) can be used here as well -
 see the earlier section for further details.
 
 The underlying device is exposed as attribute :py:attr:`device`, so methods
