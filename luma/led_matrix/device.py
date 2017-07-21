@@ -28,15 +28,17 @@
 # As before, as soon as the with block completes, the canvas buffer is flushed
 # to the device
 
-from luma.core.interface.serial import noop
-from luma.core.device import device
-from luma.core.util import deprecation
 import luma.core.error
 import luma.led_matrix.const
-from luma.led_matrix.segment_mapper import dot_muncher
+from luma.core.interface.serial import noop
+from luma.core.device import device
+from luma.core.render import canvas
+from luma.core.util import deprecation, observable
+from luma.core.virtual import sevensegment
+from luma.led_matrix.segment_mapper import dot_muncher, regular
 
 
-__all__ = ["max7219", "ws2812", "neopixel", "apa102"]
+__all__ = ["max7219", "ws2812", "neopixel", "neosegment", "apa102"]
 
 
 class max7219(device):
@@ -393,3 +395,89 @@ class apa102(device):
         self._brightness = value >> 4
         if self._last_image is not None:
             self.display(self._last_image)
+
+
+class neosegment(sevensegment):
+    """
+    Extends the :py:class:`~luma.core.virtual.sevensegment` class specifically
+    for @msurguy's modular NeoSegments. It uses the same underlying render
+    techniques as the base class, but provides additional functionality to be
+    able to adddress individual characters colors.
+
+    :param width: The number of 7-segment elements that are cascaded.
+    :type width: int
+    :param undefined: The default character to substitute when an unrenderable
+        character is supplied to the text property.
+    :type undefined: char
+
+    .. versionadded:: 0.11.0
+    """
+    def __init__(self, width, undefined="_", **kwargs):
+        if width <= 0 or width % 2 == 1:
+            raise luma.core.error.DeviceDisplayModeError(
+                "Unsupported display mode: width={0}".format(width))
+
+        height = 7
+        mapping = [(i % width) * height + (i // width) for i in range(width * height)]
+        self.device = kwargs.get("device") or ws2812(width=width, height=height, mapping=mapping)
+        self.undefined = undefined
+        self._text_buffer = ""
+        self.color = "white"
+
+    @property
+    def color(self):
+        return self._colors
+
+    @color.setter
+    def color(self, value):
+        if not isinstance(value, list):
+            value = [value] * self.device.width
+
+        assert(len(value) == self.device.width)
+        self._colors = observable(value, observer=self._color_chg)
+
+    def _color_chg(self, color):
+        self._flush(self.text, color)
+
+    def _flush(self, text, color=None):
+        data = bytearray(self.segment_mapper(text, notfound=self.undefined)).ljust(self.device.width, b'\0')
+        color = color or self.color
+
+        if len(data) > self.device.width:
+            raise OverflowError(
+                "Device's capabilities insufficient for value '{0}'".format(text))
+
+        with canvas(self.device) as draw:
+            for x, byte in enumerate(data):
+                for y in range(self.device.height):
+                    if byte & 0x01:
+                        draw.point((x, y), fill=color[x])
+                    byte >>= 1
+
+    def segment_mapper(self, text, notfound="_"):
+        try:
+            iterator = regular(text, notfound)
+            while True:
+                char = next(iterator)
+
+                # Convert from std MAX7219 segment mappings
+                a = char >> 6 & 0x01
+                b = char >> 5 & 0x01
+                c = char >> 4 & 0x01
+                d = char >> 3 & 0x01
+                e = char >> 2 & 0x01
+                f = char >> 1 & 0x01
+                g = char >> 0 & 0x01
+
+                # To NeoSegment positions
+                yield \
+                    b << 6 | \
+                    a << 5 | \
+                    f << 4 | \
+                    g << 3 | \
+                    c << 2 | \
+                    d << 1 | \
+                    e << 0
+
+        except StopIteration:
+            pass
