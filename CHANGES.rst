@@ -4,7 +4,7 @@ ChangeLog
 +------------+------------------------------------------------------------------------+------------+
 | Version    | Description                                                            | Date       |
 +============+========================================================================+============+
-| *Upcoming* | * Alternative WS2812 low level implementation                          |            |
+| **0.11.0** | * Alternative WS2812 low level implementation                          |            |
 |            | * Add support for @msurguy's modular NeoSegments                       |            |
 +------------+------------------------------------------------------------------------+------------+
 | **0.10.1** | * Add block_orientation=180 option                                     | 2017/05/01 |
