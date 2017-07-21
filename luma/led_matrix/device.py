@@ -218,16 +218,52 @@ class ws2812(device):
         self.capabilities(width, height, rotate, mode="RGB")
         self._mapping = list(mapping or range(self.cascaded))
         assert(self.cascaded == len(self._mapping))
-        self._ws = dma_interface or self.__ws281x__()(num=width * height, pin=18)
-        self._ws.begin()
-
+        self._contrast = None
         self._prev_contrast = 0x70
+
+        ws = self._ws = dma_interface or self.__ws281x__()
+
+        # Create ws2811_t structure and fill in parameters.
+        self._leds = ws.new_ws2811_t()
+
+        pin = 18
+        channel = 0
+        dma = 5
+        freq_hz = 800000
+        brightness = 255
+        strip_type = ws.WS2811_STRIP_GRB
+        invert = False
+
+        # Initialize the channels to zero
+        for channum in range(2):
+            chan = ws.ws2811_channel_get(self._leds, channum)
+            ws.ws2811_channel_t_count_set(chan, 0)
+            ws.ws2811_channel_t_gpionum_set(chan, 0)
+            ws.ws2811_channel_t_invert_set(chan, 0)
+            ws.ws2811_channel_t_brightness_set(chan, 0)
+
+        # Initialize the channel in use
+        self._channel = ws.ws2811_channel_get(self._leds, channel)
+        ws.ws2811_channel_t_count_set(self._channel, self.cascaded)
+        ws.ws2811_channel_t_gpionum_set(self._channel, pin)
+        ws.ws2811_channel_t_invert_set(self._channel, 0 if not invert else 1)
+        ws.ws2811_channel_t_brightness_set(self._channel, brightness)
+        ws.ws2811_channel_t_strip_type_set(self._channel, strip_type)
+
+        # Initialize the controller
+        ws.ws2811_t_freq_set(self._leds, freq_hz)
+        ws.ws2811_t_dmanum_set(self._leds, dma)
+
+        resp = ws.ws2811_init(self._leds)
+        if resp != 0:
+            raise RuntimeError('ws2811_init failed with code {0}'.format(resp))
+
         self.clear()
         self.show()
 
     def __ws281x__(self):
-        from neopixel import Adafruit_NeoPixel
-        return Adafruit_NeoPixel
+        import _rpi_ws281x
+        return _rpi_ws281x
 
     def display(self, image):
         """
@@ -239,10 +275,11 @@ class ws2812(device):
 
         ws = self._ws
         m = self._mapping
-        for idx, (r, g, b) in enumerate(image.getdata()):
-            ws.setPixelColorRGB(m[idx], r, g, b)
+        for idx, (red, green, blue) in enumerate(image.getdata()):
+            color = (red << 16) | (green << 8) | blue
+            ws.ws2811_led_set(self._channel, m[idx], color)
 
-        ws.show()
+        self._flush()
 
     def show(self):
         """
@@ -271,9 +308,34 @@ class ws2812(device):
         """
         assert(0x00 <= value <= 0xFF)
         self._contrast = value
-        ws = self._ws
-        ws.setBrightness(value)
-        ws.show()
+        self._ws.ws2811_channel_t_brightness_set(self._channel, value)
+        self._flush()
+
+    def _flush(self):
+        resp = self._ws.ws2811_render(self._leds)
+        if resp != 0:
+            raise RuntimeError('ws2811_render failed with code {0}'.format(resp))
+
+    def __del__(self):
+        # Required because Python will complain about memory leaks
+        # However there's no guarantee that "ws" will even be set
+        # when the __del__ method for this class is reached.
+        if self._ws is not None:
+            self.cleanup()
+
+    def cleanup(self):
+        """
+        Attempt to reset the device & switching it off prior to exiting the
+        python process.
+        """
+        self.hide()
+        self.clear()
+
+        if self._leds is not None:
+            self._ws.ws2811_fini(self._leds)
+            self._ws.delete_ws2811_t(self._leds)
+            self._leds = None
+            self._channel = None
 
 
 # Alias for ws2812

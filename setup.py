@@ -28,6 +28,7 @@ test_deps = [
 install_deps = ["luma.core>=0.9.5"]
 if os.uname()[4].startswith("arm"):
     install_deps += "rpi-ws281x"
+    install_deps += "ws2812"
 
 setup(
     name="luma.led_matrix",
