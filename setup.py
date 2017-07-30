@@ -25,7 +25,7 @@ test_deps = [
     "pytest-cov"
 ]
 
-install_deps = ["luma.core>=0.9.5"]
+install_deps = ["luma.core>=1.0.0"]
 if os.uname()[4].startswith("arm"):
     install_deps += "rpi-ws281x"
     install_deps += "ws2812"

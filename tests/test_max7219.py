@@ -4,7 +4,6 @@
 # See LICENSE.rst for details.
 
 import pytest
-import warnings
 
 from luma.led_matrix.device import max7219
 from luma.core.render import canvas
@@ -200,10 +199,3 @@ def test_block_realignment_plus180():
 def test_unknown_block_orientation():
     with pytest.raises(AssertionError):
         max7219(serial, cascaded=2, block_orientation="sausages")
-
-
-def test_deprecated_block_orientation(recwarn):
-    warnings.simplefilter('always')
-    max7219(serial, cascaded=2, block_orientation="vertical")
-    max7219(serial, cascaded=2, block_orientation="horizontal")
-    assert len(recwarn) == 2

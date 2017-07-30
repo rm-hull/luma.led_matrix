@@ -33,7 +33,7 @@ import luma.led_matrix.const
 from luma.core.interface.serial import noop
 from luma.core.device import device
 from luma.core.render import canvas
-from luma.core.util import deprecation, observable
+from luma.core.util import observable
 from luma.core.virtual import sevensegment
 from luma.led_matrix.segment_mapper import dot_muncher, regular
 
@@ -64,25 +64,8 @@ class max7219(device):
             raise luma.core.error.DeviceDisplayModeError(
                 "Unsupported display mode: {0} x {1}".format(width, height))
 
-        assert block_orientation in [0, 90, -90, 180, "horizontal", "vertical"]
-        if block_orientation == "vertical":
-            msg = (
-                "WARNING! block_orientation=\"vertical\" is now deprecated and "
-                "should be changed to block_orientation=-90 to acheive the same "
-                "effect. Use of \"vertical\" will be removed entirely beginning "
-                "v1.0.0")
-            deprecation(msg)
-            self._correction_angle = -90
-        elif block_orientation == "horizontal":
-            msg = (
-                "WARNING! block_orientation=\"horizontal\" is now deprecated and "
-                "should be changed to block_orientation=0 to acheive the same "
-                "effect. Use of \"horizontal\" will be removed entirely beginning "
-                "v1.0.0")
-            deprecation(msg)
-            self._correction_angle = 0
-        else:
-            self._correction_angle = block_orientation
+        assert block_orientation in [0, 90, -90, 180]
+        self._correction_angle = block_orientation
 
         self.cascaded = cascaded or (width * height) // 64
         self._offsets = [(y * self._w) + x
