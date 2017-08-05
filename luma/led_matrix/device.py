@@ -31,6 +31,7 @@
 import luma.core.error
 import luma.led_matrix.const
 from luma.core.interface.serial import noop
+from luma.core import lib
 from luma.core.device import device
 from luma.core.render import canvas
 from luma.core.util import deprecation, observable
@@ -38,7 +39,7 @@ from luma.core.virtual import sevensegment
 from luma.led_matrix.segment_mapper import dot_muncher, regular
 
 
-__all__ = ["max7219", "ws2812", "neopixel", "neosegment", "apa102"]
+__all__ = ["max7219", "ws2812", "neopixel", "neosegment", "apa102", "rg_matrix"]
 
 
 class max7219(device):
@@ -48,8 +49,8 @@ class max7219(device):
     sequence is pumped to the display to properly configure it. Further control
     commands can then be called to affect the brightness and other settings.
     """
-    def __init__(self, serial_interface=None, width=8, height=8, cascaded=None, rotate=0,
-                 block_orientation=0, **kwargs):
+    def __init__(self, serial_interface=None, width=8, height=8, cascaded=None,
+                 rotate=0, block_orientation=0, **kwargs):
         super(max7219, self).__init__(luma.led_matrix.const.max7219, serial_interface)
 
         # Derive (override) the width and height if a cascaded param supplied
@@ -481,3 +482,78 @@ class neosegment(sevensegment):
 
         except StopIteration:
             pass
+
+
+@lib.rpi_gpio
+class rg_matrix(device):
+
+    def __init__(self, gpio=None, width=32, height=16, cascaded=None, rotate=0, **kwargs):
+        super(rg_matrix, self).__init__(const=None, serial_interface=noop())
+
+        self.capabilities(width, height, rotate, mode="RGBA")
+        self._managed = gpio is None
+        self._gpio = gpio or self.__rpi_gpio__()
+
+        self._A = self._configure(kwargs.get("A", 22))
+        self._B = self._configure(kwargs.get("B", 23))
+        self._C = self._configure(kwargs.get("C", 24))
+        self._D = self._configure(kwargs.get("D", 25))
+
+        self._RED = self._configure(kwargs.get("RED", 10))
+        self._GREEN = self._configure(kwargs.get("GREEN", 9))
+
+        self._OE = self._configure(kwargs.get("OE", 17))
+        self._STB = self._configure(kwargs.get("STB", 8))
+        self._SCK = self._configure(kwargs.get("SCK", 11))
+
+    def _configure(self, pin):
+        if pin is not None:
+            self._gpio.setup(pin, self._gpio.OUT)
+            return pin
+
+    def clear(self):
+        pass
+
+    def display(self, image):
+        assert(image.mode == self.mode)
+        assert(image.size == self.size)
+
+        image = self.preprocess(image)
+
+        gpio = self._gpio
+
+
+        import time
+        while True:
+
+            for idx, (red, green, blue, alpha) in enumerate(image.getdata()):
+
+
+                gpio.output(self._RED, red == 0)
+                gpio.output(self._GREEN, green == 0)
+
+                # Clock pulse
+                gpio.output(self._SCK, 1)
+                gpio.output(self._SCK, 0)
+
+                if idx % self._w == self._w - 1:
+                    # Screen off
+                    gpio.output(self._OE, 1)
+
+                    # Set address lines
+                    addr = idx // self._w
+                    print(addr)
+                    gpio.output(self._A, addr >> 0 & 0x01)
+                    gpio.output(self._B, addr >> 1 & 0x01)
+                    gpio.output(self._C, addr >> 2 & 0x01)
+                    gpio.output(self._D, addr >> 3 & 0x01)
+                    #gpio.output(self._D, 0)
+
+                    # Strobe data from shift register to output
+                    gpio.output(self._STB, 0)
+                    gpio.output(self._STB, 1)
+
+                    # Screen on
+                    gpio.output(self._OE, 0)
+                    time.sleep(1)
+
