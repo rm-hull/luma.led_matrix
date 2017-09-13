@@ -17,7 +17,9 @@ matrix:
         - python: 3.5
           env: TOXENV=qa
 
-install: pip install -U pip tox coveralls
+install:
+ - pip install --upgrade setuptools
+ - pip install --upgrade pip tox coveralls
 script: tox -vv
 after_success:
   - coveralls
