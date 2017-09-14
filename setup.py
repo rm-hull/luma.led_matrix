@@ -20,7 +20,7 @@ CONTRIB = read_file("CONTRIBUTING.rst")
 CHANGES = read_file("CHANGES.rst")
 version = read_file("VERSION.txt").strip()
 test_deps = [
-    "mock",
+    'mock;python_version<"3.3"',
     "pytest>=3.1",
     "pytest-cov"
 ]
