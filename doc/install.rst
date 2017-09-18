@@ -109,7 +109,7 @@ Installing from PyPi
 Install the dependencies for library first with::
 
   $ sudo usermod -a -G spi,gpio pi
-  $ sudo apt-get install python-dev python-pip libfreetype6-dev libjpeg-dev
+  $ sudo apt-get install build-essential python-dev python-pip libfreetype6-dev libjpeg-dev
   $ sudo -i pip install --upgrade pip setuptools
   $ sudo apt-get purge python-pip
 
