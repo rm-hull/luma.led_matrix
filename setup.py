@@ -3,7 +3,7 @@
 
 import os
 import sys
-from IO import open
+from io import open
 from setuptools import setup
 
 
