@@ -3,6 +3,7 @@
 
 import os
 import sys
+from IO import open
 from setuptools import setup
 
 
@@ -10,8 +11,8 @@ needs_pytest = {'pytest', 'test', 'ptr'}.intersection(sys.argv)
 pytest_runner = ['pytest-runner'] if needs_pytest else []
 
 
-def read_file(fname):
-    with open(os.path.join(os.path.dirname(__file__), fname)) as r:
+def read_file(fname, encoding='utf-8'):
+    with open(os.path.join(os.path.dirname(__file__), fname), encoding=encoding) as r:
         return r.read()
 
 
@@ -25,7 +26,7 @@ test_deps = [
     "pytest-cov"
 ]
 
-install_deps = ["luma.core>=1.0.0"]
+install_deps = ["luma.core>=1.0.3"]
 if os.uname()[4].startswith("arm"):
     install_deps.append("rpi_ws281x")
     install_deps.append("ws2812")
