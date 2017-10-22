@@ -22,14 +22,15 @@ CHANGES = read_file("CHANGES.rst")
 version = read_file("VERSION.txt").strip()
 test_deps = [
     'mock;python_version<"3.3"',
-    "pytest>=3.1",
-    "pytest-cov"
+    'pytest>=3.1',
+    'pytest-cov'
 ]
 
-install_deps = ["luma.core>=1.0.3"]
-if os.uname()[4].startswith("arm"):
-    install_deps.append("rpi_ws281x")
-    install_deps.append("ws2812")
+install_deps = [
+    'luma.core>=1.0.3',
+    'rpi_ws281x;platform_machine=="armv7l" and platform_system=="Linux"',
+    'ws2812;platform_machine=="armv7l" and platform_system=="Linux"'
+]
 
 setup(
     name="luma.led_matrix",
