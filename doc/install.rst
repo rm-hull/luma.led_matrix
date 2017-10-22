@@ -139,7 +139,7 @@ matrices::
 
     $ python examples/matrix_demo.py -h
     usage: matrix_demo.py [-h] [--cascaded CASCADED]
-                          [--block-orientation {0, 90, -90}]
+                          [--block-orientation {0,90,-90}] [--rotate {0,1,2,3}]
 
     matrix_demo arguments
 
@@ -150,6 +150,8 @@ matrices::
     --block-orientation {0, 90, -90}
                           Corrects block orientation when wired vertically
                           (default: 0)
+    --rotate {0,1,2,3}    Rotate display 0=0°, 1=90°, 2=180°, 3=270° (default:
+                          0)
 
 Similarly, there is a basic demo of the capabilities of the
 :py:class:`luma.led_matrix.virtual.sevensegment` wrapper::
