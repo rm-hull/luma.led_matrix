@@ -5,10 +5,10 @@ API Documentation
     :undoc-members:
     :show-inheritance:
 
-.. inheritance-diagram:: luma.core.device luma.core.mixin luma.core.virtual luma.led_matrix.device luma.led_matrix.virtual
+.. inheritance-diagram:: luma.core.device luma.core.mixin luma.core.virtual luma.led_matrix.device
 
-Breaking changes
-""""""""""""""""
+Upgrading
+"""""""""
 .. warning::
    Version 0.3.0 was released on 19 January 2017: this came with a rename of the
    project in github from **max7219** to **luma.led_matrix** to reflect the changing
@@ -26,14 +26,6 @@ Breaking changes
 :mod:`luma.led_matrix.device`
 """""""""""""""""""""""""""""
 .. automodule:: luma.led_matrix.device
-    :members:
-    :inherited-members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`luma.led_matrix.virtual`
-""""""""""""""""""""""""""""""
-.. automodule:: luma.led_matrix.virtual
     :members:
     :inherited-members:
     :undoc-members:

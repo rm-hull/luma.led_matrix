@@ -340,8 +340,8 @@ a translation mapping is required, as follows:
 
 This should animate a green dot moving left-to-right down each line.
 
-NeoSegments
-"""""""""""
+NeoSegments (WS2812)
+""""""""""""""""""""
 `@msurguy <https://twitter.com/msurguy?lang=en>`_ has `crowdsourced some WS2812 neopixels <https://www.crowdsupply.com/maksmakes/neosegment>`_ 
 into a modular 3D-printed seven-segment unit. To program these devices:
 
