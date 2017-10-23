@@ -17,6 +17,11 @@ matrix:
         - python: 3.5
           env: TOXENV=qa,doc
 
+addons:
+  apt:
+    sources:
+    - graphviz
+
 install:
  - pip install --upgrade --ignore-installed setuptools
  - pip install --upgrade pip tox coveralls
