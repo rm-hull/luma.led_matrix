@@ -18,9 +18,9 @@ matrix:
           env: TOXENV=qa,doc
 
 addons:
-  apt:
-    sources:
-    - graphviz
+    apt:
+        packages:
+            - graphviz
 
 install:
  - pip install --upgrade --ignore-installed setuptools
