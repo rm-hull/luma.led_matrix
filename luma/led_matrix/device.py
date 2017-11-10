@@ -2,6 +2,10 @@
 # Copyright (c) 2017 Richard Hull and contributors
 # See LICENSE.rst for details.
 
+"""
+Collection of serial interfaces to LED matrix devices.
+"""
+
 # Example usage:
 #
 #   from luma.core.interface.serial import spi, noop
@@ -43,10 +47,12 @@ __all__ = ["max7219", "ws2812", "neopixel", "neosegment", "apa102"]
 
 class max7219(device):
     """
-    Encapsulates the serial interface to a series of 8x8 LED matrixes
-    daisychained together with MAX7219 chips. On creation, an initialization
-    sequence is pumped to the display to properly configure it. Further control
-    commands can then be called to affect the brightness and other settings.
+    Serial interface to a series of 8x8 LED matrixes daisychained together with
+    MAX7219 chips.
+
+    On creation, an initialization sequence is pumped to the display to properly
+    configure it. Further control commands can then be called to affect the
+    brightness and other settings.
     """
     def __init__(self, serial_interface=None, width=8, height=8, cascaded=None, rotate=0,
                  block_orientation=0, **kwargs):
@@ -162,17 +168,19 @@ class max7219(device):
 
 class ws2812(device):
     """
-    Encapsulates the serial interface to a series of RGB neopixels
-    daisy-chained together with WS281x chips. On creation, the array is
-    initialized with the correct number of cascaded devices. Further control
-    commands can then be called to affect the brightness and other settings.
+    Serial interface to a series of RGB neopixels daisy-chained together with
+    WS281x chips.
+
+    On creation, the array is initialized with the correct number of cascaded
+    devices. Further control commands can then be called to affect the
+    brightness and other settings.
 
     :param dma_interface: The WS2812 interface to write to (usually omit this
         parameter and it will default to the correct value - it is only needed
-        for testing whereby a mock implementation is supplied)
-    :param width: The number of pixels laid out horizontally
+        for testing whereby a mock implementation is supplied).
+    :param width: The number of pixels laid out horizontally.
     :type width: int
-    :param height: The number of pixels laid out vertically
+    :param height: The number of pixels laid out vertically.
     :type width: int
     :param cascaded: The number of pixels in a single strip - if supplied, this
         will override ``width`` and ``height``.
@@ -183,7 +191,7 @@ class ws2812(device):
     :type rotate: int
     :param mapping: An (optional) array of integer values that translate the
         pixel to physical offsets. If supplied, should be the same size as
-        ``width * height``
+        ``width * height``.
     :type mapping: int[]
 
     .. versionadded:: 0.4.0
@@ -266,7 +274,7 @@ class ws2812(device):
 
     def show(self):
         """
-        Simulates switching the display mode ON; this is acheived by restoring
+        Simulates switching the display mode ON; this is achieved by restoring
         the contrast to the level prior to the last time hide() was called.
         """
         if self._prev_contrast is not None:
@@ -275,7 +283,7 @@ class ws2812(device):
 
     def hide(self):
         """
-        Simulates switching the display mode OFF; this is acheived by setting
+        Simulates switching the display mode OFF; this is achieved by setting
         the contrast level to zero.
         """
         if self._prev_contrast is None:
@@ -340,20 +348,22 @@ UNICORN_HAT = [
 
 class apa102(device):
     """
-    Encapsulates the serial interface to a series of 'next-gen' RGB neopixels
-    daisy-chained together with APA102 chips. On creation, the array is
-    initialized with the correct number of cascaded devices. Further control
-    commands can then be called to affect the brightness and other settings.
+    Serial interface to a series of 'next-gen' RGB neopixels daisy-chained
+    together with APA102 chips.
+
+    On creation, the array is initialized with the correct number of cascaded
+    devices. Further control commands can then be called to affect the brightness
+    and other settings.
 
     Note that the brightness of individual pixels can be set by altering the
     alpha channel of the RGBA image that is being displayed.
 
     :param serial_interface: The serial interface to write to (usually omit this
         parameter and it will default to the correct value - it is only needed
-        for testing whereby a mock implementation is supplied)
-    :param width: The number of pixels laid out horizontally
+        for testing whereby a mock implementation is supplied).
+    :param width: The number of pixels laid out horizontally.
     :type width: int
-    :param height: The number of pixels laid out vertically
+    :param height: The number of pixels laid out vertically.
     :type width: int
     :param cascaded: The number of pixels in a single strip - if supplied, this
         will override ``width`` and ``height``.
@@ -364,7 +374,7 @@ class apa102(device):
     :type rotate: int
     :param mapping: An (optional) array of integer values that translate the
         pixel to physical offsets. If supplied, should be the same size as
-        ``width * height``
+        ``width * height``.
     :type mapping: int[]
 
     .. versionadded:: 0.9.0
