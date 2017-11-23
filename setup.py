@@ -39,7 +39,7 @@ test_deps = [
 ]
 
 install_deps = [
-    'luma.core>=1.0.3',
+    'luma.core>=1.1.1',
     'rpi_ws281x;platform_machine=="armv7l" and platform_system=="Linux"',
     'ws2812;platform_machine=="armv7l" and platform_system=="Linux"'
 ]
