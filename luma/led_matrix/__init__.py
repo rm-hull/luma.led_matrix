@@ -3,5 +3,8 @@
 # See LICENSE.rst for details.
 
 """
-LED matrix display driver for max7219 devices.
+Display drivers for LED Matrices & 7-segment displays (MAX7219) and
+RGB NeoPixels (WS2812 / APA102).
 """
+
+__version__ = '1.0.5'

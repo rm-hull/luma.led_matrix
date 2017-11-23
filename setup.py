@@ -1,25 +1,37 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import re
 import os
 import sys
 from io import open
 from setuptools import setup
 
 
-needs_pytest = {'pytest', 'test', 'ptr'}.intersection(sys.argv)
-pytest_runner = ['pytest-runner'] if needs_pytest else []
-
-
 def read_file(fname, encoding='utf-8'):
-    with open(os.path.join(os.path.dirname(__file__), fname), encoding=encoding) as r:
+    with open(fname, encoding=encoding) as r:
         return r.read()
 
 
-README = read_file("README.rst")
-CONTRIB = read_file("CONTRIBUTING.rst")
-CHANGES = read_file("CHANGES.rst")
-version = read_file("VERSION.txt").strip()
+def find_version(*file_paths):
+    fpath = os.path.join(os.path.dirname(__file__), *file_paths)
+    version_file = read_file(fpath)
+    version_match = re.search(r"^__version__ = ['\"]([^'\"]*)['\"]",
+                              version_file, re.M)
+    if version_match:
+        return version_match.group(1)
+
+    err_msg = 'Unable to find version string in {}'.format(fpath)
+    raise RuntimeError(err_msg)
+
+
+README = read_file('README.rst')
+CONTRIB = read_file('CONTRIBUTING.rst')
+CHANGES = read_file('CHANGES.rst')
+version = find_version('luma', 'led_matrix', '__init__.py')
+
+needs_pytest = {'pytest', 'test', 'ptr'}.intersection(sys.argv)
+pytest_runner = ['pytest-runner'] if needs_pytest else []
 test_deps = [
     'mock;python_version<"3.3"',
     'pytest>=3.1',

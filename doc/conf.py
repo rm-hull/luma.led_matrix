@@ -12,13 +12,17 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import os, sys
+import os
+import sys
 from datetime import datetime
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
+
 sys.path.insert(0, os.path.abspath('..'))
+
+from luma.led_matrix import __version__ as version
 
 # -- General configuration ------------------------------------------------
 
@@ -55,13 +59,12 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Luma.LED_Matrix: Display driver for MAX7219, WS2812'
-copyright = u'2015-{0}, Richard Hull'.format(datetime.now().year)
+author = u'Richard Hull and contributors'
+copyright = u'2015-{0}, {1}'.format(datetime.now().year, author)
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
-
-version = open("../VERSION.txt").read().strip()
 
 # The full version, including alpha/beta/rc tags.
 release = version
@@ -208,7 +211,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
   ('index', 'luma.led_matrix.tex', u'Luma.LED_Matrix Documentation',
-   u'Richard Hull', 'manual'),
+   author, 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -238,7 +241,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'luma.led_matrix', u'Luma.LED_Matrix Documentation',
-     [u'Richard Hull'], 1)
+     [author], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -252,7 +255,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   ('index', 'luma.led_matrix', u'Luma.LED_Matrix Documentation',
-   u'Richard Hull', 'luma.led_matrix', 'One line description of project.',
+   author, 'luma.led_matrix', 'One line description of project.',
    'Miscellaneous'),
 ]
 
