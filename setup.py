@@ -38,12 +38,6 @@ test_deps = [
     'pytest-cov'
 ]
 
-install_deps = [
-    'luma.core>=1.1.1',
-    'rpi_ws281x;platform_machine=="armv7l" and platform_system=="Linux"',
-    'ws2812;platform_machine=="armv7l" and platform_system=="Linux"'
-]
-
 setup(
     name="luma.led_matrix",
     version=version,
@@ -57,10 +51,13 @@ setup(
     download_url="https://github.com/rm-hull/luma.led_matrix/tarball/" + version,
     namespace_packages=["luma"],
     packages=["luma.led_matrix"],
-    install_requires=install_deps,
+    install_requires=["luma.core>=1.1.1"],
     setup_requires=pytest_runner,
-    tests_require=["mock", "pytest", "pytest-cov"],
+    tests_require=test_deps,
     extras_require={
+        ':platform_machine=="armv7l" and platform_system=="Linux"': [
+            'ws2812', 'rpi_ws281x'
+        ],
         'docs': [
             'sphinx >= 1.5.1'
         ],
