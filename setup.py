@@ -51,7 +51,7 @@ setup(
     download_url="https://github.com/rm-hull/luma.led_matrix/tarball/" + version,
     namespace_packages=["luma"],
     packages=["luma.led_matrix"],
-    install_requires=["luma.core>=1.1.1"],
+    install_requires=["luma.core>=1.2.1"],
     setup_requires=pytest_runner,
     tests_require=test_deps,
     extras_require={
