@@ -25,7 +25,7 @@ Luma.LED_Matrix
 .. image:: https://img.shields.io/pypi/v/luma.led_matrix.svg
    :target: https://pypi.python.org/pypi/luma.led_matrix
 
-.. image:: https://img.shields.io/maintenance/yes/2017.svg?maxAge=2592000
+.. image:: https://img.shields.io/maintenance/yes/2018.svg?maxAge=2592000
 
 Python library interfacing LED matrix displays with the MAX7219 driver (using
 SPI) and WS2812 & APA102 NeoPixels on the Raspberry Pi and other linux-based
@@ -84,7 +84,7 @@ License
 -------
 The MIT License (MIT)
 
-Copyright (c) 2017 Richard Hull & Contributors
+Copyright (c) 2013-18 Richard Hull & Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
