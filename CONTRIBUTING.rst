@@ -19,3 +19,4 @@ Contributors
 * Brice Parent (@agripo)
 * Thomas De Keulenaer (@twdkeule)
 * Tero Korpela (@terokorp)
+* Qinkang Huang (@pokebox)

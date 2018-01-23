@@ -219,7 +219,7 @@ class ws2812(device):
 
         pin = 18
         channel = 0
-        dma = 5
+        dma = 10
         freq_hz = 800000
         brightness = 255
         strip_type = ws.WS2811_STRIP_GRB
