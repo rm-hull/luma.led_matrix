@@ -35,8 +35,8 @@ implies the kernel SPI driver is not loaded. Enable the SPI as follows (steps
 taken from https://learn.sparkfun.com/tutorials/raspberry-pi-spi-and-i2c-tutorial#spi-on-pi):
 
 #. Run ``sudo raspi-config``
-#. Use the down arrow to select ``9 Advanced Options``
-#. Arrow down to ``A6 SPI.``
+#. Use the down arrow to select ``5 Interfacing Options``
+#. Arrow down to ``P4 SPI.``
 #. Select **yes** when it asks you to enable SPI,
 #. Also select **yes** when it asks about automatically loading the kernel module.
 #. Use the right arrow to select the **<Finish>** button.
