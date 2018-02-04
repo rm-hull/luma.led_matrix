@@ -2,7 +2,7 @@ Installation
 ------------
 .. note:: The library has been tested against Python 2.7 and 3.4+.
 
-   For **Python3** installation, substitute the following in the 
+   For a **Python 3** installation, substitute the following in the 
    instructions below.
 
    * ``pip`` ⇒ ``pip3``, 
@@ -15,8 +15,8 @@ Pre-requisites
 
 MAX7219 Devices
 """""""""""""""
-By default, the SPI kernel driver is **NOT** enabled on the Raspberry Pi Raspian image.
-You can confirm whether it is enabled using the shell commands below::
+By default, the SPI kernel driver is **NOT** enabled on a Raspberry Pi Raspbian image.
+You can confirm whether it is enabled using the shell command below::
 
   $ lsmod | grep -i spi
   spi_bcm2835             7424  0
@@ -24,7 +24,7 @@ You can confirm whether it is enabled using the shell commands below::
 Depending on the hardware/kernel version, this may report **spi_bcm2807** rather 
 than **spi_bcm2835** - either should be adequate.
 
-And that the devices are successfully installed in ``/dev``::
+And to verify that the devices are successfully installed in ``/dev``::
 
   $ ls -l /dev/spi*
   crw------- 1 root root 153, 0 Jan  1  1970 /dev/spidev0.0
@@ -36,11 +36,11 @@ taken from https://learn.sparkfun.com/tutorials/raspberry-pi-spi-and-i2c-tutoria
 
 #. Run ``sudo raspi-config``
 #. Use the down arrow to select ``5 Interfacing Options``
-#. Arrow down to ``P4 SPI.``
-#. Select **yes** when it asks you to enable SPI,
-#. Also select **yes** when it asks about automatically loading the kernel module.
-#. Use the right arrow to select the **<Finish>** button.
-#. Select **yes** when it asks to reboot.
+#. Arrow down to ``P4 SPI``
+#. Select **yes** when it asks you to enable SPI
+#. Also select **yes** when it asks about automatically loading the kernel module
+#. Use the right arrow to select the **<Finish>** button
+#. Select **yes** when it asks to reboot
 
 .. image:: images/raspi-spi.png
 
@@ -111,8 +111,8 @@ Install the dependencies for library first with::
   $ sudo usermod -a -G spi,gpio pi
   $ sudo apt-get install build-essential python-dev python-pip libfreetype6-dev libjpeg-dev
 
-.. warning:: The default pip bundled with apt on Raspbian **Jessie** is really old, and can
-   cause components to not be installed properly. Please ensure that **pip 9.0.1**
+.. warning:: The default pip bundled with apt on Raspbian **Jessie** is really old,
+   and can cause components to not be installed properly. Please ensure that **pip 9.0.1** 
    or newer is installed prior to continuing::
    
       $ pip --version
