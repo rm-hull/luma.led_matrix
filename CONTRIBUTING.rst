@@ -21,3 +21,4 @@ Contributors
 * Tero Korpela (@terokorp)
 * Qinkang Huang (@pokebox)
 * Shawn Woodford (@swoodford)
+* Phil Howard (@gadgetoid)
