@@ -65,7 +65,7 @@ def test_regular_empty_buf():
 
 
 def test_degrees():
-    buf = mutable_string(u"29.12°C")
+    buf = mutable_string("29.12°C")
     results = dot_muncher(buf)
     assert list(results) == [0x6d, 0x7b | 0x80, 0x30, 0x6d, 0x63, 0x4e]
 
