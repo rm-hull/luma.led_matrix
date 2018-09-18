@@ -22,3 +22,4 @@ Contributors
 * Qinkang Huang (@pokebox)
 * Shawn Woodford (@swoodford)
 * Phil Howard (@gadgetoid)
+* Petr Kracík (@petrkr)
