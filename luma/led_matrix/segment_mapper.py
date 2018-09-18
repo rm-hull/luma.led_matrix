@@ -6,6 +6,8 @@ _DIGITS = {
     ' ': 0x00,
     '-': 0x01,
     '_': 0x08,
+    u'°': 0x63,
+    '\xb0': 0x63,
     '\'': 0x02,
     '0': 0x7e,
     '1': 0x30,
@@ -86,6 +88,9 @@ def regular(text, notfound="_"):
 
 
 def dot_muncher(text, notfound="_"):
+    if not text:
+        return
+
     undefined = _DIGITS[notfound]
     iterator = iter(text)
     last = _DIGITS.get(next(iterator), undefined)
