@@ -120,12 +120,12 @@ aspect, then add a :py:attr:`rotate=N` parameter when creating the device:
 
 .. code:: python
 
-  from luma.core.interface.serial import i2c
+  from luma.core.interface.serial import spi, noop
   from luma.core.render import canvas
-  from luma.oled.device import ssd1306, ssd1325, ssd1331, sh1106
+  from luma.led_matrix.device import max7219
 
-  serial = i2c(port=1, address=0x3C)
-  device = ssd1306(serial, rotate=1)
+  serial = spi(port=0, device=0, gpio=noop())
+  device = max7219(serial, rotate=1) 
 
   # Box and text rendered in portrait mode
   with canvas(device) as draw:
