@@ -120,7 +120,7 @@ aspect, then add a :py:attr:`rotate=N` parameter when creating the device:
 
 .. code:: python
 
-  from luma.core.interface.serial import i2c
+  from luma.core.interface.serial import spi, noop
   from luma.core.render import canvas
   from luma.led_matrix.device import max7219
 
