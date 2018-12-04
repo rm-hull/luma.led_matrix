@@ -23,6 +23,7 @@ capabilities. However, for most cases, for drawing text and graphics primitives,
 the canvas class should be used as follows:
 
 .. code:: python
+
    from PIL import ImageFont
 
    font = ImageFont.truetype("examples/pixelmix.ttf", 8)
