@@ -24,6 +24,8 @@ the canvas class should be used as follows:
 
 .. code:: python
 
+   from PIL import ImageFont
+
    font = ImageFont.truetype("examples/pixelmix.ttf", 8)
  
    with canvas(device) as draw:
