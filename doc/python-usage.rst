@@ -52,11 +52,11 @@ garbage collected.
 
    .. code:: python
 
-     from luma.core import legacy
+     from luma.core.legacy import text
      from luma.core.legacy.font import proportional, CP437_FONT, LCD_FONT
 
      with canvas(device) as draw:
-        legacy.text(draw, (0, 0), "A", fill="white", font=proportional(CP437_FONT))
+         text(draw, (0, 0), "A", fill="white", font=proportional(CP437_FONT))
 
    The fixed-width fonts can be "converted" on-the-fly to proportionally
    spaced by wrapping them with the :py:class:`luma.core.legacy.font.proportional` 
@@ -177,8 +177,9 @@ below,
 
    from luma.core.interface.serial import spi, noop
    from luma.core.render import canvas
-   from luma.led_matrix.device import max7219
+   from luma.core.legacy import text
    from luma.core.legacy.font import proportional, LCD_FONT
+   from luma.led_matrix.device import max7219
 
    serial = spi(port=0, device=0, gpio=noop(), block_orientation=-90)
    device = max7219(serial, width=32, height=24)
