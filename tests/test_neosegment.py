@@ -83,7 +83,7 @@ def test_segment_mapper():
 def test_unknown_char():
     neoseg = neosegment(width=6, device=dummy(width=6, height=7))
     neoseg.text = "888888"
-    neoseg.text[2:4] = "#)"
+    neoseg.text[2:4] = "&\x7f"
     neoseg.color[2:4] = ["orange", "orange"]
     ref = dummy(width=6, height=7)
     with canvas(ref) as draw:
