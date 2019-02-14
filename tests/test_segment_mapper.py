@@ -40,6 +40,12 @@ def test_dot_muncher_empty_buf():
     assert list(results) == []
 
 
+def test_dot_muncher_skips_unknown():
+    buf = mutable_string("B&B")
+    results = dot_muncher(buf)
+    assert list(results) == [0x7f, 0x7f]
+
+
 def test_regular_without_dots():
     buf = mutable_string("Hello world")
     results = regular(buf)
@@ -62,6 +68,12 @@ def test_regular_empty_buf():
     buf = mutable_string("")
     results = regular(buf)
     assert list(results) == []
+
+
+def test_regular_skips_unknown():
+    buf = mutable_string("B&B")
+    results = regular(buf)
+    assert list(results) == [0x7f, 0x7f]
 
 
 def test_degrees_unicode():
