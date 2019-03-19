@@ -54,7 +54,7 @@ def test_dot_muncher_empty_buf():
 
 def test_dot_muncher_skips_unknown():
     buf = mutable_string("B&B")
-    results = dot_muncher(buf)
+    results = dot_muncher(buf, notfound=None)
     assert list(results) == [0x7f, 0x7f]
 
 
@@ -90,7 +90,7 @@ def test_regular_empty_buf():
 
 def test_regular_skips_unknown():
     buf = mutable_string("B&B")
-    results = regular(buf)
+    results = regular(buf, notfound=None)
     assert list(results) == [0x7f, 0x7f]
 
 

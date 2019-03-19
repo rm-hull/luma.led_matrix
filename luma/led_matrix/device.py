@@ -509,7 +509,7 @@ class neosegment(sevensegment):
                         draw.point((x, y), fill=color[x])
                     byte >>= 1
 
-    def segment_mapper(self, text, notfound=None):
+    def segment_mapper(self, text, notfound="_"):
         for char in regular(text, notfound):
 
             # Convert from std MAX7219 segment mappings

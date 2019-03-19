@@ -76,7 +76,7 @@ _DIGITS = {
 }
 
 
-def regular(text, notfound=None):
+def regular(text, notfound="_"):
     undefined = _DIGITS[notfound] if notfound is not None else None
     for char in iter(text):
         d = _DIGITS.get(char, undefined)
@@ -84,7 +84,7 @@ def regular(text, notfound=None):
             yield d
 
 
-def dot_muncher(text, notfound=None):
+def dot_muncher(text, notfound="_"):
     if not text:
         return
 
