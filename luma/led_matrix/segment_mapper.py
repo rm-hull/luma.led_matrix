@@ -77,33 +77,28 @@ _DIGITS = {
 
 
 def regular(text, notfound="_"):
-    try:
-        undefined = _DIGITS[notfound]
-        iterator = iter(text)
-        while True:
-            char = next(iterator)
-            yield _DIGITS.get(char, undefined)
-    except StopIteration:
-        pass
+    undefined = _DIGITS[notfound] if notfound is not None else None
+    for char in iter(text):
+        digit = _DIGITS.get(char, undefined)
+        if digit is not None:
+            yield digit
 
 
 def dot_muncher(text, notfound="_"):
     if not text:
         return
 
-    undefined = _DIGITS[notfound]
-    iterator = iter(text)
-    last = _DIGITS.get(next(iterator), undefined)
-    try:
-        while True:
-            curr = _DIGITS.get(next(iterator), undefined)
+    undefined = _DIGITS[notfound] if notfound is not None else None
+    last = None
+    for char in iter(text):
+        curr = _DIGITS.get(char, undefined)
 
-            if curr == 0x80:
-                yield curr | last
-            elif last != 0x80:
-                yield last
-
-            last = curr
-    except StopIteration:
-        if last != 0x80:
+        if curr == 0x80:
+            yield curr | (last or 0)
+        elif last != 0x80 and last is not None:
             yield last
+
+        last = curr
+
+    if curr != 0x80 and curr is not None:
+        yield curr

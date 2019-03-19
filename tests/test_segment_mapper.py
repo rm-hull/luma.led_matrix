@@ -10,7 +10,7 @@ from luma.led_matrix.segment_mapper import dot_muncher, regular
 
 def test_dot_muncher_without_dots():
     buf = mutable_string("Hello world")
-    results = dot_muncher(buf)
+    results = dot_muncher(buf, notfound='_')
     assert list(results) == [0x37, 0x6f, 0x06, 0x06, 0x1d, 0x00, 0x08, 0x1d, 0x05, 0x06, 0x3d]
 
 
@@ -28,10 +28,22 @@ def test_dot_muncher_with_dot_at_end():
     assert list(results) == [0x00, 0x00, 0x5b, 0x6d, 0x5b, 0x7b, 0x6d, 0x7e | 0x80]
 
 
+def test_dot_muncher_with_dot_at_start():
+    buf = mutable_string(".PDF")
+    results = dot_muncher(buf)
+    assert list(results) == [0x80, 0x67, 0x7e, 0x47]
+
+
 def test_dot_muncher_with_multiple_dot():
     buf = mutable_string("127.0.0.1")
     results = dot_muncher(buf)
     assert list(results) == [0x30, 0x6d, 0x70 | 0x80, 0x7e | 0x80, 0x7e | 0x80, 0x30]
+
+
+def test_dot_muncher_with_consecutive_dot():
+    buf = mutable_string("No...")
+    results = dot_muncher(buf)
+    assert list(results) == [0x76, 0x1d | 0x80, 0x80, 0x80]
 
 
 def test_dot_muncher_empty_buf():
@@ -40,9 +52,21 @@ def test_dot_muncher_empty_buf():
     assert list(results) == []
 
 
+def test_dot_muncher_skips_unknown():
+    buf = mutable_string("B&B")
+    results = dot_muncher(buf, notfound=None)
+    assert list(results) == [0x7f, 0x7f]
+
+
+def test_dot_muncher_with_notfound():
+    buf = mutable_string("B&B")
+    results = dot_muncher(buf, notfound='_')
+    assert list(results) == [0x7f, 0x08, 0x7f]
+
+
 def test_regular_without_dots():
     buf = mutable_string("Hello world")
-    results = regular(buf)
+    results = regular(buf, notfound='_')
     assert list(results) == [0x37, 0x6f, 0x06, 0x06, 0x1d, 0x00, 0x08, 0x1d, 0x05, 0x06, 0x3d]
 
 
@@ -62,6 +86,18 @@ def test_regular_empty_buf():
     buf = mutable_string("")
     results = regular(buf)
     assert list(results) == []
+
+
+def test_regular_skips_unknown():
+    buf = mutable_string("B&B")
+    results = regular(buf, notfound=None)
+    assert list(results) == [0x7f, 0x7f]
+
+
+def test_regular_with_notfound():
+    buf = mutable_string("B&B")
+    results = regular(buf, notfound='_')
+    assert list(results) == [0x7f, 0x08, 0x7f]
 
 
 def test_degrees_unicode():

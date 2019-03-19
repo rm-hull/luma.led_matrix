@@ -510,29 +510,23 @@ class neosegment(sevensegment):
                     byte >>= 1
 
     def segment_mapper(self, text, notfound="_"):
-        try:
-            iterator = regular(text, notfound)
-            while True:
-                char = next(iterator)
+        for char in regular(text, notfound):
 
-                # Convert from std MAX7219 segment mappings
-                a = char >> 6 & 0x01
-                b = char >> 5 & 0x01
-                c = char >> 4 & 0x01
-                d = char >> 3 & 0x01
-                e = char >> 2 & 0x01
-                f = char >> 1 & 0x01
-                g = char >> 0 & 0x01
+            # Convert from std MAX7219 segment mappings
+            a = char >> 6 & 0x01
+            b = char >> 5 & 0x01
+            c = char >> 4 & 0x01
+            d = char >> 3 & 0x01
+            e = char >> 2 & 0x01
+            f = char >> 1 & 0x01
+            g = char >> 0 & 0x01
 
-                # To NeoSegment positions
-                yield \
-                    b << 6 | \
-                    a << 5 | \
-                    f << 4 | \
-                    g << 3 | \
-                    c << 2 | \
-                    d << 1 | \
-                    e << 0
-
-        except StopIteration:
-            pass
+            # To NeoSegment positions
+            yield \
+                b << 6 | \
+                a << 5 | \
+                f << 4 | \
+                g << 3 | \
+                c << 2 | \
+                d << 1 | \
+                e << 0
