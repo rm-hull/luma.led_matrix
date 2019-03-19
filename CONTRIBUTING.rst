@@ -23,3 +23,4 @@ Contributors
 * Shawn Woodford (@swoodford)
 * Phil Howard (@gadgetoid)
 * Petr Kracík (@petrkr)
+* Emlyn Corrin (@emlyn)
