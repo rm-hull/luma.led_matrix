@@ -153,15 +153,15 @@ class max7219(device):
 
     def show(self):
         """
-        Switches the display mode OFF, putting the device in low-power
-        sleep mode.
+        Sets the display mode ON, waking the device out of a prior
+        low-power sleep mode.
         """
         self.data([self._const.SHUTDOWN, 1] * self.cascaded)
 
     def hide(self):
         """
-        Sets the display mode ON, waking the device out of a prior
-        low-power sleep mode.
+        Switches the display mode OFF, putting the device in low-power
+        sleep mode.
         """
         self.data([self._const.SHUTDOWN, 0] * self.cascaded)
 
