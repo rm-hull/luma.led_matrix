@@ -163,7 +163,6 @@ class max7219(device):
         Switches the display mode OFF, putting the device in low-power
         sleep mode.
         """
-
         self.data([self._const.SHUTDOWN, 0] * self.cascaded)
 
 
