@@ -201,6 +201,25 @@ def test_block_realignment_plus180():
     ])
 
 
+def test_reversed_max7219():
+    device = max7219(serial, cascaded=4, blocks_arranged_in_reverse_order=True)
+    serial.reset_mock()
+
+    with canvas(device) as draw:
+        draw.rectangle((0, 0, 15, 3), outline="white")
+
+    serial.data.assert_has_calls([
+        call([1, 15, 1, 9, 1, 0, 1, 0]),
+        call([2, 9, 2, 9, 2, 0, 2, 0]),
+        call([3, 9, 3, 9, 3, 0, 3, 0]),
+        call([4, 9, 4, 9, 4, 0, 4, 0]),
+        call([5, 9, 5, 9, 5, 0, 5, 0]),
+        call([6, 9, 6, 9, 6, 0, 6, 0]),
+        call([7, 9, 7, 9, 7, 0, 7, 0]),
+        call([8, 9, 8, 15, 8, 0, 8, 0])
+    ])
+
+
 def test_unknown_block_orientation():
     with pytest.raises(AssertionError):
         max7219(serial, cascaded=2, block_orientation="sausages")
