@@ -17,6 +17,11 @@ def test_init_cascaded():
     assert device.height == 8
 
 
+def test_init_reversed():
+    device = max7219(serial, cascaded=4, blocks_arranged_in_reverse_order=True)
+    assert device.blocks_arranged_in_reverse_order is True
+
+
 def test_init_8x8():
     device = max7219(serial)
     assert device.cascaded == 1
@@ -193,6 +198,25 @@ def test_block_realignment_plus180():
         call([6, 0x90, 6, 0x90]),
         call([7, 0x90, 7, 0x90]),
         call([8, 0x90, 8, 0xF0])
+    ])
+
+
+def test_reversed_max7219():
+    device = max7219(serial, cascaded=4, blocks_arranged_in_reverse_order=True)
+    serial.reset_mock()
+
+    with canvas(device) as draw:
+        draw.rectangle((0, 0, 15, 3), outline="white")
+
+    serial.data.assert_has_calls([
+        call([1, 15, 1, 9, 1, 0, 1, 0]),
+        call([2, 9, 2, 9, 2, 0, 2, 0]),
+        call([3, 9, 3, 9, 3, 0, 3, 0]),
+        call([4, 9, 4, 9, 4, 0, 4, 0]),
+        call([5, 9, 5, 9, 5, 0, 5, 0]),
+        call([6, 9, 6, 9, 6, 0, 6, 0]),
+        call([7, 9, 7, 9, 7, 0, 7, 0]),
+        call([8, 9, 8, 15, 8, 0, 8, 0])
     ])
 
 
