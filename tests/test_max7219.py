@@ -17,6 +17,11 @@ def test_init_cascaded():
     assert device.height == 8
 
 
+def test_init_reversed():
+    device = max7219(serial, cascaded=4, blocks_arranged_in_reverse_order=True)
+    assert device.blocks_arranged_in_reverse_order == True
+
+
 def test_init_8x8():
     device = max7219(serial)
     assert device.cascaded == 1
