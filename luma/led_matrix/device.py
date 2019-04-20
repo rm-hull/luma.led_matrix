@@ -55,7 +55,7 @@ class max7219(device):
     brightness and other settings.
     """
     def __init__(self, serial_interface=None, width=8, height=8, cascaded=None, rotate=0,
-                 block_orientation=0, **kwargs):
+                 block_orientation=0, blocks_arranged_in_reverse_order=False, **kwargs):
         super(max7219, self).__init__(luma.led_matrix.const.max7219, serial_interface)
 
         # Derive (override) the width and height if a cascaded param supplied
@@ -63,6 +63,7 @@ class max7219(device):
             width = cascaded * 8
             height = 8
 
+        self.blocks_arranged_in_reverse_order = blocks_arranged_in_reverse_order
         self.capabilities(width, height, rotate)
         self.segment_mapper = dot_muncher
 
@@ -102,6 +103,12 @@ class max7219(device):
                     box = (x, y, x + 8, y + 8)
                     rotated_block = image.crop(box).rotate(self._correction_angle)
                     image.paste(rotated_block, box)
+        if self.blocks_arranged_in_reverse_order:
+            old_image = image.copy()
+            for y in range(8):
+                for x in range(8):
+                    for i in range(self.cascaded):
+                        image.putpixel((24-i*8 + x, y), old_image.getpixel((i*8 + x,y)))
 
         return image
 
