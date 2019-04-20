@@ -108,7 +108,7 @@ class max7219(device):
             for y in range(8):
                 for x in range(8):
                     for i in range(self.cascaded):
-                        image.putpixel((24 - i * 8 + x, y), old_image.getpixel((i * 8 + x, y)))
+                        image.putpixel((8 * (self.cascaded - 1) - i * 8 + x, y), old_image.getpixel((i * 8 + x, y)))
 
         return image
 
