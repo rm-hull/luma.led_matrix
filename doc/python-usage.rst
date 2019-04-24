@@ -220,6 +220,17 @@ aligned the other way):
 Every time a display render is subsequenly requested, the underlying image
 representation is corrected to reverse the 90° phase shift.
 
+Similarly, in other pre-assembled configurations, the 4-in-1 blocks
+arrange the 8x8 blocks in reverse order. In that case, you need to pass
+a True value to parameter `blocks_arranged_in_reverse_order`, requesting
+an additional pre-processing step that fixes this:
+
+.. code:: python
+
+   ...
+   device = max7219(serial, cascaded=4, block_orientation=-90,
+                    blocks_arranged_in_reverse_order=True)
+
 7-Segment LED Displays
 ^^^^^^^^^^^^^^^^^^^^^^
 For the 7-segment device, initialize the :py:class:`luma.core.virtual.sevensegment` 

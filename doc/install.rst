@@ -138,18 +138,22 @@ matrices::
     $ python examples/matrix_demo.py -h
     usage: matrix_demo.py [-h] [--cascaded CASCADED]
                           [--block-orientation {0,90,-90}] [--rotate {0,1,2,3}]
+                          [--reverse-order REVERSE_ORDER]
 
     matrix_demo arguments
 
     optional arguments:
-    -h, --help            show this help message and exit
-    --cascaded CASCADED, -n CASCADED
-                          Number of cascaded MAX7219 LED matrices (default: 1)
-    --block-orientation {0, 90, -90}
-                          Corrects block orientation when wired vertically
-                          (default: 0)
-    --rotate {0,1,2,3}    Rotate display 0=0°, 1=90°, 2=180°, 3=270° (default:
-                          0)
+      -h, --help            show this help message and exit
+      --cascaded CASCADED, -n CASCADED
+                            Number of cascaded MAX7219 LED matrices (default: 1)
+      --block-orientation {0,90,-90}
+                            Corrects block orientation when wired vertically
+                            (default: 0)
+      --rotate {0,1,2,3}    Rotate display 0=0_, 1=90_, 2=180_, 3=270_
+                            (default: 0)
+      --reverse-order REVERSE_ORDER
+                            Set to true if blocks are in reverse order (default:
+                            False)
 
 Similarly, there is a basic demo of the capabilities of the
 :py:class:`luma.led_matrix.virtual.sevensegment` wrapper::
