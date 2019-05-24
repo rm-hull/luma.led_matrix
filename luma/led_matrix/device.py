@@ -42,7 +42,7 @@ from luma.core.virtual import sevensegment
 from luma.led_matrix.segment_mapper import dot_muncher, regular
 
 
-__all__ = ["max7219", "ws2812", "neopixel", "neosegment", "apa102"]
+__all__ = ["max7219", "ws2812", "neopixel", "neosegment", "apa102", "unicornhathd"]
 
 
 class max7219(device):
@@ -537,3 +537,61 @@ class neosegment(sevensegment):
                 c << 2 | \
                 d << 1 | \
                 e << 0
+
+class unicornhathd(device):
+    
+    def __init__(self, serial_interface=None, mapping=None, rotate=0, **kwargs):
+        super(max7219, self).__init__(luma.core.const.common, serial_interface)
+        width = 16
+        height = 16
+        self.capabilities(width, height, rotate, mode="RGB")
+        self._mapping = list(mapping or range(width * height))
+        self._last_image = None
+
+        self.contrast(0x70)
+    
+    def display(self, image):
+        """
+        Takes a 32-bit RGBA :py:mod:`PIL.Image` and dumps it to the Unicorn HAT HD. 
+        If a pixel is not fully opaque, the alpha channel value is used to set the
+        brightness of the respective RGB LED.
+        """
+        assert(image.mode == self.mode)
+        assert(image.size == self.size)
+        self._last_image = image.copy()
+
+        # Send zeros to reset, then pixel values then zeros at end
+        sz = image.width * image.height * 3
+        buf = bytearray(sz)
+
+        for idx, (r, g, b, a) in enumerate(image.getdata()):
+            brightness = int(a / 255.0) if a != 0xFF else self._brightness
+            buf[idx] = int(r * self._brightness)
+            buf[idx + 1] = int(g * self._brightness)
+            buf[idx + 2] = int(b * self._brightness)
+
+        self._serial_interface.data([0x72] + list(buf))   # 0x72 == SOF ... start of frame?
+
+    def show(self):
+        """
+        Not supported
+        """
+        pass
+
+    def hide(self):
+        """
+        Not supported
+        """
+        pass
+
+    def contrast(self, value):
+        """
+        Sets the LED intensity to the desired level, in the range 0-255.
+
+        :param level: Desired contrast level in the range of 0-255.
+        :type level: int
+        """
+        assert(0x00 <= value <= 0xFF)
+        self._brightness = value / 255.0
+        if self._last_image is not None:
+            self.display(self._last_image)
