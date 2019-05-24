@@ -541,7 +541,7 @@ class neosegment(sevensegment):
 class unicornhathd(device):
     
     def __init__(self, serial_interface=None, mapping=None, rotate=0, **kwargs):
-        super(max7219, self).__init__(luma.core.const.common, serial_interface)
+        super(unicornhathd, self).__init__(luma.core.const.common, serial_interface)
         width = 16
         height = 16
         self.capabilities(width, height, rotate, mode="RGB")
