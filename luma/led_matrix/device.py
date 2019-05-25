@@ -560,7 +560,7 @@ class unicornhathd(device):
         # Send zeros to reset, then pixel values then zeros at end
         sz = image.width * image.height * 3
         buf = bytearray(sz)
-	normalized_brightness = self._brightness / 255.0
+        normalized_brightness = self._brightness / 255.0
 
         for idx, (r, g, b, a) in enumerate(image.getdata()):
             offset = idx * 3
