@@ -538,8 +538,8 @@ class neosegment(sevensegment):
                 d << 1 | \
                 e << 0
 
+
 class unicornhathd(device):
-    
     def __init__(self, serial_interface=None, rotate=0, **kwargs):
         super(unicornhathd, self).__init__(luma.core.const.common, serial_interface)
         self.capabilities(16, 16, rotate, mode="RGB")
@@ -563,9 +563,9 @@ class unicornhathd(device):
         for idx, (r, g, b, a) in enumerate(image.getdata()):
             offset = idx * 3
             brightness = int(a / 255.0) if a != 0xFF else self._brightness
-            buf[offset] = int(r * self._brightness)
-            buf[offset + 1] = int(g * self._brightness)
-            buf[offset + 2] = int(b * self._brightness)
+            buf[offset] = int(r * brightness)
+            buf[offset + 1] = int(g * brightness)
+            buf[offset + 2] = int(b * brightness)
 
         self._serial_interface.data([0x72] + list(buf))   # 0x72 == SOF ... start of frame?
 
