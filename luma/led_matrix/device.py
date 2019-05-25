@@ -540,14 +540,13 @@ class neosegment(sevensegment):
 
 class unicornhathd(device):
     
-    def __init__(self, serial_interface=None, mapping=None, rotate=0, **kwargs):
+    def __init__(self, serial_interface=None, rotate=0, **kwargs):
         super(unicornhathd, self).__init__(luma.core.const.common, serial_interface)
         width = 16
         height = 16
         self.capabilities(width, height, rotate, mode="RGB")
-        self._mapping = list(mapping or range(width * height))
         self._last_image = None
-
+        
         self.contrast(0x70)
     
     def display(self, image):
@@ -574,15 +573,21 @@ class unicornhathd(device):
 
     def show(self):
         """
-        Not supported
+        Simulates switching the display mode ON; this is achieved by restoring
+        the contrast to the level prior to the last time hide() was called.
         """
-        pass
+        if self._prev_brightness is not None:
+            self.contrast(self._prev_brightness)
+            self._prev_brightness = None
 
     def hide(self):
         """
-        Not supported
+        Simulates switching the display mode OFF; this is achieved by setting
+        the contrast level to zero.
         """
-        pass
+        if self._prev_brightness is None:
+            self._prev_brightness = self._brightness
+            self.contrast(0x00)
 
     def contrast(self, value):
         """
