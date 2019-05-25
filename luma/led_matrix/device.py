@@ -542,16 +542,13 @@ class unicornhathd(device):
     
     def __init__(self, serial_interface=None, rotate=0, **kwargs):
         super(unicornhathd, self).__init__(luma.core.const.common, serial_interface)
-        width = 16
-        height = 16
-        self.capabilities(width, height, rotate, mode="RGB")
+        self.capabilities(16, 16, rotate, mode="RGB")
         self._last_image = None
-        
         self.contrast(0x70)
-    
+
     def display(self, image):
         """
-        Takes a 32-bit RGBA :py:mod:`PIL.Image` and dumps it to the Unicorn HAT HD. 
+        Takes a 32-bit RGBA :py:mod:`PIL.Image` and dumps it to the Unicorn HAT HD.
         If a pixel is not fully opaque, the alpha channel value is used to set the
         brightness of the respective RGB LED.
         """
@@ -564,10 +561,11 @@ class unicornhathd(device):
         buf = bytearray(sz)
 
         for idx, (r, g, b, a) in enumerate(image.getdata()):
+            offset = idx * 3
             brightness = int(a / 255.0) if a != 0xFF else self._brightness
-            buf[idx] = int(r * self._brightness)
-            buf[idx + 1] = int(g * self._brightness)
-            buf[idx + 2] = int(b * self._brightness)
+            buf[offset] = int(r * self._brightness)
+            buf[offset + 1] = int(g * self._brightness)
+            buf[offset + 2] = int(b * self._brightness)
 
         self._serial_interface.data([0x72] + list(buf))   # 0x72 == SOF ... start of frame?
 
