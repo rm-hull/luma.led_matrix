@@ -542,8 +542,9 @@ class neosegment(sevensegment):
 class unicornhathd(device):
     def __init__(self, serial_interface=None, rotate=0, **kwargs):
         super(unicornhathd, self).__init__(luma.core.const.common, serial_interface)
-        self.capabilities(16, 16, rotate, mode="RGB")
+        self.capabilities(16, 16, rotate, mode="RGBA")
         self._last_image = None
+        self._prev_brightness = None
         self.contrast(0x70)
 
     def display(self, image):
@@ -559,10 +560,11 @@ class unicornhathd(device):
         # Send zeros to reset, then pixel values then zeros at end
         sz = image.width * image.height * 3
         buf = bytearray(sz)
+	normalized_brightness = self._brightness / 255.0
 
         for idx, (r, g, b, a) in enumerate(image.getdata()):
             offset = idx * 3
-            brightness = int(a / 255.0) if a != 0xFF else self._brightness
+            brightness = int(a / 255.0) if a != 0xFF else normalized_brightness
             buf[offset] = int(r * brightness)
             buf[offset + 1] = int(g * brightness)
             buf[offset + 2] = int(b * brightness)
@@ -595,6 +597,6 @@ class unicornhathd(device):
         :type level: int
         """
         assert(0x00 <= value <= 0xFF)
-        self._brightness = value / 255.0
+        self._brightness = value
         if self._last_image is not None:
             self.display(self._last_image)
