@@ -565,6 +565,8 @@ class unicornhathd(device):
         self._last_image = None
         self._prev_brightness = None
         self.contrast(0x70)
+        self.clear()
+        self.show()
 
     def display(self, image):
         """
