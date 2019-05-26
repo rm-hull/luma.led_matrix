@@ -42,7 +42,7 @@ from luma.core.virtual import sevensegment
 from luma.led_matrix.segment_mapper import dot_muncher, regular
 
 
-__all__ = ["max7219", "ws2812", "neopixel", "neosegment", "apa102"]
+__all__ = ["max7219", "ws2812", "neopixel", "neosegment", "apa102", "unicornhathd"]
 
 
 class max7219(device):
@@ -191,7 +191,7 @@ class ws2812(device):
     :type width: int
     :param cascaded: The number of pixels in a single strip - if supplied, this
         will override ``width`` and ``height``.
-    :type width: int
+    :type cascaded: int
     :param rotate: Whether the device dimenstions should be rotated in-situ:
         A value of: 0=0°, 1=90°, 2=180°, 3=270°. If not supplied, zero is
         assumed.
@@ -374,7 +374,7 @@ class apa102(device):
     :type width: int
     :param cascaded: The number of pixels in a single strip - if supplied, this
         will override ``width`` and ``height``.
-    :type width: int
+    :type cascaded: int
     :param rotate: Whether the device dimenstions should be rotated in-situ:
         A value of: 0=0°, 1=90°, 2=180°, 3=270°. If not supplied, zero is
         assumed.
@@ -537,3 +537,87 @@ class neosegment(sevensegment):
                 c << 2 | \
                 d << 1 | \
                 e << 0
+
+
+class unicornhathd(device):
+    """
+    Display adapter for Pimoroni's Unicorn Hat HD - a dense 16x16 array of
+    high intensity RGB LEDs. Since the board contains a small ARM chip to
+    manage the LEDs, interfacing is very straightforward using SPI. This has
+    the side-effect that the board appears not to be daisy-chainable though.
+    However there a number of undocumented contact pads on the underside of
+    the board which _may_ allow this behaviour.
+
+    Note that the brightness of individual pixels can be set by altering the
+    alpha channel of the RGBA image that is being displayed.
+
+    :param serial_interface: The serial interface to write to.
+    :param rotate: Whether the device dimenstions should be rotated in-situ:
+        A value of: 0=0°, 1=90°, 2=180°, 3=270°. If not supplied, zero is
+        assumed.
+    :type rotate: int
+
+    .. versionadded:: 1.3.0
+    """
+    def __init__(self, serial_interface=None, rotate=0, **kwargs):
+        super(unicornhathd, self).__init__(luma.core.const.common, serial_interface)
+        self.capabilities(16, 16, rotate, mode="RGBA")
+        self._last_image = None
+        self._prev_brightness = None
+        self.contrast(0x70)
+        self.clear()
+        self.show()
+
+    def display(self, image):
+        """
+        Takes a 32-bit RGBA :py:mod:`PIL.Image` and dumps it to the Unicorn HAT HD.
+        If a pixel is not fully opaque, the alpha channel value is used to set the
+        brightness of the respective RGB LED.
+        """
+        assert(image.mode == self.mode)
+        assert(image.size == self.size)
+        self._last_image = image.copy()
+
+        # Send zeros to reset, then pixel values then zeros at end
+        sz = image.width * image.height * 3
+        buf = bytearray(sz)
+        normalized_brightness = self._brightness / 255.0
+
+        for idx, (r, g, b, a) in enumerate(image.getdata()):
+            offset = idx * 3
+            brightness = int(a / 255.0) if a != 0xFF else normalized_brightness
+            buf[offset] = int(r * brightness)
+            buf[offset + 1] = int(g * brightness)
+            buf[offset + 2] = int(b * brightness)
+
+        self._serial_interface.data([0x72] + list(buf))   # 0x72 == SOF ... start of frame?
+
+    def show(self):
+        """
+        Simulates switching the display mode ON; this is achieved by restoring
+        the contrast to the level prior to the last time hide() was called.
+        """
+        if self._prev_brightness is not None:
+            self.contrast(self._prev_brightness)
+            self._prev_brightness = None
+
+    def hide(self):
+        """
+        Simulates switching the display mode OFF; this is achieved by setting
+        the contrast level to zero.
+        """
+        if self._prev_brightness is None:
+            self._prev_brightness = self._brightness
+            self.contrast(0x00)
+
+    def contrast(self, value):
+        """
+        Sets the LED intensity to the desired level, in the range 0-255.
+
+        :param level: Desired contrast level in the range of 0-255.
+        :type level: int
+        """
+        assert(0x00 <= value <= 0xFF)
+        self._brightness = value
+        if self._last_image is not None:
+            self.display(self._last_image)

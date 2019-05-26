@@ -46,7 +46,11 @@ setup(
     description="A library to drive a MAX7219 LED serializer (using SPI) and WS2812 NeoPixels (using DMA)",
     long_description="\n\n".join([README, CONTRIB, CHANGES]),
     license="MIT",
-    keywords=["raspberry pi", "rpi", "led", "max7219", "matrix", "seven segment", "7 segment", "neopixel", "ws2812", "ws281x", "apa102"],
+    keywords=[
+        "raspberry pi", "rpi", "led", "max7219", "matrix", "seven segment", "7 segment",
+        "neopixel", "neosegment", "ws2812", "ws281x", "apa102", "unicorn-phat",
+        "unicorn-hat", "unicorn-hat-hd"
+    ],
     url="https://github.com/rm-hull/luma.led_matrix",
     download_url="https://github.com/rm-hull/luma.led_matrix/tarball/" + version,
     packages=["luma", "luma.led_matrix"],

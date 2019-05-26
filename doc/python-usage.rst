@@ -354,6 +354,31 @@ a translation mapping is required, as follows:
 
 This should animate a green dot moving left-to-right down each line.
 
+Pimoroni Unicorn HAT HD
+"""""""""""""""""""""""
+Pimoroni sells the `Unicorn HAT HD <https://shop.pimoroni.com/products/unicorn-hat-hd>`_,
+comprising 256 high-intensity RGB LEDs in a 16x16 arrangement. The pixels are driven by an
+ARM STM32F making the display appear as an SPI device:
+
+.. code:: python
+
+    import time
+
+    from luma.led_matrix.device import unicornhathd
+    from luma.core.interface.serial import spi, noop
+    from luma.core.render import canvas
+
+    serial = spi(port=0, device=0, gpio=noop())
+    device = unicornhathd(serial)
+
+    for y in range(device.height):
+        for x in range(device.width):
+            with canvas(device) as draw:
+                draw.point((x, y), fill="green")
+            time.sleep(0.5)
+
+This should animate a green dot moving left-to-right down each line.
+
 NeoSegments (WS2812)
 """"""""""""""""""""
 `@msurguy <https://twitter.com/msurguy?lang=en>`_ has `crowdsourced some WS2812 neopixels <https://www.crowdsupply.com/maksmakes/neosegment>`_ 
