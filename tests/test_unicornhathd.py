@@ -50,3 +50,11 @@ def test_display():
     with canvas(device) as draw:
         draw.rectangle(device.bounding_box, outline="white")
     serial.data.assert_called_once_with([0x72] + get_json_data('demo_unicornhathd'))
+
+
+def test_alpha_blending():
+    device = unicornhathd(serial)
+    serial.reset_mock()
+    with canvas(device) as draw:
+        draw.rectangle(device.bounding_box, outline=(255, 128, 64, 32))
+    serial.data.assert_called_once_with([0x72] + get_json_data('demo_unicornhathd_alphablend'))
