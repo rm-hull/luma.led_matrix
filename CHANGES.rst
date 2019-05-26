@@ -4,7 +4,7 @@ ChangeLog
 +------------+------------------------------------------------------------------------+------------+
 | Version    | Description                                                            | Date       |
 +============+========================================================================+============+
-| *upcoming* | * Add support for Pimoroni's Unicorn Hat HD                            | TBC        |
+| **1.3.0**  | * Add support for Pimoroni's Unicorn Hat HD                            | 2019/05/26 |
 +------------+------------------------------------------------------------------------+------------+
 | **1.2.0**  | * Add option to control if 8x8 blocks are arranged in reverse order    | 2019/04/20 |
 |            | * Add (approximations of) more characters for 7-segment displa         |            |

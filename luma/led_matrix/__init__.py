@@ -7,4 +7,4 @@ Display drivers for LED Matrices & 7-segment displays (MAX7219) and
 RGB NeoPixels (WS2812 / APA102).
 """
 
-__version__ = '1.2.0'
+__version__ = '1.3.0'
