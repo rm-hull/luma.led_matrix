@@ -585,7 +585,7 @@ class unicornhathd(device):
 
         for idx, (r, g, b, a) in enumerate(image.getdata()):
             offset = idx * 3
-            brightness = int(a / 255.0) if a != 0xFF else normalized_brightness
+            brightness = a / 255.0 if a != 255 else normalized_brightness
             buf[offset] = int(r * brightness)
             buf[offset + 1] = int(g * brightness)
             buf[offset + 2] = int(b * brightness)
