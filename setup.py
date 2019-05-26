@@ -47,8 +47,8 @@ setup(
     long_description="\n\n".join([README, CONTRIB, CHANGES]),
     license="MIT",
     keywords=[
-        "raspberry pi", "rpi", "led", "max7219", "matrix", "seven segment", "7 segment", 
-        "neopixel", "neosegment", "ws2812", "ws281x", "apa102", "unicorn-phat", 
+        "raspberry pi", "rpi", "led", "max7219", "matrix", "seven segment", "7 segment",
+        "neopixel", "neosegment", "ws2812", "ws281x", "apa102", "unicorn-phat",
         "unicorn-hat", "unicorn-hat-hd"
     ],
     url="https://github.com/rm-hull/luma.led_matrix",
