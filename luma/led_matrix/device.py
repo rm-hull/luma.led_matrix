@@ -191,7 +191,7 @@ class ws2812(device):
     :type width: int
     :param cascaded: The number of pixels in a single strip - if supplied, this
         will override ``width`` and ``height``.
-    :type width: int
+    :type cascaded: int
     :param rotate: Whether the device dimenstions should be rotated in-situ:
         A value of: 0=0°, 1=90°, 2=180°, 3=270°. If not supplied, zero is
         assumed.
@@ -374,7 +374,7 @@ class apa102(device):
     :type width: int
     :param cascaded: The number of pixels in a single strip - if supplied, this
         will override ``width`` and ``height``.
-    :type width: int
+    :type cascaded: int
     :param rotate: Whether the device dimenstions should be rotated in-situ:
         A value of: 0=0°, 1=90°, 2=180°, 3=270°. If not supplied, zero is
         assumed.
@@ -540,6 +540,25 @@ class neosegment(sevensegment):
 
 
 class unicornhathd(device):
+    """
+    Display adapter for Pimoroni's Unicorn Hat HD - a dense 16x16 array of
+    high intensity RGB LEDs. Since the board contains a small ARM chip to
+    manage the LEDs, interfacing is very straightforward using SPI. This has
+    the side-effect that the board appears not to be daisy-chainable though.
+    However there a number of undocumented contact pads on the underside of
+    the board which _may_ allow this behaviour.
+
+    Note that the brightness of individual pixels can be set by altering the
+    alpha channel of the RGBA image that is being displayed.
+
+    :param serial_interface: The serial interface to write to.
+    :param rotate: Whether the device dimenstions should be rotated in-situ:
+        A value of: 0=0°, 1=90°, 2=180°, 3=270°. If not supplied, zero is
+        assumed.
+    :type rotate: int
+
+    .. versionadded:: 1.3.0
+    """
     def __init__(self, serial_interface=None, rotate=0, **kwargs):
         super(unicornhathd, self).__init__(luma.core.const.common, serial_interface)
         self.capabilities(16, 16, rotate, mode="RGBA")
