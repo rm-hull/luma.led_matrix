@@ -40,7 +40,7 @@ taken from https://learn.sparkfun.com/tutorials/raspberry-pi-spi-and-i2c-tutoria
 #. Select **yes** when it asks you to enable SPI
 #. Also select **yes** when it asks about automatically loading the kernel module
 #. Use the right arrow to select the **<Finish>** button
-#. Select **yes** when it asks to reboot
+#. Reboot.
 
 .. image:: images/raspi-spi.png
 
