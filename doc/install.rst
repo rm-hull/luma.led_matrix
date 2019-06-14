@@ -40,7 +40,7 @@ taken from https://learn.sparkfun.com/tutorials/raspberry-pi-spi-and-i2c-tutoria
 #. Select **yes** when it asks you to enable SPI
 #. Also select **yes** when it asks about automatically loading the kernel module
 #. Use the right arrow to select the **<Finish>** button
-#. Select **yes** when it asks to reboot
+#. Reboot.
 
 .. image:: images/raspi-spi.png
 
@@ -67,7 +67,7 @@ Board Pin    Name   Remarks       RPi Pin   RPi Function
 5            CLK    Clock         23        GPIO 11 (SPI CLK)
 ============ ====== ============= ========= ====================
 
-.. seealso:: See notes section for cascading/daisy-chaining, power supply and
+.. seealso:: Also see the section for :doc:`cascading/daisy-chaining <python-usage>`, power supply and
    level-shifting.
 
 WS2812 NeoPixels (DMA)
