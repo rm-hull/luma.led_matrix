@@ -45,6 +45,7 @@ setup(
     author_email="richard.hull@destructuring-bind.org",
     description="A library to drive a MAX7219 LED serializer (using SPI) and WS2812 NeoPixels (using DMA)",
     long_description="\n\n".join([README, CONTRIB, CHANGES]),
+    long_description_content_type="text/x-rst",
     license="MIT",
     keywords=[
         "raspberry pi", "rpi", "led", "max7219", "matrix", "seven segment", "7 segment",
