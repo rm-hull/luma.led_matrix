@@ -72,6 +72,7 @@ setup(
         'test': test_deps
     },
     zip_safe=False,
+    python_requires='>=2.7',
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Development Status :: 5 - Production/Stable",
