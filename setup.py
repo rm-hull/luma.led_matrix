@@ -5,7 +5,7 @@ import re
 import os
 import sys
 from io import open
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 def read_file(fname, encoding='utf-8'):
@@ -53,7 +53,8 @@ setup(
     ],
     url="https://github.com/rm-hull/luma.led_matrix",
     download_url="https://github.com/rm-hull/luma.led_matrix/tarball/" + version,
-    packages=["luma", "luma.led_matrix"],
+    packages=find_packages(),
+    namespace_packages=["luma"],
     install_requires=["luma.core>=1.8.1"],
     setup_requires=pytest_runner,
     tests_require=test_deps,
