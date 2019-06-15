@@ -5,7 +5,7 @@ import re
 import os
 import sys
 from io import open
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 def read_file(fname, encoding='utf-8'):
@@ -34,7 +34,7 @@ needs_pytest = {'pytest', 'test', 'ptr'}.intersection(sys.argv)
 pytest_runner = ['pytest-runner'] if needs_pytest else []
 test_deps = [
     'mock;python_version<"3.3"',
-    'pytest==4.5',
+    'pytest<=4.5',
     'pytest-cov'
 ]
 
@@ -54,8 +54,9 @@ setup(
     ],
     url="https://github.com/rm-hull/luma.led_matrix",
     download_url="https://github.com/rm-hull/luma.led_matrix/tarball/" + version,
-    packages=["luma", "luma.led_matrix"],
-    install_requires=["luma.core>=1.8.1"],
+    packages=find_packages(),
+    namespace_packages=["luma"],
+    install_requires=["luma.core>=1.12.0"],
     setup_requires=pytest_runner,
     tests_require=test_deps,
     extras_require={
