@@ -23,7 +23,6 @@ addons:
             - graphviz
 
 install:
- - pip install --upgrade --ignore-installed setuptools
- - pip install --upgrade pip tox coveralls
+ - pip install --upgrade --ignore-installed setuptools pip tox coveralls
 script: tox -vv
 after_success: if [ "$TOXENV" == "py36" ]; then coveralls; fi

@@ -40,7 +40,7 @@ taken from https://learn.sparkfun.com/tutorials/raspberry-pi-spi-and-i2c-tutoria
 #. Select **yes** when it asks you to enable SPI
 #. Also select **yes** when it asks about automatically loading the kernel module
 #. Use the right arrow to select the **<Finish>** button
-#. Select **yes** when it asks to reboot
+#. Reboot.
 
 .. image:: images/raspi-spi.png
 
@@ -67,7 +67,7 @@ Board Pin    Name   Remarks       RPi Pin   RPi Function
 5            CLK    Clock         23        GPIO 11 (SPI CLK)
 ============ ====== ============= ========= ====================
 
-.. seealso:: See notes section for cascading/daisy-chaining, power supply and
+.. seealso:: Also see the section for :doc:`cascading/daisy-chaining <python-usage>`, power supply and
    level-shifting.
 
 WS2812 NeoPixels (DMA)
@@ -111,14 +111,13 @@ Install the dependencies for library first with::
   $ sudo usermod -a -G spi,gpio pi
   $ sudo apt install build-essential python-dev python-pip libfreetype6-dev libjpeg-dev libopenjp2-7 libtiff5
 
-.. warning:: The default pip bundled with apt on Raspbian **Jessie** is really old,
-   and can cause components to not be installed properly. Please ensure that **pip 9.0.1** 
-   or newer is installed prior to continuing::
+.. warning:: The default ``pip`` and ``setuptools`` bundled with apt on Raspbian are really old,
+   and can cause components to not be installed properly. Make sure they are up to date by upgrading
+   them first::
    
-      $ pip --version
-      pip 9.0.1 from /usr/local/lib/python2.7/dist-packages (python 2.7)
+      $ sudo -H pip install --upgrade --ignore-installed pip setuptools
 
-Proceed to install latest version of the library directly from
+Proceed to install latest version of the luma.led_matrix library directly from
 `PyPI <https://pypi.python.org/pypi?:action=display&name=luma.led_matrix>`_::
 
   $ sudo -H pip install --upgrade luma.led_matrix

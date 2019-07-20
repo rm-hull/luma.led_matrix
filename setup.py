@@ -5,7 +5,7 @@ import re
 import os
 import sys
 from io import open
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 def read_file(fname, encoding='utf-8'):
@@ -34,7 +34,7 @@ needs_pytest = {'pytest', 'test', 'ptr'}.intersection(sys.argv)
 pytest_runner = ['pytest-runner'] if needs_pytest else []
 test_deps = [
     'mock;python_version<"3.3"',
-    'pytest>=3.1',
+    'pytest<=4.5',
     'pytest-cov'
 ]
 
@@ -45,6 +45,7 @@ setup(
     author_email="richard.hull@destructuring-bind.org",
     description="A library to drive a MAX7219 LED serializer (using SPI) and WS2812 NeoPixels (using DMA)",
     long_description="\n\n".join([README, CONTRIB, CHANGES]),
+    long_description_content_type="text/x-rst",
     license="MIT",
     keywords=[
         "raspberry pi", "rpi", "led", "max7219", "matrix", "seven segment", "7 segment",
@@ -53,8 +54,9 @@ setup(
     ],
     url="https://github.com/rm-hull/luma.led_matrix",
     download_url="https://github.com/rm-hull/luma.led_matrix/tarball/" + version,
-    packages=["luma", "luma.led_matrix"],
-    install_requires=["luma.core>=1.8.1"],
+    packages=find_packages(),
+    namespace_packages=["luma"],
+    install_requires=["luma.core>=1.12.0"],
     setup_requires=pytest_runner,
     tests_require=test_deps,
     extras_require={
@@ -71,6 +73,7 @@ setup(
         'test': test_deps
     },
     zip_safe=False,
+    python_requires='>=2.7',
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Development Status :: 5 - Production/Stable",
