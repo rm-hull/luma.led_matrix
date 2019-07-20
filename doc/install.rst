@@ -109,7 +109,7 @@ Installing from PyPi
 Install the dependencies for library first with::
 
   $ sudo usermod -a -G spi,gpio pi
-  $ sudo apt-get install build-essential python-dev python-pip libfreetype6-dev libjpeg-dev
+  $ sudo apt install build-essential python-dev python-pip libfreetype6-dev libjpeg-dev libopenjp2-7 libtiff5
 
 .. warning:: The default pip bundled with apt on Raspbian **Jessie** is really old,
    and can cause components to not be installed properly. Please ensure that **pip 9.0.1** 
