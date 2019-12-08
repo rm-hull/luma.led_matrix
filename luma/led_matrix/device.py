@@ -55,7 +55,8 @@ class max7219(device):
     brightness and other settings.
     """
     def __init__(self, serial_interface=None, width=8, height=8, cascaded=None, rotate=0,
-                 block_orientation=0, blocks_arranged_in_reverse_order=False, **kwargs):
+                 block_orientation=0, blocks_arranged_in_reverse_order=False, contrast=0x70,
+                 **kwargs):
         super(max7219, self).__init__(luma.led_matrix.const.max7219, serial_interface)
 
         # Derive (override) the width and height if a cascaded param supplied
@@ -84,7 +85,7 @@ class max7219(device):
         self.data([self._const.DECODEMODE, 0] * self.cascaded)
         self.data([self._const.DISPLAYTEST, 0] * self.cascaded)
 
-        self.contrast(0x70)
+        self.contrast(contrast)
         self.clear()
         self.show()
 
