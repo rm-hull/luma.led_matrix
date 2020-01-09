@@ -29,6 +29,7 @@ README = read_file('README.rst')
 CONTRIB = read_file('CONTRIBUTING.rst')
 CHANGES = read_file('CHANGES.rst')
 version = find_version('luma', 'led_matrix', '__init__.py')
+project_url = 'https://github.com/rm-hull/luma.led_matrix'
 
 needs_pytest = {'pytest', 'test', 'ptr'}.intersection(sys.argv)
 pytest_runner = ['pytest-runner'] if needs_pytest else []
@@ -52,8 +53,13 @@ setup(
         "neopixel", "neosegment", "ws2812", "ws281x", "apa102", "unicorn-phat",
         "unicorn-hat", "unicorn-hat-hd"
     ],
-    url="https://github.com/rm-hull/luma.led_matrix",
-    download_url="https://github.com/rm-hull/luma.led_matrix/tarball/" + version,
+    url=project_url,
+    download_url=project_url + '/tarball/' + version,
+    project_urls={
+        'Documentation': 'https://luma-led-matrix.readthedocs.io',
+        'Source': project_url,
+        'Issue Tracker': project_url + '/issues',
+    },
     packages=find_packages(),
     namespace_packages=["luma"],
     install_requires=["luma.core>=1.12.0"],
@@ -73,7 +79,7 @@ setup(
         'test': test_deps
     },
     zip_safe=False,
-    python_requires='>=2.7',
+    python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, <4',
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Development Status :: 5 - Production/Stable",
@@ -86,10 +92,10 @@ setup(
         "Programming Language :: Python :: 2",
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.4",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         "Operating System :: POSIX",
         "Operating System :: Unix"
     ]
