@@ -25,13 +25,13 @@ Luma.LED_Matrix
 .. image:: https://img.shields.io/pypi/v/luma.led_matrix.svg
    :target: https://pypi.python.org/pypi/luma.led_matrix
 
-.. image:: https://img.shields.io/maintenance/yes/2019.svg?maxAge=2592000
+.. image:: https://img.shields.io/maintenance/yes/2020.svg?maxAge=2592000
 
 Python library interfacing LED matrix displays with the MAX7219 driver (using
 SPI) and WS2812 & APA102 NeoPixels (inc Pimoroni Unicorn pHat/Hat and Unicorn
 Hat HD) on the Raspberry Pi and other Linux-based single board computers - it
-provides a Pillow-compatible drawing canvas, and other functionality to
-support:
+provides a `Pillow <https://pillow.readthedocs.io/>`_-compatible drawing canvas,
+and other functionality to support:
 
 * multiple cascaded devices
 * LED matrix, seven-segment and NeoPixel variants
@@ -40,7 +40,7 @@ support:
 * state management,
 * dithering to monochrome,
 * pygame emulator,
-* Python 2.7 and 3.4+ are both supported
+* Python 2.7 and 3.5+ are both supported
 
 Documentation
 -------------
@@ -85,7 +85,7 @@ License
 -------
 The MIT License (MIT)
 
-Copyright (c) 2013-2019 Richard Hull & Contributors
+Copyright (c) 2013-2020 Richard Hull & Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
