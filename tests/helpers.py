@@ -4,11 +4,7 @@
 
 import os.path
 
-try:
-    from unittest.mock import call, Mock
-except ImportError:
-    from mock import call, Mock  # noqa: F401
-
+from unittest.mock import Mock
 import pytest
 from PIL import ImageChops
 

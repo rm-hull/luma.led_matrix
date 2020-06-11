@@ -6,7 +6,7 @@
 from luma.led_matrix.device import unicornhathd
 from luma.core.render import canvas
 
-from helpers import serial, call  # noqa: F401
+from helpers import serial
 from baseline_data import get_json_data
 
 
