@@ -8,7 +8,8 @@ import pytest
 from luma.led_matrix.device import max7219
 from luma.core.render import canvas
 
-from helpers import setup_function, serial, call, assert_invalid_dimensions  # noqa: F401
+from helpers import setup_function, serial, assert_invalid_dimensions  # noqa: F401
+from unittest.mock import call
 
 
 def test_init_cascaded():
