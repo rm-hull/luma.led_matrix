@@ -3,7 +3,6 @@
 # Commandline Wrapper
 # Thomas Wenzlaff
  
-import re
 import time
 import argparse
 
@@ -14,6 +13,7 @@ from luma.core.virtual import viewport
 from luma.core.legacy import text, show_message
 from luma.core.legacy.font import proportional, CP437_FONT, TINY_FONT, SINCLAIR_FONT, LCD_FONT
 
+
 def output(n, block_orientation, rotate, inreverse, text): 
     serial = spi(port=0, device=0, gpio=noop())
     device = max7219(serial, cascaded=n or 1, block_orientation=block_orientation,
@@ -22,6 +22,7 @@ def output(n, block_orientation, rotate, inreverse, text):
 
     show_message(device, text, fill="white", font=proportional(CP437_FONT), scroll_delay=0.05)
     time.sleep(1)
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='view_massage arguments',
