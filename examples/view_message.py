@@ -25,7 +25,7 @@ def output(n, block_orientation, rotate, inreverse, text):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='view_massage arguments',
+    parser = argparse.ArgumentParser(description='view_message arguments',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     parser.add_argument('--cascaded', '-n', type=int, default=1, help='Number of cascaded MAX7219 LED matrices')
