@@ -4,7 +4,6 @@
 # Thomas Wenzlaff
 # See LICENSE.rst for details.
 
-import re
 import time
 import argparse
 
@@ -36,7 +35,6 @@ if __name__ == "__main__":
     parser.add_argument('--rotate', type=int, default=0, choices=[0, 1, 2, 3], help='Rotate display 0=0°, 1=90°, 2=180°, 3=270°')
     parser.add_argument('--reverse-order', type=bool, default=False, help='Set to true if blocks are in reverse order')
     parser.add_argument('--text', '-t', default='>>> No text set', help='Set text message')
-    
     args = parser.parse_args()
 
     try:
