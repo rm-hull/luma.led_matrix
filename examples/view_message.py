@@ -4,7 +4,7 @@
 # Thomas Wenzlaff
 # See LICENSE.rst for details.
 
-import re 
+import re
 import time
 import argparse
 
@@ -17,7 +17,7 @@ from luma.core.legacy.font import proportional, CP437_FONT, TINY_FONT, SINCLAIR_
 
 
 def output(n, block_orientation, rotate, inreverse, text):
-    # create matrix device 
+    # create matrix device
     serial = spi(port=0, device=0, gpio=noop())
     device = max7219(serial, cascaded=n or 1, block_orientation=block_orientation,
                      rotate=rotate or 0, blocks_arranged_in_reverse_order=inreverse)
@@ -35,7 +35,8 @@ if __name__ == "__main__":
     parser.add_argument('--block-orientation', type=int, default=0, choices=[0, 90, -90], help='Corrects block orientation when wired vertically')
     parser.add_argument('--rotate', type=int, default=0, choices=[0, 1, 2, 3], help='Rotate display 0=0°, 1=90°, 2=180°, 3=270°')
     parser.add_argument('--reverse-order', type=bool, default=False, help='Set to true if blocks are in reverse order')
-    parser.add_argument('--text', '-t', default='>>> No text set', help='Set text message') 
+    parser.add_argument('--text', '-t', default='>>> No text set', help='Set text message')
+    
     args = parser.parse_args()
 
     try:
