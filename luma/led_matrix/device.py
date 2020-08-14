@@ -356,7 +356,7 @@ UNICORN_HAT = [
 
 class apa102(device):
     """
-    Serial interface to a series of 'next-gen' RGB neopixels daisy-chained
+    Serial interface to a series of 'next-gen' RGB DotStar daisy-chained
     together with APA102 chips.
 
     On creation, the array is initialized with the correct number of cascaded
