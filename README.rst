@@ -28,10 +28,10 @@ Luma.LED_Matrix
 .. image:: https://img.shields.io/maintenance/yes/2020.svg?maxAge=2592000
 
 Python 3 library interfacing LED matrix displays with the MAX7219 driver (using
-SPI) and WS2812 & APA102 NeoPixels (inc Pimoroni Unicorn pHat/Hat and Unicorn
-Hat HD) on the Raspberry Pi and other Linux-based single board computers - it
-provides a `Pillow <https://pillow.readthedocs.io/>`_-compatible drawing canvas,
-and other functionality to support:
+SPI), WS2812 (NeoPixels, inc Pimoroni Unicorn pHat/Hat and Unicorn Hat HD) and
+APA102 (DotStar) on the Raspberry Pi and other Linux-based single board computers
+- it provides a `Pillow <https://pillow.readthedocs.io/>`_-compatible drawing
+canvas, and other functionality to support:
 
 * multiple cascaded devices
 * LED matrix, seven-segment and NeoPixel variants
