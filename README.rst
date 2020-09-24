@@ -40,7 +40,7 @@ canvas, and other functionality to support:
 * state management,
 * dithering to monochrome,
 * pygame emulator,
-* Python 2.7 and 3.5+ are both supported
+* Python 3.5 and newer are supported
 
 Documentation
 -------------
