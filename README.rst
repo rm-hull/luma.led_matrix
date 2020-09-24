@@ -67,8 +67,8 @@ or `Ebay <http://www.ebay.com/itm/-/172317726225>`_.
 .. image:: https://raw.githubusercontent.com/rm-hull/luma.led_matrix/master/doc/images/emulator.gif
    :alt: max7219 emulator
 
-Breaking changes
-----------------
+Upgrade
+-------
 Version 0.3.0 was released on 19 January 2017: this came with a rename of the
 github project from **max7219** to **luma.led_matrix** to reflect the changing
 nature of the codebase.
