@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2017-18 Richard Hull and contributors
+# Copyright (c) 2017-2020 Richard Hull and contributors
 # See LICENSE.rst for details.
 
-import os.path
-
+from pathlib import Path
 from unittest.mock import Mock
+
 import pytest
 from PIL import ImageChops
 
@@ -32,14 +32,22 @@ def assert_invalid_dimensions(deviceType, serial_interface, width, height):
 
 
 def get_reference_file(fname):
-    return os.path.abspath(os.path.join(
-        os.path.dirname(__file__),
-        'reference',
-        fname))
+    """
+    Get absolute path for ``fname``.
+
+    :param fname: Filename.
+    :type fname: str or pathlib.Path
+    :rtype: str
+    """
+    return str(Path(__file__).resolve().parent.joinpath('reference', fname))
 
 
 def get_reference_image(fname):
-    return get_reference_file(os.path.join('images', fname))
+    """
+    :param fname: Filename.
+    :type fname: str or pathlib.Path
+    """
+    return get_reference_file(Path('images').joinpath(fname))
 
 
 def assert_identical_image(reference, target):
