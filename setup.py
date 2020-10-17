@@ -34,9 +34,9 @@ project_url = 'https://github.com/rm-hull/luma.led_matrix'
 needs_pytest = {'pytest', 'test', 'ptr'}.intersection(sys.argv)
 pytest_runner = ['pytest-runner'] if needs_pytest else []
 test_deps = [
-    'mock;python_version<"3.3"',
     'pytest<=4.5',
-    'pytest-cov'
+    'pytest-cov',
+    'pytest-timeout'
 ]
 
 setup(
@@ -79,7 +79,7 @@ setup(
         'test': test_deps
     },
     zip_safe=False,
-    python_requires='>=3.5, <4',
+    python_requires='>=3.6, <4',
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Development Status :: 5 - Production/Stable",
@@ -90,10 +90,10 @@ setup(
         "Topic :: System :: Hardware",
         "Topic :: System :: Hardware :: Hardware Drivers",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
         "Operating System :: POSIX",
         "Operating System :: Unix"
     ]

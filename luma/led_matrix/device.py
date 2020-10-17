@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2017-19 Richard Hull and contributors
+# Copyright (c) 2017-2020 Richard Hull and contributors
 # See LICENSE.rst for details.
 
 """
@@ -70,7 +70,7 @@ class max7219(device):
 
         if width <= 0 or width % 8 != 0 or height <= 0 or height % 8 != 0:
             raise luma.core.error.DeviceDisplayModeError(
-                "Unsupported display mode: {0} x {1}".format(width, height))
+                f"Unsupported display mode: {width} x {height}")
 
         assert block_orientation in [0, 90, -90, 180]
         self._correction_angle = block_orientation
@@ -255,7 +255,7 @@ class ws2812(device):
 
         resp = ws.ws2811_init(self._leds)
         if resp != 0:
-            raise RuntimeError('ws2811_init failed with code {0}'.format(resp))
+            raise RuntimeError(f'ws2811_init failed with code {resp}')
 
         self.clear()
         self.show()

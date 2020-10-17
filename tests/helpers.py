@@ -28,7 +28,7 @@ def assert_invalid_dimensions(deviceType, serial_interface, width, height):
     """
     with pytest.raises(luma.core.error.DeviceDisplayModeError) as ex:
         deviceType(serial_interface, width=width, height=height)
-    assert "Unsupported display mode: {} x {}".format(width, height) in str(ex.value)
+    assert f"Unsupported display mode: {width} x {height}" in str(ex.value)
 
 
 def get_reference_file(fname):
