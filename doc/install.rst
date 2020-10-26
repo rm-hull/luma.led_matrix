@@ -1,14 +1,6 @@
 Installation
 ------------
-.. note:: The library has been tested against Python 2.7 and 3.4+.
-
-   For a **Python 3** installation, substitute the following in the 
-   instructions below.
-
-   * ``pip`` ⇒ ``pip3``, 
-   * ``python`` ⇒ ``python3``, 
-   * ``python-dev`` ⇒ ``python3-dev``,
-   * ``python-pip`` ⇒ ``python3-pip``.
+.. note:: The library has been tested against Python 3.6 and newer.
 
 Pre-requisites
 ^^^^^^^^^^^^^^
@@ -109,7 +101,7 @@ Installing from PyPi
 Install the dependencies for library first with::
 
   $ sudo usermod -a -G spi,gpio pi
-  $ sudo apt install build-essential python-dev python-pip libfreetype6-dev libjpeg-dev libopenjp2-7 libtiff5
+  $ sudo apt install build-essential python3-dev python3-pip libfreetype6-dev libjpeg-dev libopenjp2-7 libtiff5
 
 .. warning:: The default ``pip`` and ``setuptools`` bundled with apt on Raspbian are really old,
    and can cause components to not be installed properly. Make sure they are up to date by upgrading
