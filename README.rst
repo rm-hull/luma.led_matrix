@@ -25,6 +25,9 @@ Luma.LED_Matrix
 .. image:: https://img.shields.io/pypi/v/luma.led_matrix.svg
    :target: https://pypi.python.org/pypi/luma.led_matrix
 
+.. image:: https://img.shields.io/pypi/dm/luma.led_matrix
+   :target: https://pypi.python.org/project/luma.led_matrix
+
 .. image:: https://img.shields.io/maintenance/yes/2020.svg?maxAge=2592000
 
 Python 3 library interfacing LED matrix displays with the MAX7219 driver (using
