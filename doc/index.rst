@@ -1,7 +1,8 @@
 Luma.LED_Matrix: Display drivers for MAX7219, WS2812, APA102
 ============================================================
-.. image:: https://travis-ci.org/rm-hull/luma.led_matrix.svg?branch=master
-   :target: https://travis-ci.org/rm-hull/luma.led_matrix
+
+.. image:: https://github.com/rm-hull/luma.led_matrix/workflows/luma.led_matrix/badge.svg?branch=master
+   :target: https://github.com/rm-hull/luma.led_matrix/actions?workflow=luma.led_matrix
 
 .. image:: https://coveralls.io/repos/github/rm-hull/luma.led_matrix/badge.svg?branch=master
    :target: https://coveralls.io/github/rm-hull/luma.led_matrix?branch=master
