@@ -12,7 +12,7 @@ support:
 * terminal-style printing,
 * state management,
 * dithering to monochrome,
-* Python 2.7 and 3.4+ are both supported
+* Python 3.6+ is supported
 
 .. image:: https://raw.githubusercontent.com/rm-hull/luma.led_matrix/master/doc/images/devices.jpg
    :alt: max7219 matrix
