@@ -112,7 +112,7 @@ Install the dependencies for library first with::
 Proceed to install latest version of the luma.led_matrix library directly from
 `PyPI <https://pypi.python.org/pypi?:action=display&name=luma.led_matrix>`_::
 
-  $ sudo -H pip install --upgrade luma.led_matrix
+  $ sudo python3 -m pip install --upgrade luma.led_matrix
 
 Examples
 ^^^^^^^^
