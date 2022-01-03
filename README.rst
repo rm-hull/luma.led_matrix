@@ -28,7 +28,7 @@ Luma.LED_Matrix
 .. image:: https://img.shields.io/pypi/dm/luma.led_matrix
    :target: https://pypi.python.org/project/luma.led_matrix
 
-.. image:: https://img.shields.io/maintenance/yes/2021.svg?maxAge=2592000
+.. image:: https://img.shields.io/maintenance/yes/2022.svg?maxAge=2592000
 
 Python 3 library interfacing LED matrix displays with the MAX7219 driver (using
 SPI), WS2812 (NeoPixels, inc Pimoroni Unicorn pHat/Hat and Unicorn Hat HD) and
@@ -88,7 +88,7 @@ License
 -------
 The MIT License (MIT)
 
-Copyright (c) 2013-2021 Richard Hull & Contributors
+Copyright (c) 2013-2022 Richard Hull & Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
