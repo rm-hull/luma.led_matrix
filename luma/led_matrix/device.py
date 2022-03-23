@@ -42,7 +42,7 @@ from luma.core.virtual import sevensegment
 from luma.led_matrix.segment_mapper import dot_muncher, regular
 
 
-__all__ = ["max7219", "ws2812", "neopixel", "neosegment", "apa102", "unicornhathd"]
+__all__ = ["max7219", "ws2812", "neopixel", "neosegment", "apa102", "unicornhathd", "rpirgbledmatrix"]
 
 
 class max7219(device):
@@ -622,3 +622,105 @@ class unicornhathd(device):
         self._brightness = value
         if self._last_image is not None:
             self.display(self._last_image)
+
+class rpirgbledmatrix(device):
+    """
+    Interface to the Python bindings of the rpi-rgb-led-matrix library
+    https://github.com/hzeller/rpi-rgb-led-matrix
+    """
+    def __init__(self,
+        led_gpio_mapping="regular",
+        width=32, # Total matrix width, will be divided by chain to obtain panel width
+        height=32, # Total matrix height, will be divided by parallel to obtain panel height
+        led_chain = 1,
+        led_parallel = 1,
+        led_row_addr_type = 0,
+        led_multiplexing = 0,
+        led_pwm_bits = 11,
+        led_brightness = 100,
+        led_scan_mode = 1,
+        led_pwm_lsb_nanoseconds = 130,
+        led_rgb_sequence = "RGB",
+        led_pixel_mapper = "",
+        led_panel_type = "",
+        led_show_refresh = None,
+        led_slowdown_gpio = 1,
+        led_disable_hardware_pulse = None,
+        led_drop_privileges = True,
+        rotate=0, **kwargs):
+        super(rpirgbledmatrix, self).__init__(const=None, serial_interface=noop)
+
+        self.capabilities(width, height, rotate, mode="RGB")
+
+        from rgbmatrix import RGBMatrixOptions
+        self.options = RGBMatrixOptions()
+
+        self.options.hardware_mapping = led_gpio_mapping
+        self.options.rows = height / led_parallel
+        self.options.cols = width / led_chain
+        self.options.chain_length = led_chain
+        self.options.parallel = led_parallel
+        self.options.row_address_type = led_row_addr_type
+        self.options.multiplexing = led_multiplexing
+        self.options.pwm_bits = led_pwm_bits
+        self.options.brightness = led_brightness
+        self.options.scan_mode = led_scan_mode
+        self.options.pwm_lsb_nanoseconds = led_pwm_lsb_nanoseconds
+        self.options.led_rgb_sequence = led_rgb_sequence
+        self.options.pixel_mapper_config = led_pixel_mapper
+        self.options.panel_type = led_panel_type
+
+        if led_show_refresh != None:
+          self.options.show_refresh_rate = 1
+
+        if led_slowdown_gpio != None:
+            self.options.gpio_slowdown = led_slowdown_gpio
+
+        if led_disable_hardware_pulse != None:
+            self.options.led_disable_hardware_pulse = True
+
+        self.options.drop_privileges = led_drop_privileges
+
+
+        rlm = self._rlm = self.__rlm__()
+
+
+    def __rlm__(self):
+        from rgbmatrix import RGBMatrix
+        matrix = RGBMatrix(options = self.options)
+
+        return matrix
+
+    def display(self, image):
+        """
+        Copies an image to the LED matrix
+        """
+        assert(image.mode == self.mode)
+        assert(image.size == self.size)
+
+        self._rlm.SetImage(image)
+
+    def hide(self):
+        """
+        Turns the display off - since this is an LED Matrix this is achieved
+        by clearing the display
+        """
+        self.clear()
+
+    def clear(self):
+        """
+        Clears the LED matrix
+        """
+        self._rlm.Clear()
+
+    def contrast(self, value):
+        """
+        Sets the LED intensity to the desired level, in the range 0-255.
+
+        :param level: Desired contrast level in the range of 0-255.
+        :type level: int
+        """
+        max_brightness = self.options.brightness
+        scalar = max_brightness / value
+
+        self._rlm.brightness = round(value * scalar)
