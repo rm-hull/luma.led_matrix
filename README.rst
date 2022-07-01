@@ -43,7 +43,7 @@ canvas, and other functionality to support:
 * state management,
 * dithering to monochrome,
 * pygame emulator,
-* Python 3.5 and newer are supported
+* Python 3.6 and newer are supported
 
 Documentation
 -------------
@@ -69,20 +69,6 @@ or `Ebay <http://www.ebay.com/itm/-/172317726225>`_.
      
 .. image:: https://raw.githubusercontent.com/rm-hull/luma.led_matrix/master/doc/images/emulator.gif
    :alt: max7219 emulator
-
-Upgrade
--------
-Version 0.3.0 was released on 19 January 2017: this came with a rename of the
-github project from **max7219** to **luma.led_matrix** to reflect the changing
-nature of the codebase.
-
-There is no direct migration path, but the old `docs <https://max7219.readthedocs.io>`_
-and `PyPi packages <https://pypi.python.org/pypi/max7219>`_ will remain
-available indefinitely, but that deprecated codebase will no longer recieve 
-updates or fixes.
-
-The consequence is that any existing code that uses the old **max7219** package
-should probably be updated. 
 
 License
 -------
