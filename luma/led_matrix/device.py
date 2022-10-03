@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2017-2020 Richard Hull and contributors
+# Copyright (c) 2017-2022 Richard Hull and contributors
 # See LICENSE.rst for details.
 
 """
@@ -118,8 +118,8 @@ class max7219(device):
         Takes a 1-bit :py:mod:`PIL.Image` and dumps it to the LED matrix display
         via the MAX7219 serializers.
         """
-        assert(image.mode == self.mode)
-        assert(image.size == self.size)
+        assert image.mode == self.mode
+        assert image.size == self.size
 
         image = self.preprocess(image)
 
@@ -156,7 +156,7 @@ class max7219(device):
         :param level: Desired contrast level in the range of 0-255.
         :type level: int
         """
-        assert(0x00 <= value <= 0xFF)
+        assert 0x00 <= value <= 0xFF
         self.data([self._const.INTENSITY, value >> 4] * self.cascaded)
 
     def show(self):
@@ -216,7 +216,7 @@ class ws2812(device):
         self.cascaded = width * height
         self.capabilities(width, height, rotate, mode="RGB")
         self._mapping = list(mapping or range(self.cascaded))
-        assert(self.cascaded == len(self._mapping))
+        assert self.cascaded == len(self._mapping)
         self._contrast = None
         self._prev_contrast = 0x70
 
@@ -269,8 +269,8 @@ class ws2812(device):
         Takes a 24-bit RGB :py:mod:`PIL.Image` and dumps it to the daisy-chained
         WS2812 neopixels.
         """
-        assert(image.mode == self.mode)
-        assert(image.size == self.size)
+        assert image.mode == self.mode
+        assert image.size == self.size
 
         ws = self._ws
         m = self._mapping
@@ -305,7 +305,7 @@ class ws2812(device):
         :param level: Desired contrast level in the range of 0-255.
         :type level: int
         """
-        assert(0x00 <= value <= 0xFF)
+        assert 0x00 <= value <= 0xFF
         self._contrast = value
         self._ws.ws2811_channel_t_brightness_set(self._channel, value)
         self._flush()
@@ -399,7 +399,7 @@ class apa102(device):
         self.cascaded = width * height
         self.capabilities(width, height, rotate, mode="RGBA")
         self._mapping = list(mapping or range(self.cascaded))
-        assert(self.cascaded == len(self._mapping))
+        assert self.cascaded == len(self._mapping)
         self._last_image = None
 
         self.contrast(0x70)
@@ -416,8 +416,8 @@ class apa102(device):
         APA102 neopixels. If a pixel is not fully opaque, the alpha channel
         value is used to set the brightness of the respective RGB LED.
         """
-        assert(image.mode == self.mode)
-        assert(image.size == self.size)
+        assert image.mode == self.mode
+        assert image.size == self.size
         self._last_image = image.copy()
 
         # Send zeros to reset, then pixel values then zeros at end
@@ -454,7 +454,7 @@ class apa102(device):
         :param level: Desired contrast level in the range of 0-255.
         :type level: int
         """
-        assert(0x00 <= value <= 0xFF)
+        assert 0x00 <= value <= 0xFF
         self._brightness = value >> 4
         if self._last_image is not None:
             self.display(self._last_image)
@@ -496,7 +496,7 @@ class neosegment(sevensegment):
         if not isinstance(value, list):
             value = [value] * self.device.width
 
-        assert(len(value) == self.device.width)
+        assert len(value) == self.device.width
         self._colors = observable(value, observer=self._color_chg)
 
     def _color_chg(self, color):
@@ -575,8 +575,8 @@ class unicornhathd(device):
         If a pixel is not fully opaque, the alpha channel value is used to set the
         brightness of the respective RGB LED.
         """
-        assert(image.mode == self.mode)
-        assert(image.size == self.size)
+        assert image.mode == self.mode
+        assert image.size == self.size
         self._last_image = image.copy()
 
         # Send zeros to reset, then pixel values then zeros at end
@@ -618,7 +618,7 @@ class unicornhathd(device):
         :param level: Desired contrast level in the range of 0-255.
         :type level: int
         """
-        assert(0x00 <= value <= 0xFF)
+        assert 0x00 <= value <= 0xFF
         self._brightness = value
         if self._last_image is not None:
             self.display(self._last_image)
