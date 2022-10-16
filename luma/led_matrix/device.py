@@ -313,7 +313,7 @@ class ws2812(device):
     def _flush(self):
         resp = self._ws.ws2811_render(self._leds)
         if resp != 0:
-            raise RuntimeError('ws2811_render failed with code {0}'.format(resp))
+            raise RuntimeError(f'ws2811_render failed with code {resp}')
 
     def __del__(self):
         # Required because Python will complain about memory leaks
@@ -478,7 +478,7 @@ class neosegment(sevensegment):
     def __init__(self, width, undefined="_", **kwargs):
         if width <= 0 or width % 2 == 1:
             raise luma.core.error.DeviceDisplayModeError(
-                "Unsupported display mode: width={0}".format(width))
+                f"Unsupported display mode: width={width}")
 
         height = 7
         mapping = [(i % width) * height + (i // width) for i in range(width * height)]
