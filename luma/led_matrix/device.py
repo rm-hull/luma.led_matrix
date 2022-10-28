@@ -193,7 +193,7 @@ class ws2812(device):
     :param cascaded: The number of pixels in a single strip - if supplied, this
         will override ``width`` and ``height``.
     :type cascaded: int
-    :param rotate: Whether the device dimenstions should be rotated in-situ:
+    :param rotate: Whether the device dimensions should be rotated in-situ:
         A value of: 0=0°, 1=90°, 2=180°, 3=270°. If not supplied, zero is
         assumed.
     :type rotate: int
@@ -376,7 +376,7 @@ class apa102(device):
     :param cascaded: The number of pixels in a single strip - if supplied, this
         will override ``width`` and ``height``.
     :type cascaded: int
-    :param rotate: Whether the device dimenstions should be rotated in-situ:
+    :param rotate: Whether the device dimensions should be rotated in-situ:
         A value of: 0=0°, 1=90°, 2=180°, 3=270°. If not supplied, zero is
         assumed.
     :type rotate: int
@@ -553,7 +553,7 @@ class unicornhathd(device):
     alpha channel of the RGBA image that is being displayed.
 
     :param serial_interface: The serial interface to write to.
-    :param rotate: Whether the device dimenstions should be rotated in-situ:
+    :param rotate: Whether the device dimensions should be rotated in-situ:
         A value of: 0=0°, 1=90°, 2=180°, 3=270°. If not supplied, zero is
         assumed.
     :type rotate: int
