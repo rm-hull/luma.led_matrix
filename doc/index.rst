@@ -19,8 +19,6 @@ Luma.LED_Matrix: Display drivers for MAX7219, WS2812, APA102
 .. image:: https://img.shields.io/pypi/dm/luma.led_matrix
    :target: https://pypi.python.org/project/luma.led_matrix
 
-.. image:: https://img.shields.io/maintenance/yes/2021.svg?maxAge=2592000
-
 .. toctree::
    :maxdepth: 2
 
