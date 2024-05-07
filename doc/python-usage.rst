@@ -181,8 +181,8 @@ below,
    from luma.core.legacy.font import proportional, LCD_FONT
    from luma.led_matrix.device import max7219
 
-   serial = spi(port=0, device=0, gpio=noop(), block_orientation=-90)
-   device = max7219(serial, width=32, height=24)
+   serial = spi(port=0, device=0, gpio=noop())
+   device = max7219(serial, width=32, height=24, block_orientation=-90)
 
    with canvas(device) as draw:
       draw.rectangle(device.bounding_box, outline="white")
