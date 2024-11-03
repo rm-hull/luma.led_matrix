@@ -3,6 +3,7 @@
 # Copyright (c) 2014-18 Richard Hull and contributors
 # See LICENSE.rst for details.
 
+from math import ceil
 from luma.led_matrix.device import apa102
 from luma.core.render import canvas
 
@@ -14,7 +15,7 @@ def start_frame():
 
 
 def end_frame(n):
-    return [0] * round(n / 2 / 8)
+    return [0] * ceil(n / 2 / 8)
 
 
 def test_init_cascaded():
