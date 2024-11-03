@@ -26,3 +26,4 @@ Contributors
 * Emlyn Corrin (@emlyn)
 * Bram Verboom (@bramverb)
 * Thanassis Tsiodras (@ttsiodras)
+* Marko Vincek (markoaurelije)
