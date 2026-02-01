@@ -19,14 +19,14 @@ Luma.LED_Matrix
 .. image:: https://readthedocs.org/projects/luma-led_matrix/badge/?version=latest
    :target: http://luma-led-matrix.readthedocs.io/en/latest/?badge=latest
 
-.. image:: https://img.shields.io/pypi/pyversions/luma.led_matrix.svg
-   :target: https://pypi.python.org/pypi/luma.led_matrix
+.. image:: https://img.shields.io/pypi/pyversions/luma.led_matrix
+   :target: https://pypi.org/project/luma.led-matrix
 
-.. image:: https://img.shields.io/pypi/v/luma.led_matrix.svg
-   :target: https://pypi.python.org/pypi/luma.led_matrix
+.. image:: https://img.shields.io/pypi/v/luma.led_matrix
+   :target: https://pypi.org/project/luma.led-matrix
 
 .. image:: https://img.shields.io/pypi/dm/luma.led_matrix
-   :target: https://pypi.python.org/project/luma.led_matrix
+   :target: https://pypi.org/project/luma.led-matrix
 
 Python 3 library interfacing LED matrix displays with the MAX7219 driver (using
 SPI), WS2812 (NeoPixels, inc Pimoroni Unicorn pHat/Hat and Unicorn Hat HD) and
