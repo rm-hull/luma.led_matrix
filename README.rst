@@ -13,7 +13,7 @@ Luma.LED_Matrix
 .. image:: https://github.com/rm-hull/luma.led_matrix/actions/workflows/main.yml/badge.svg
    :target: https://github.com/rm-hull/luma.led_matrix/actions/workflows/main.yml
 
-.. image:: https://coveralls.io/repos/github/rm-hull/luma.led_matrix/badge.svg?branch=master
+.. image:: https://coveralls.io/repos/github/rm-hull/luma.led_matrix/badge.svg?branch=main
    :target: https://coveralls.io/github/rm-hull/luma.led_matrix?branch=master
 
 .. image:: https://readthedocs.org/projects/luma-led_matrix/badge/?version=latest
