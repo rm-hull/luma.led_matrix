@@ -40,8 +40,7 @@ canvas, and other functionality to support:
 * terminal-style printing,
 * state management,
 * dithering to monochrome,
-* pygame emulator,
-* Python 3.8 and newer are supported
+* pygame emulator
 
 Documentation
 -------------
