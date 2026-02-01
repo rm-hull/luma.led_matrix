@@ -1,13 +1,37 @@
 Installation
 ------------
-.. note:: The library has been tested against Python 3.6 and newer.
+
+Installing from PyPi
+^^^^^^^^^^^^^^^^^^^^
+
+Install the system dependencies for the library first::
+
+  $ sudo usermod -a -G spi,gpio pi
+  $ sudo apt install build-essential python3-dev python3-pip libfreetype6-dev libjpeg-dev libopenjp2-7 libtiff5
+
+Before installing the library, create a
+`virtual environment <https://docs.python.org/3/library/venv.html>`__ for your
+project using::
+
+  $ python3 -m venv ~/luma-env
+
+This creates a virtual environment in the home directory called `luma-env`
+and a Python executable at `~/luma-env/bin/python`.
+
+Next, install the `latest version of the library <https://pypi.org/project/luma.led-matrix>`__
+in the virtual environment directly with::
+
+  $ ~/luma-env/bin/python -m pip install --upgrade luma.led_matrix
+
+This will normally retrieve all of the dependencies ``luma.led_matrix`` requires and
+install them automatically.
 
 Pre-requisites
 ^^^^^^^^^^^^^^
 
 MAX7219 Devices
 """""""""""""""
-By default, the SPI kernel driver is **NOT** enabled on a Raspberry Pi Raspbian image.
+By default, the SPI kernel driver is **NOT** enabled on the Raspberry Pi OS image.
 You can confirm whether it is enabled using the shell command below::
 
   $ lsmod | grep -i spi
@@ -27,8 +51,8 @@ implies the kernel SPI driver is not loaded. Enable the SPI as follows (steps
 taken from https://learn.sparkfun.com/tutorials/raspberry-pi-spi-and-i2c-tutorial#spi-on-pi):
 
 #. Run ``sudo raspi-config``
-#. Use the down arrow to select ``5 Interfacing Options``
-#. Arrow down to ``P4 SPI``
+#. Use the down arrow to select ``Interface Options``
+#. Arrow down to ``SPI``
 #. Select **yes** when it asks you to enable SPI
 #. Also select **yes** when it asks about automatically loading the kernel module
 #. Use the right arrow to select the **<Finish>** button
@@ -94,25 +118,6 @@ Board Pin    Name   Remarks       RPi Pin   RPi Function
 2            DI     Data In       12        GPIO 18 (PWM0)
 3            VCC    +5V Power     2         5V0
 ============ ====== ============= ========= ====================
-
-
-Installing from PyPi
-^^^^^^^^^^^^^^^^^^^^
-Install the dependencies for library first with::
-
-  $ sudo usermod -a -G spi,gpio pi
-  $ sudo apt install build-essential python3-dev python3-pip libfreetype6-dev libjpeg-dev libopenjp2-7 libtiff5
-
-.. warning:: The default ``pip`` and ``setuptools`` bundled with apt on Raspbian are really old,
-   and can cause components to not be installed properly. Make sure they are up to date by upgrading
-   them first::
-   
-      $ sudo -H pip install --upgrade --ignore-installed pip setuptools
-
-Proceed to install latest version of the luma.led_matrix library directly from
-`PyPI <https://pypi.python.org/pypi?:action=display&name=luma.led_matrix>`_::
-
-  $ sudo python3 -m pip install --upgrade luma.led_matrix
 
 Examples
 ^^^^^^^^
