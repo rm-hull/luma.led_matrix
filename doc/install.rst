@@ -18,10 +18,10 @@ project using::
 This creates a virtual environment in the home directory called `luma-env`
 and a Python executable at `~/luma-env/bin/python`.
 
-Next, install the `latest version of the library <https://pypi.org/project/luma.led-matrix>`__
+Next, upgrade pip and install the `latest version of the library <https://pypi.org/project/luma.led-matrix>`__
 in the virtual environment directly with::
 
-  $ ~/luma-env/bin/python -m pip install --upgrade luma.led_matrix
+  $ ~/luma-env/bin/python -m pip install --upgrade pip luma.led_matrix
 
 This will normally retrieve all of the dependencies ``luma.led_matrix`` requires and
 install them automatically.
