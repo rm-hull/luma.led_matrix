@@ -32,6 +32,7 @@ Collection of serial interfaces to LED matrix devices.
 # As before, as soon as the with block completes, the canvas buffer is flushed
 # to the device
 
+from math import ceil
 import luma.core.error
 import luma.led_matrix.const
 from luma.core.interface.serial import noop
@@ -420,13 +421,13 @@ class apa102(device):
         assert image.size == self.size
         self._last_image = image.copy()
 
-        # Send zeros to reset, then pixel values then zeros at end
+        # Send 32 zero-bits to reset, then pixel values then n/2 zero-bits at end
         sz = image.width * image.height * 4
-        buf = bytearray(sz * 3)
+        buf = bytearray(4 + sz + ceil(image.width * image.height / 8 / 2))
 
         m = self._mapping
         for idx, (r, g, b, a) in enumerate(image.getdata()):
-            offset = sz + m[idx] * 4
+            offset = 4 + m[idx] * 4
             brightness = (a >> 4) if a != 0xFF else self._brightness
             buf[offset] = (0xE0 | brightness)
             buf[offset + 1] = b
