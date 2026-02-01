@@ -14,7 +14,7 @@ Luma.LED_Matrix
    :target: https://github.com/rm-hull/luma.led_matrix/actions/workflows/main.yml
 
 .. image:: https://coveralls.io/repos/github/rm-hull/luma.led_matrix/badge.svg?branch=main
-   :target: https://coveralls.io/github/rm-hull/luma.led_matrix?branch=master
+   :target: https://coveralls.io/github/rm-hull/luma.led_matrix?branch=main
 
 .. image:: https://readthedocs.org/projects/luma-led_matrix/badge/?version=latest
    :target: http://luma-led-matrix.readthedocs.io/en/latest/?badge=latest
