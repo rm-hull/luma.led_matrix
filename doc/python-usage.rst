@@ -440,6 +440,30 @@ APA102 RGB pixels can have their brightness individually controlled: by setting
 the alpha chanel to a translucent value (as per the above example) will set the 
 brightness accordingly.
 
+Scroll pHAT HD (IS31FL3731)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+`Pimoroni's Scroll pHAT HD <https://shop.pimoroni.com/products/scroll-phat-hd>`_
+is a 17x7 matrix of individually PWM-dimmable white LEDs, driven by an onboard
+ISSI IS31FL3731 chip and addressed over I2C - no ``serial_interface`` is
+needed, so the device can typically be constructed with no arguments at all:
+
+.. code:: python
+
+   from luma.core.render import canvas
+   from luma.led_matrix.device import scrollphathd
+
+   device = scrollphathd()
+
+   with canvas(device) as draw:
+       draw.point((0, 0), fill="white")
+       draw.point((1, 0), fill=(255, 255, 255, 0x40))  # dimmer, via alpha
+
+As with :py:class:`~luma.led_matrix.device.apa102` and
+:py:class:`~luma.led_matrix.device.unicornhathd`, per-pixel brightness can be
+set by giving a pixel a translucent alpha value; since the underlying LEDs
+are a single colour (white), the brightest of the red, green and blue
+channel values is used as that pixel's intensity.
+
 Emulators
 ^^^^^^^^^
 There are various `display emulators <http://github.com/rm-hull/luma.emulator>`_
