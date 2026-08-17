@@ -43,7 +43,7 @@ from luma.core.virtual import sevensegment
 from luma.led_matrix.segment_mapper import dot_muncher, regular
 
 
-__all__ = ["max7219", "ws2812", "neopixel", "neosegment", "apa102", "unicornhathd"]
+__all__ = ["max7219", "ws2812", "neopixel", "neosegment", "apa102", "unicornhathd", "scrollphathd"]
 
 
 class max7219(device):
@@ -623,3 +623,168 @@ class unicornhathd(device):
         self._brightness = value
         if self._last_image is not None:
             self.display(self._last_image)
+
+
+class scrollphathd(device):
+    """
+    Display adapter for Pimoroni's `Scroll pHAT HD
+    <https://shop.pimoroni.com/products/scroll-phat-hd>`_ - a 17x7 array of
+    individually PWM-dimmable white LEDs. It is addressed *natively* over
+    I2C via the onboard ISSI IS31FL3731 LED matrix driver chip's register
+    map - this is a fresh, from-scratch implementation and not a wrapper
+    around Pimoroni's own ``scrollphathd`` library.
+
+    As every LED offers 256 levels of brightness, a 32-bit RGBA
+    :py:mod:`PIL.Image` is expected. Since the underlying hardware is a
+    single-colour (white) LED matrix, the brightest of the red, green and
+    blue channel values is used as each pixel's intensity; as with
+    :py:class:`apa102` and :py:class:`unicornhathd`, if a pixel is not
+    fully opaque, its alpha channel value is used to set the brightness of
+    the respective LED instead.
+
+    .. note::
+        Scroll pHAT HD is only ever addressed over I2C, so (unlike most of
+        the other devices in this module) there is no ``serial_interface``
+        parameter to supply. Instead, an (optional) ``i2c_bus`` may be
+        injected - this is typically only needed for testing, with a
+        stubbed/mocked bus.
+
+    :param i2c_bus: An `smbus2 <https://pypi.org/project/smbus2>`_
+        compatible I2C bus instance, exposing (at least) ``write_byte_data``
+        and ``write_i2c_block_data`` methods. If not supplied,
+        ``smbus2.SMBus(1)`` is used.
+    :param address: 7-bit I2C address of the attached IS31FL3731
+        (default: ``0x74``).
+    :type address: int
+    :param rotate: Whether the device dimensions should be rotated in-situ:
+        A value of: 0=0°, 1=90°, 2=180°, 3=270°. If not supplied, zero is
+        assumed.
+    :type rotate: int
+
+    .. versionadded:: X.Y.Z
+    """
+    def __init__(self, i2c_bus=None, address=0x74, rotate=0, **kwargs):
+        super(scrollphathd, self).__init__(luma.led_matrix.const.is31fl3731, noop())
+        self.capabilities(17, 7, rotate, mode="RGBA")
+
+        self._i2c = i2c_bus or self.__smbus2__()
+        self._address = address
+        self._current_frame = 0
+        self._last_image = None
+        self._brightness = 0x70
+
+        # Reset into a known state: briefly shutdown, then wake, select
+        # simple "picture" (as opposed to auto-play or audio-play) mode,
+        # and ensure audio-modulated brightness is disabled.
+        self.hide()
+        self.show()
+        self._write_config_register(self._const.MODE, self._const.PICTURE_MODE)
+        self._write_config_register(self._const.AUDIOSYNC, 0)
+
+        # The 17x7 visible grid only occupies 119 of the chip's 144
+        # addressable LED positions; precompute the mapping once, and use
+        # it to tell the chip which positions are actually wired up.
+        self._pixel_map = [self._pixel_address(x, y)
+                            for y in range(self._h) for x in range(self._w)]
+
+        wired = [False] * self._const.NUM_PIXELS
+        for index in self._pixel_map:
+            wired[index] = True
+        for frame in range(self._const.NUM_FRAMES):
+            self._enable_leds(frame, wired)
+
+        self.clear()
+
+    def __smbus2__(self):
+        import smbus2
+        return smbus2.SMBus(1)
+
+    def display(self, image):
+        """
+        Takes a 32-bit RGBA :py:mod:`PIL.Image` and dumps it to the Scroll
+        pHAT HD's LED matrix via the IS31FL3731's register interface.
+        """
+        assert image.mode == self.mode
+        assert image.size == self.size
+        self._last_image = image.copy()
+
+        image = self.preprocess(image)
+        normalized_brightness = self._brightness / 255.0
+        pixel_map = self._pixel_map
+
+        pwm_values = [0] * self._const.NUM_PIXELS
+        for index, (r, g, b, a) in enumerate(image.getdata()):
+            brightness = (a / 255.0) if a != 0xFF else normalized_brightness
+            pwm_values[pixel_map[index]] = int(max(r, g, b) * brightness)
+
+        frame = self._current_frame
+        self._select_bank(frame)
+        self._write_block(self._const.LED_PWM, pwm_values)
+        self._write_config_register(self._const.FRAME, frame)
+        self._current_frame ^= 1
+
+    def show(self):
+        """
+        Wakes the device out of a prior low-power sleep mode.
+        """
+        self._write_config_register(self._const.SHUTDOWN, 1)
+
+    def hide(self):
+        """
+        Puts the device into low-power sleep mode. LED memory contents are
+        retained, so the display resumes from where it left off once
+        :py:meth:`show` is called again.
+        """
+        self._write_config_register(self._const.SHUTDOWN, 0)
+
+    def contrast(self, value):
+        """
+        Sets the LED intensity to the desired level, in the range 0-255.
+        As with :py:class:`apa102` and :py:class:`unicornhathd`, this is
+        only applied to fully opaque pixels; pixels with a translucent
+        alpha channel use that value to set brightness instead.
+
+        :param level: Desired contrast level in the range of 0-255.
+        :type level: int
+        """
+        assert 0x00 <= value <= 0xFF
+        self._brightness = value
+        if self._last_image is not None:
+            self.display(self._last_image)
+
+    def _enable_leds(self, frame, enabled_pixels):
+        enable_bitmap = bytearray(self._const.NUM_PIXELS // 8)
+        for index, enabled in enumerate(enabled_pixels):
+            if enabled:
+                enable_bitmap[index // 8] |= 1 << (index % 8)
+
+        self._select_bank(frame)
+        self._write_block(self._const.LED_ENABLE, list(enable_bitmap))
+
+    def _write_config_register(self, register, value):
+        self._select_bank(self._const.CONFIG_BANK)
+        self._i2c.write_byte_data(self._address, register, value)
+
+    def _select_bank(self, bank):
+        self._i2c.write_byte_data(self._address, self._const.BANK_ADDRESS, bank)
+
+    def _write_block(self, start_register, data):
+        for offset in range(0, len(data), 32):
+            chunk = data[offset:offset + 32]
+            self._i2c.write_i2c_block_data(self._address, start_register + offset, chunk)
+
+    @staticmethod
+    def _pixel_address(x, y):
+        """
+        Translates a logical (x, y) coordinate on the visible 17x7 display
+        into the corresponding LED index within the IS31FL3731's 144-pixel
+        internal frame buffer.
+
+        The board is built from two 8-column-wide LED matrix dies (plus a
+        shared middle column at x=8), wired in mirrored/opposite
+        orientations to one another, which is why the mapping splits and
+        differs either side of that middle column.
+        """
+        if x <= 8:
+            return (8 - x) * 16 + (6 - y)
+        return (x - 9) * 16 + 8 + y
