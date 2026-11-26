@@ -44,7 +44,7 @@ jobs:
         run: coveralls --service=github
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COVERALLS_FLAG_NAME: Python 3.${{ matrix.python-minor-version }}
+          COVERALLS_FLAG_NAME: luma.led_matrix
           COVERALLS_PARALLEL: true
 
   coveralls:
