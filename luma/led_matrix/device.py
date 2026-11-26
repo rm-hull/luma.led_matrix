@@ -661,7 +661,7 @@ class scrollphathd(device):
         assumed.
     :type rotate: int
 
-    .. versionadded:: X.Y.Z
+    .. versionadded:: 1.10.0
     """
     def __init__(self, i2c_bus=None, address=0x74, rotate=0, **kwargs):
         super(scrollphathd, self).__init__(luma.led_matrix.const.is31fl3731, noop())
