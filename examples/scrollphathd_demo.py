@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# Copyright (c) 2013-2026 Richard Hull and contributors
+# Copyright (c) 2026 Richard Hull and contributors
 # See LICENSE.rst for details.
 
 import time
