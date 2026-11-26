@@ -356,7 +356,7 @@ This should animate a green dot moving left-to-right down each line.
 
 Pimoroni Unicorn HAT HD
 """""""""""""""""""""""
-Pimoroni sells the `Unicorn HAT HD <https://shop.pimoroni.com/products/unicorn-hat-hd>`_,
+Pimoroni also sells the `Unicorn HAT HD <https://shop.pimoroni.com/products/unicorn-hat-hd>`_,
 comprising 256 high-intensity RGB LEDs in a 16x16 arrangement. The pixels are driven by an
 ARM STM32F making the display appear as an SPI device:
 
