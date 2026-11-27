@@ -1,8 +1,9 @@
 Introduction
 ------------
 Python library interfacing LED matrix displays with the MAX7219 driver (using
-SPI) and WS2812 & APA102 NeoPixels (inc Pimoroni Unicorn pHat/Hat and Unicorn
-Hat HD) on the Raspberry Pi and other Linux-based single board computers - it
+SPI), WS2812 & APA102 NeoPixels (inc Pimoroni Unicorn pHat/Hat and Unicorn
+Hat HD), and the IS31FL3731 driver (inc Pimoroni Scroll pHAT HD, over I2C)
+on the Raspberry Pi and other Linux-based single board computers - it
 provides a Pillow-compatible drawing canvas, and other functionality to
 support:
 
